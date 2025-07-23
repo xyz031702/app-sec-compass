@@ -1,0 +1,9 @@
+# requirements.txt  – intentionally vulnerable for demo purposes
+Django==2.2.2        # CVE-2019-14234, CVE-2019-14235  (SQL injection / denial‑of‑service)
+requests==2.19.1     # CVE-2018-18074  (open redirect in OAuth helper)
+urllib3==1.24.1      # CVE-2019-11324  (CRLF injection via HTTP headers)
+PyYAML==5.3          # CVE-2020-14343  (arbitrary code execution on load)
+Pillow==7.1.1        # CVE-2020-10177, CVE-2020-10378  (DOS / RCE via crafted images)
+Werkzeug==0.11.15    # CVE-2016-10516  (host header injection)
+Jinja2==2.10.1       # CVE-2019-10906  (XSS in sandbox escape)
+Flask==1.0           # pulls in vulnerable Werkzeug & Jinja2 versions

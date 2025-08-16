@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecurePay - Payment Gateway</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .payment-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo h1 {
+            color: #333;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .logo p {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="email"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .card-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .card-row .form-group {
+            flex: 1;
+        }
+        
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .badge {
+            background: #f8f9fa;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #666;
+            border: 1px solid #e9ecef;
+        }
+        
+        .pay-button {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .pay-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .ssl-notice {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .ssl-notice::before {
+            content: "🔒 ";
+        }
+        
+        .amount-display {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .amount {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .description {
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .demo-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .demo-section h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .demo-section p {
+            color: #856404;
+            font-size: 14px;
+        }
+        
+        .exploit-button {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="logo">
+            <h1>SecurePay</h1>
+            <p>Secure Payment Gateway</p>
+        </div>
+        
+        <div class="demo-section">
+            <h3>⚠️ CVE-2019-11358 Demo</h3>
+            <p>This page uses jQuery 3.3.1 which is vulnerable to prototype pollution. Click the button below to trigger the exploit.</p>
+            <button class="exploit-button" onclick="triggerExploit()">Trigger jQuery Prototype Pollution → XSS</button>
+        </div>
+        
+        <div class="amount-display">
+            <div class="amount">$299.99</div>
+            <div class="description">Premium Software License</div>
+        </div>
+        
+        <form id="paymentForm">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cardNumber">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
+            </div>
+            
+            <div class="card-row">
+                <div class="form-group">
+                    <label for="expiryDate">Expiry Date</label>
+                    <input type="text" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvv">CVV</label>
+                    <input type="text" id="cvv" name="cvv" placeholder="123" maxlength="4" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="cardholderName">Cardholder Name</label>
+                <input type="text" id="cardholderName" name="cardholderName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="billingAddress">Billing Address</label>
+                <input type="text" id="billingAddress" name="billingAddress" required>
+            </div>
+            
+            <div class="card-row">
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="zipCode">ZIP Code</label>
+                    <input type="text" id="zipCode" name="zipCode" required>
+                </div>
+            </div>
+            
+            <div class="security-badges">
+                <div class="badge">🔒 SSL Secured</div>
+                <div class="badge">💳 PCI Compliant</div>
+                <div class="badge">🛡️ 256-bit Encryption</div>
+            </div>
+            
+            <button type="submit" class="pay-button">Complete Payment</button>
+            
+            <div class="ssl-notice">
+                Your payment information is encrypted and secure
+            </div>
+        </form>
+    </div>
+
+    <!-- VULNERABLE: jQuery 3.3.1 (CVE-2019-11358) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    
+    <!-- Payment processing and exploit code -->
+    <script src="payment-processor.js"></script>
+</body>
+</html>

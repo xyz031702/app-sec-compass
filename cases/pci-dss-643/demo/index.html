@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCI-DSS Card Skimmer Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f7fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 20px;
+        }
+        .experiment {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        .steps {
+            background: #fff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+        ul {
+            margin: 10px 0;
+        }
+        li {
+            margin: 8px 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PCI-DSS Card Skimmer Demo</h1>
+        
+        <div class="info">
+            <strong>Purpose:</strong> Demonstrate card skimming attacks and protection mechanisms for PCI-DSS requirements 6.4.1 and 11.6.1
+        </div>
+
+        <div class="experiment">
+            <h2>1. Card Number Skimmer Attacks</h2>
+            
+            <h3>Via Vulnerable jQuery 3.3.1</h3>
+            <div class="steps">
+                <ol>
+                    <li>Run <a href="clear.html">clear.html</a></li>
+                    <li>Run <a href="payment_jquery.html">payment_jquery.html</a> to show no injection</li>
+                    <li>Run <a href="seed.html">seed.html</a> to inject</li>
+                    <li>Run <a href="payment_jquery.html">payment_jquery.html</a> to show injection</li>
+                </ol>
+            </div>
+
+            <h3>Via XSS</h3>
+            <div class="steps">
+                <ol>
+                    <li>Run <a href="clear.html">clear.html</a></li>
+                    <li>Run <a href="payment.html">payment.html</a> to show no injection</li>
+                    <li>Run <a href="seed.html">seed.html</a> to inject</li>
+                    <li>Run <a href="payment.html">payment.html</a> to show injection</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="experiment">
+            <h2>2. CSP and SRI Protection</h2>
+            <div class="steps">
+                <ol>
+                    <li>Go into <a href="csp-sri/">csp-sri</a> folder</li>
+                    <li>Run <a href="csp-sri/demo.sh">demo.sh</a> to start local server</li>
+                    <li>Click <a href="http://localhost:8080/seed.html">seed.html</a> to inject, check injected content: console → application → localStorage → localhost:8080</li>
+                    <li>Click <a href="http://localhost:8080/payment_vulnerable.html">payment_vulnerable.html</a> to show injection</li>
+                    <li>Click <a href="http://localhost:8080/payment_protected.html">payment_protected.html</a> to show no injection, check CSP block error in console</li>
+                    <li>Click <a href="http://localhost:8080/csp-sri-guide.html">csp-sri-guide.html</a> to show the guide</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="experiment">
+            <h2>3. CSP and SRI Limitations</h2>
+            
+            <h3>When CSP and SRI Cannot Block All Attacks</h3>
+            <div class="steps">
+                <ul>
+                    <li>Go into <a href="jquery_failed/">jquery_failed</a> folder</li>
+                    <li>Open <a href="jquery_failed/index.html">index.html</a></li>
+                    <li>Open console to show the DOM-XSS attack</li>
+                    <li>Enter something to show card number is still skimmed</li>
+                </ul>
+            </div>
+
+            <h3>CSP/SRI Limitations</h3>
+            <div class="steps">
+                <ul>
+                    <li>Some libraries don't provide SRI hashes (e.g., Stripe.js): <a href="https://github.com/stripe/stripe-js/issues/167">GitHub Issue #167</a></li>
+                    <li>Rare case: Corporate SSL inspection can intercept and modify content (requires pre-configured trust)</li>
+                    <li>Rare case: CDN/infrastructure compromises at the source can serve malicious code from trusted domains</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>Note:</strong> These demonstrations are for educational purposes only. Always follow responsible disclosure practices and obtain proper authorization before testing security measures.
+        </div>
+    </div>
+</body>
+</html>

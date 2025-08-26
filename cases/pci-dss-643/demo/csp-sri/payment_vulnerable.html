@@ -1,0 +1,119 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Checkout (demo)</title>
+<style>
+  body { 
+    font: 14px/1.5 system-ui, sans-serif; 
+    margin: 0; 
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  h2 { 
+    color: #333; 
+    margin-top: 0; 
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 16px;
+  }
+  label { 
+    display: block; 
+    margin: 16px 0 8px; 
+    font-weight: 600; 
+    color: #555;
+  }
+  #card { 
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #e0e0e0; 
+    border-radius: 6px; 
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  #card:focus { 
+    outline: none; 
+    border-color: #667eea; 
+  }
+  #status { 
+    margin: 12px 0; 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    background: #e8f5e8; 
+    color: #2d5a2d; 
+    border: 1px solid #c3e6c3;
+  }
+  #msg { 
+    border: 1px dashed #ddd; 
+    padding: 12px; 
+    min-height: 28px; 
+    border-radius: 6px; 
+    background: #fafafa;
+  }
+  code { 
+    background: #f6f6f6; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 12px;
+  }
+  hr { 
+    border: none; 
+    height: 1px; 
+    background: #e0e0e0; 
+    margin: 24px 0; 
+  }
+  .info { 
+    font-size: 12px; 
+    color: #666; 
+    background: #f8f9fa; 
+    padding: 12px; 
+    border-radius: 6px; 
+    border-left: 4px solid #667eea;
+  }
+</style>
+
+<div class="container">
+  <h2>💳 Secure Checkout</h2>
+  
+  <label>Card number:
+    <input id="card" autocomplete="off" inputmode="numeric" placeholder="1234 5678 9012 3456">
+  </label>
+  
+  <div id="status">🔒 No skimmer</div>
+
+  <p>Message from <code>localStorage.msg</code> (rendered <b>as HTML</b> on purpose):</p>
+  <div id="msg"></div>
+
+  <p>Exfil log (demo only): <code id="log"></code></p>
+  
+  <hr>
+  <div class="info">
+    <b>⚠️ Demo Info:</b> This page reads <code>localStorage.msg</code> and sets
+    <code>innerHTML</code>. That's intentionally unsafe for the demo.
+  </div>
+</div>
+
+<script>
+  // VULN (on purpose): read untrusted state, render as HTML
+  const msg = localStorage.getItem('msg') || 'Welcome! (no seeded state)';
+  console.log('Retrieved from localStorage:', msg);
+  document.getElementById('msg').innerHTML = msg;
+  
+  // Debug: Check if elements exist after a short delay
+  setTimeout(() => {
+    const statusEl = document.getElementById('status');
+    const logEl = document.getElementById('log');
+    console.log('Status element:', statusEl);
+    console.log('Log element:', logEl);
+    console.log('Current status text:', statusEl ? statusEl.textContent : 'not found');
+  }, 100);
+</script>

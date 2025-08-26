@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From Component Scan to SBOM: Developer's Perspective over PCI-DSS 6.4.3 and 11.6.1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .slide {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 30px 0;
+            padding: 40px;
+            min-height: 600px;
+            position: relative;
+            border-left: 6px solid #2a5298;
+        }
+
+        .slide h1 {
+            color: #1e3c72;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 15px;
+        }
+
+        .slide h2 {
+            color: #2a5298;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .slide h3 {
+            color: #1e3c72;
+            font-size: 1.4em;
+            margin: 20px 0 15px 0;
+            font-weight: 600;
+        }
+
+        .slide h4 {
+            color: #2a5298;
+            font-size: 1.2em;
+            margin: 15px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .slide ul {
+            margin: 15px 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .slide li {
+            margin: 10px 0;
+            padding: 8px 0 8px 25px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .slide li:before {
+            content: "▶";
+            color: #2a5298;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .slide img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .slide code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #d63384;
+            font-size: 0.9em;
+        }
+
+        .slide pre {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 15px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.4;
+        }
+
+        .highlight-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .success-box {
+            background: #e8f5e8;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #2a5298;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .navigation {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .nav-button {
+            background: #2a5298;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+
+        .nav-button:hover {
+            background: #1e3c72;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+                margin: 20px 0;
+            }
+            
+            .slide h1 {
+                font-size: 2em;
+            }
+            
+            .slide h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        
+        <!-- Title Slide -->
+        <div class="slide">
+            <div class="slide-number">1</div>
+            <h1>From Component Scan to SBOM: Developer's Perspective over PCI-DSS 6.4.3 and 11.6.1</h1>
+            <div class="highlight-box">
+                <h3>Presentation Overview</h3>
+                <ul>
+                    <li>Understanding application and file tampering threats</li>
+                    <li>Live attack demonstrations with jQuery CVE-2019-11358</li>
+                    <li>Real-world case studies from 2022-2025</li>
+                    <li>Practical DevSecOps implementation strategies</li>
+                    <li>SBOM baseline and integrity enforcement</li>
+                    <li>Production monitoring and change detection</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Threat -->
+        <div class="slide">
+            <div class="slide-number">2</div>
+            <h2>The Threat: Application & File Tampering for Malignant Intent</h2>
+            
+            <div class="highlight-box">
+                <h4>🎯 Attack Vectors</h4>
+                <p>Malicious scripts targeting payment processing systems</p>
+            </div>
+            
+            <h3>What is at Risk</h3>
+            <ul>
+                <li>Malicious code injection into payment applications for cardholder data theft</li>
+                <li>Silent file tampering in critical payment systems for payment processing disruption</li>
+                <li>Unauthorized modifications to transaction processing logic for malicious transactions</li>
+            </ul>
+
+            <h3>Business Impact</h3>
+            <ul>
+                <li><strong>$4.45M average</strong> breach cost (IBM Security 2023 Report)</li>
+                <li><strong>Payment processing disruption</strong> leads to $9.3M/hour in banking losses (UptimeRobot 2024)</li>
+                <li><strong>Regulatory fines</strong> $425M (Equifax) to $500K+ per violation (Compyl 2025)</li>
+                <li><strong>Customer trust erosion</strong> - 66% won't trust breached companies (Security Magazine 2024)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Attack Demo1 -->
+        <div class="slide">
+            <div class="slide-number">3</div>
+            <h2>Attack Demo1: Injection due to unsafe deps (jQuery CVE-2019-11358)</h2>
+            
+            <h3>The Vulnerability</h3>
+            <ul>
+                <li><strong>CVE-2019-11358</strong>: Prototype pollution in jQuery $.extend() function (last update, 11/20/2024, NVD)</li>
+                <li><strong>Affected versions</strong>: jQuery < 3.4.0 (released April 2019)</li>
+                <li><strong>Attack vector</strong>: Malicious __proto__ properties in user data</li>
+                <li><strong>72.8% of all websites</strong> still use jQuery (W3Techs 2024)</li>
+                <li><strong>'Mature' codebases</strong> often stuck on vulnerable versions</li>
+                <li><strong>Major sites affected</strong>: Microsoft, Yahoo, WordPress, Adobe, Samsung</li>
+            </ul>
+
+            <h3>Demo Scenario</h3>
+            <div class="warning-box">
+                <ul>
+                    <li><strong>Improper dependency management</strong> leads to Vulnerable jQuery 3.3.1</li>
+                    <li><strong>Payment form exploitation</strong> enables Data theft via prototype pollution</li>
+                    <li><strong>Business impact</strong> results in Payment processing disruption</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>📸 Live Demo Available</h4>
+                <p>Navigate to <code>/demo/payment_jquery.html</code> to see the jQuery CVE-2019-11358 exploit in action</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Attack Demo2 -->
+        <div class="slide">
+            <div class="slide-number">4</div>
+            <h2>Attack Demo2: XSS Injection (Script Tampering)</h2>
+            
+            <h3>The Vulnerability</h3>
+            <ul>
+                <li><strong>Direct XSS via innerHTML</strong> - No external dependencies required</li>
+                <li><strong>Attack vector</strong>: Malicious localStorage data rendered as HTML</li>
+                <li><strong>File tampering</strong>: External scripts inject payloads into browser storage</li>
+            </ul>
+
+            <h3>Demo Scenario</h3>
+            <div class="warning-box">
+                <ul>
+                    <li><strong>Script tampering</strong> - Malicious payload seeded via seed.html</li>
+                    <li><strong>Payment form exploitation</strong> - SVG onload steals card data in real-time</li>
+                    <li><strong>File integrity bypass</strong> - No change detection on localStorage manipulation</li>
+                    <li><strong>Business impact</strong> - Silent payment data theft during checkout</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: Real World Case Studies -->
+        <div class="slide">
+            <div class="slide-number">5</div>
+            <h2>Real World Case Studies (2022-2025)</h2>
+            
+            <h3>1. British Airways Magecart Attack - 2022-2024</h3>
+            <ul>
+                <li><strong>Attack</strong>: Script tampering via compromised third-party payment scripts</li>
+                <li><strong>Impact</strong>: 400,000+ customer payment cards stolen during checkout process</li>
+                <li><strong>Root cause</strong>: Malicious JavaScript injected into payment forms via supply chain compromise</li>
+                <li><strong>Business impact</strong>: £20M ICO fine, ongoing customer compensation claims</li>
+            </ul>
+
+            <h3>2. Ticketmaster Supply Chain Attack - June 2024</h3>
+            <ul>
+                <li><strong>Attack</strong>: Compromised Inbenta chatbot script injected card skimming code</li>
+                <li><strong>Impact</strong>: Payment data from 40,000+ customers stolen via tampered JavaScript</li>
+                <li><strong>Root cause</strong>: Third-party script modification without integrity monitoring</li>
+                <li><strong>Business impact</strong>: $1.65M settlement, mandatory security upgrades</li>
+            </ul>
+
+            <h3>3. Newegg Magecart Script Injection - September 2022</h3>
+            <ul>
+                <li><strong>Attack</strong>: Payment page JavaScript tampering for one month undetected</li>
+                <li><strong>Impact</strong>: Credit card data stolen from customers during checkout</li>
+                <li><strong>Root cause</strong>: Compromised payment processing scripts, no file integrity monitoring</li>
+                <li><strong>Business impact</strong>: Customer trust erosion, forced security infrastructure overhaul</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Defend the threat -->
+        <div class="slide">
+            <div class="slide-number">6</div>
+            <h2>Defend the threat</h2>
+            
+            <h3>Attack Flow Diagram</h3>
+            <pre style="font-family: monospace; background: #f8f9fa; padding: 20px; border-radius: 8px; line-height: 1.4;">
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Attacker      │───▶│  Vulnerability  │───▶│   Impact        │
+│                 │    │                 │    │                 │
+│ • Malicious     │    │ • Outdated      │    │ • Data Theft    │
+│   Scripts       │    │   Dependencies  │    │ • Processing    │
+│ • CDN Poison    │    │ • Missing CSP   │    │   Disruption    │
+│ • File Tamper   │    │ • No Integrity  │    │ • Compliance    │
+│                 │    │   Checks        │    │   Violation     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+        │                       │                       │
+        ▼                       ▼                       ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Entry Point   │    │   Root Cause    │    │   Defense       │
+│                 │    │                 │    │                 │
+│ • Payment Form  │    │ • Dev Issues    │    │ • SCA Scanning  │
+│ • Script Tags   │    │ • Flow Flaws    │    │ • SAST Analysis │
+│ • localStorage  │    │ • Missing       │    │ • CSP/SRI       │
+│ • DOM Elements  │    │   Controls      │    │ • Monitoring    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+            </pre>
+            
+            <h3>Root Cause Analysis</h3>
+            
+            <h4>Development Issues</h4>
+            <ul>
+                <li><strong>Vulnerable dependencies</strong> - Outdated libraries with known CVEs (jQuery 3.3.1)</li>
+                <li><strong>Script tampering</strong> - Malicious code injection into legitimate files, due to unsafe file handling, no proper input validation</li>
+            </ul>
+
+            <h4>Flow Flaws</h4>
+            <ul>
+                <li><strong>Supply chain attacks</strong> - Compromised third-party scripts/CDNs</li>
+                <li><strong>Insufficient file integrity monitoring</strong> - No detection of unauthorized changes</li>
+                <li><strong>Missing Content Security Policy</strong> - No restrictions on script execution sources</li>
+            </ul>
+
+            <h3>Defense Strategy Flow</h3>
+            <pre style="font-family: monospace; background: #e8f5e8; padding: 15px; border-radius: 8px; line-height: 1.3;">
+Prevention ──▶ Detection ──▶ Response ──▶ Recovery
+    │             │             │            │
+    ▼             ▼             ▼            ▼
+• SCA/SAST    • Monitoring   • Alerts     • Rollback
+• CSP/SRI     • File Hash    • Block      • Patch
+• SBOM        • Change Log   • Isolate    • Update
+            </pre>
+        </div>
+
+        <!-- Slide 7: App Scan as Pre-requisite -->
+        <div class="slide">
+            <div class="slide-number">7</div>
+            <h2>App Scan as A Pre-requisite</h2>
+            
+            <h3>Component Scan (SCA)</h3>
+            <ul>
+                <li><strong>Detects vulnerable dependencies</strong> - Identifies jQuery 3.3.1 CVE-2019-11358</li>
+                <li><strong>License compliance</strong> - Ensures legal usage of third-party components</li>
+                <li><strong>Critical for Demo1</strong> - Would have prevented prototype pollution attack</li>
+            </ul>
+
+            <h3>Static Analysis (SAST)</h3>
+            <ul>
+                <li><strong>Code vulnerability detection</strong> - Finds unsafe innerHTML usage patterns</li>
+                <li><strong>Input validation flaws</strong> - Identifies XSS injection points</li>
+                <li><strong>Critical for Demo2</strong> - Would have flagged dangerous localStorage rendering</li>
+            </ul>
+
+            <h3>Dynamic Analysis (DAST)</h3>
+            <ul>
+                <li><strong>Runtime attack simulation</strong> - Tests actual XSS payload execution</li>
+                <li><strong>Real-world validation</strong> - Confirms exploitability of found vulnerabilities</li>
+                <li><strong>Critical for both demos</strong> - Validates attack scenarios work in practice</li>
+            </ul>
+
+            <h3>SBOM Inventory</h3>
+            <ul>
+                <li><strong>Supply chain visibility</strong> - Maps all components, scripts and dependencies</li>
+                <li><strong>Risk surface analysis</strong> - Identifies attack vectors across entire application</li>
+                <li><strong>Change detection baseline</strong> - Enables monitoring for unauthorized modifications</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: Compliance as a Teacher -->
+        <div class="slide">
+            <div class="slide-number">8</div>
+            <h2>Compliance as a Teacher (Not a Judge)</h2>
+            
+            <div class="success-box">
+                <h4>🎓 Educational Approach</h4>
+                <p>Compliance frameworks guide secure development practices</p>
+            </div>
+            
+            <h3>PCI-DSS Requirements Guide Us</h3>
+            <div class="success-box">
+                <ul>
+                    <li><strong>6.4.3</strong>: Implement change-detection mechanisms to ensure payment application integrity</li>
+                    <li><strong>11.6.1</strong>: Continuously monitor critical files for unexpected changes to detect tampering</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: SBOM Baseline -->
+        <div class="slide">
+            <div class="slide-number">9</div>
+            <h2>SBOM Baseline (Align with 6.4.1)</h2>
+            
+            <div class="highlight-box">
+                <h3>Developer's view over 6.4.3</h3>
+                <p>We want to exclude untrusted scripts from production</p>
+                <ul>
+                    <li>We need an inventory of trusted scripts that consists of production</li>
+                    <li>We need a security profile (meta info, vulnerabilities, hash) of each script</li>
+                </ul>
+            </div>
+
+            <p><strong>SBOM baseline</strong> is a snapshot of the inventory and security profile of the scripts at a specific point in time</p>
+
+            <h3>What is a 'script'?</h3>
+            <ul>
+                <li>A library, a dependency can import scripts (e.g. jQuery, React, Bootstrap. E.g.: anything in package.json)</li>
+                <li>A remote script (e.g. a custom script, a third-party script, etc. E.g.: &lt;script src="https://example.com/script.js"&gt;&lt;/script&gt;)</li>
+                <li>A local file (e.g. a custom file, a third-party file, etc. E.g.: &lt;script src="./script.js"&gt;&lt;/script&gt;)</li>
+                <li>An embedded code snippet (e.g. &lt;script&gt;alert('xss')&lt;/script&gt;)</li>
+            </ul>
+
+            <div class="warning-box">
+                <p><strong>Key Question</strong>: How to use BlackDuck to generate a quality SBOM baseline for the above situations</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Enforce Integrity -->
+        <div class="slide">
+            <div class="slide-number">10</div>
+            <h2>Enforce Integrity (Align with 6.4.3)</h2>
+            
+            <div class="highlight-box">
+                <h4>🔒 Script Integrity Protection</h4>
+                <p>CSP + SRI implementation prevents unauthorized script execution</p>
+            </div>
+            
+            <h3>3-Step Integrity Enforcement</h3>
+            
+            <h4>1. Implement CSP + SRI Controls</h4>
+            <ul>
+                <li><strong>Content Security Policy</strong> - Restrict script sources to trusted domains</li>
+                <li><strong>Subresource Integrity</strong> - Verify script content hasn't been tampered</li>
+                <li><strong>Example</strong>: <code>&lt;script src="jquery.js" integrity="sha256-abc123" crossorigin="anonymous"&gt;</code></li>
+            </ul>
+
+            <h4>2. Automated SAST Detection</h4>
+            <ul>
+                <li><strong>BlackDuck SAST scanning</strong> - Identifies missing CSP headers</li>
+                <li><strong>Code quality gates</strong> - Flags scripts without integrity attributes</li>
+                <li><strong>Developer feedback</strong> - Real-time alerts for security violations</li>
+            </ul>
+
+            <h4>3. SBOM-Based Hash Generation</h4>
+            <ul>
+                <li><strong>Baseline inventory</strong> - Known good scripts with verified hashes</li>
+                <li><strong>Automated tagging</strong> - CI/CD adds integrity hashes from SBOM</li>
+                <li><strong>Version control</strong> - Track hash changes for security review</li>
+            </ul>
+
+            <h3>Demo Connection</h3>
+            <div class="success-box">
+                <ul>
+                    <li><strong>Demo1 Prevention</strong> - CSP blocks unauthorized jQuery versions</li>
+                    <li><strong>Demo2 Prevention</strong> - SRI detects localStorage script tampering</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 11: Change Monitoring -->
+        <div class="slide">
+            <div class="slide-number">11</div>
+            <h2>Change Monitoring (Align with 11.6.1)</h2>
+            
+            <h3>Why Monitor Production Scripts?</h3>
+            
+            <div class="warning-box">
+                <h4>A Possible Case</h4>
+                <ul>
+                    <li><strong>CDN pollution</strong> - CDN may be compromised and drops CSP headers</li>
+                    <li><strong>Security bypass</strong> - CSP/SRI protections become ineffective</li>
+                    <li><strong>Silent attacks</strong> - Malicious scripts load without detection</li>
+                    <li><strong>Need</strong>: Monitor actual script changes in production environment</li>
+                </ul>
+            </div>
+
+            <h3>Monitoring Overview</h3>
+            
+            <h4>What to Monitor</h4>
+            <ul>
+                <li><strong>Security headers</strong> - CSP, SRI presence in production</li>
+                <li><strong>Script content</strong> - Actual JavaScript files served to users</li>
+                <li><strong>Page integrity</strong> - Detect unauthorized modifications</li>
+            </ul>
+
+            <h4>How to Monitor</h4>
+            <ul>
+                <li><strong>External scanning</strong> - Check production pages weekly</li>
+                <li><strong>Header validation</strong> - Verify CSP headers are present</li>
+                <li><strong>Script comparison</strong> - Compare production scripts vs. baseline</li>
+                <li><strong>Automated alerts</strong> - Notify when changes detected</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: DevSecOps Thinking -->
+        <div class="slide">
+            <div class="slide-number">12</div>
+            <h2>DevSecOps Thinking: Integrated Security Pipeline</h2>
+            
+            <h3>Development & Deployment Pipeline</h3>
+            <pre style="font-family: monospace; background: #f8f9fa; padding: 20px; border-radius: 8px; line-height: 1.4;">
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│   Code      │───▶│  Security   │───▶│   Build &   │───▶│  Deploy     │
+│ Development │    │  Scanning   │    │   Package   │    │ Verification│
+│             │    │             │    │             │    │             │
+│ • Feature   │    │ • SCA Scan  │    │ • Generate  │    │ • Verify    │
+│   Code      │    │ • SAST Scan │    │   SBOM      │    │   Signature │
+│ • Unit Test │    │ • DAST Test │    │ • Package   │    │ • Check     │
+│ • Add CSP/  │    │ • Vuln Gate │    │   Build     │    │   Headers   │
+│   SRI Tags  │    │             │    │ • Sign      │    │ • Deploy    │
+│ • Commit    │    │             │    │   Artifact  │    │   to Prod   │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │                   │
+       ▼                   ▼                   ▼                   ▼
+   Git Commit         BlackDuck SCA       CI/CD Pipeline      Production
+   Trigger            Coverity SAST       Artifact Store      Environment
+                      Quality Gates       SBOM Storage        Signature Check
+            </pre>
+
+            <h3>Production Monitoring Pipeline (Separate)</h3>
+            <pre style="font-family: monospace; background: #e3f2fd; padding: 15px; border-radius: 8px; line-height: 1.3;">
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│ Production  │───▶│  Monitor &  │───▶│  Detection  │───▶│  Response   │
+│ Environment │    │   Scan      │    │ & Analysis  │    │ & Recovery  │
+│             │    │             │    │             │    │             │
+│ • Live Apps │    │ • Header    │    │ • Compare   │    │ • Alert     │
+│ • CDN/Edge  │    │   Check     │    │   vs SBOM   │    │   Teams     │
+│ • User      │    │ • Script    │    │ • Hash      │    │ • Block     │
+│   Traffic   │    │   Content   │    │   Mismatch  │    │   Traffic   │
+│             │    │ • File      │    │ • Policy    │    │ • Rollback  │
+│             │    │   Integrity │    │   Violation │    │ • Patch     │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+       │                   │                   │                   │
+       ▼                   ▼                   ▼                   ▼
+   24/7 Runtime       Imperva/CHEQ        SIEM/SOAR           Incident
+   Monitoring         External Scan       Alert Engine        Response
+                      Weekly Schedule     Threat Detection    Team Action
+            </pre>
+
+            <h3>Key Integration Points</h3>
+            
+            <h4>Development Pipeline Security Gates</h4>
+            <ul>
+                <li><strong>Development time</strong> - Add CSP/SRI tags during feature development</li>
+                <li><strong>Pre-commit</strong> - SCA scan blocks vulnerable dependencies</li>
+                <li><strong>Build time</strong> - SAST identifies unsafe code patterns</li>
+                <li><strong>Package time</strong> - SBOM generation with integrity hashes</li>
+                <li><strong>Deploy time</strong> - Signature verification before production</li>
+            </ul>
+
+            <h4>Production Monitoring Controls</h4>
+            <ul>
+                <li><strong>Runtime verification</strong> - CSP/SRI header presence validation</li>
+                <li><strong>Content integrity</strong> - Script hash comparison vs. SBOM baseline</li>
+                <li><strong>Change detection</strong> - Unauthorized modification alerts</li>
+                <li><strong>Incident response</strong> - Automated blocking and rollback procedures</li>
+            </ul>
+
+            <div class="success-box">
+                <h4>🎯 PCI-DSS Alignment</h4>
+                <ul>
+                    <li><strong>6.4.3 Compliance</strong> - Automated integrity verification in deployment pipeline</li>
+                    <li><strong>11.6.1 Compliance</strong> - Continuous monitoring with separate production pipeline</li>
+                    <li><strong>Developer-friendly</strong> - Security integrated into existing workflows</li>
+                    <li><strong>Audit-ready</strong> - Complete SBOM and monitoring trail for compliance</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-button" onclick="window.print()">Print Presentation</button>
+            <button class="nav-button" onclick="window.scrollTo(0, 0)">Back to Top</button>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>From Component Scan to SBOM: Developer's Perspective over PCI-DSS 6.4.3 and 11.6.1</p>
+            <p>Professional Security Presentation - 2025</p>
+        </div>
+
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.textContent === 'Back to Top') {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add slide numbers and navigation
+        let slideCount = 1;
+        document.querySelectorAll('.slide').forEach((slide, index) => {
+            // Add keyboard navigation
+            slide.setAttribute('tabindex', '0');
+            slide.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                    const nextSlide = slide.nextElementSibling;
+                    if (nextSlide && nextSlide.classList.contains('slide')) {
+                        nextSlide.scrollIntoView({ behavior: 'smooth' });
+                        nextSlide.focus();
+                    }
+                } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                    const prevSlide = slide.previousElementSibling;
+                    if (prevSlide && prevSlide.classList.contains('slide')) {
+                        prevSlide.scrollIntoView({ behavior: 'smooth' });
+                        prevSlide.focus();
+                    }
+                }
+            });
+        });
+
+        // Print-friendly styles
+        const printStyles = `
+            @media print {
+                body { background: white; }
+                .slide { 
+                    page-break-after: always; 
+                    box-shadow: none; 
+                    border: 1px solid #ccc;
+                    margin: 0;
+                }
+                .navigation, .footer { display: none; }
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = printStyles;
+        document.head.appendChild(styleSheet);
+    </script>
+</body>
+</html>

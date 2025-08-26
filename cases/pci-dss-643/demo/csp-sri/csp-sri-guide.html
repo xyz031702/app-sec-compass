@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CSP + SRI Implementation Guide</title>
+<style>
+  body { 
+    font: 14px/1.6 system-ui, sans-serif; 
+    margin: 0; 
+    padding: 24px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  h1 { 
+    color: #2c3e50; 
+    text-align: center;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+  }
+  h2 { 
+    color: #34495e; 
+    margin-top: 40px;
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
+  }
+  h3 { 
+    color: #2980b9; 
+    margin-top: 25px;
+  }
+  .code-block {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow-x: auto;
+    font-family: 'Courier New', monospace;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .highlight {
+    background: #e8f4fd;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .warning {
+    background: #fef9e7;
+    border-left: 4px solid #f39c12;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .success {
+    background: #eafaf1;
+    border-left: 4px solid #27ae60;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 0 6px 6px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  th, td {
+    border: 1px solid #bdc3c7;
+    padding: 12px;
+    text-align: left;
+  }
+  th {
+    background: #ecf0f1;
+    font-weight: 600;
+  }
+  code {
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #e74c3c;
+  }
+  .nav-links {
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+  }
+  .nav-links a {
+    display: inline-block;
+    margin: 0 15px;
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+  .nav-links a:hover {
+    background: #2980b9;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🛡️ CSP + SRI Implementation Guide</h1>
+  
+
+  <h2>📋 Overview</h2>
+  <p>Content Security Policy (CSP) and Subresource Integrity (SRI) are critical web security mechanisms that prevent script tampering attacks, including those from phishing emails and supply chain compromises.</p>
+
+  <h2>🔒 Content Security Policy (CSP)</h2>
+  
+  <h3>Basic Implementation</h3>
+  <div class="code-block">
+<span style="color: #95a5a6;">&lt;!-- Method 1: HTTP Header (Recommended) --&gt;</span>
+<span style="color: #e74c3c;">Content-Security-Policy:</span> <span style="color: #f39c12;">script-src</span> <span style="color: #2ecc71;">'self'</span> <span style="color: #e74c3c;">'unsafe-inline'</span> <span style="color: #95a5a6;">/* ⚠️ INSECURE - avoid in production */</span>
+
+<span style="color: #95a5a6;">&lt;!-- Method 2: HTML Meta Tag --&gt;</span>
+<span style="color: #3498db;">&lt;meta</span> <span style="color: #f39c12;">http-equiv=</span><span style="color: #2ecc71;">"Content-Security-Policy"</span> 
+      <span style="color: #f39c12;">content=</span><span style="color: #2ecc71;">"script-src 'self'"</span><span style="color: #3498db;">&gt;</span>
+  </div>
+
+
+  <h3>CSP Source Keywords</h3>
+  <table>
+    <tr>
+      <th>Keyword</th>
+      <th>Meaning</th>
+      <th>Security Level</th>
+    </tr>
+    <tr>
+      <td><code>'self'</code></td>
+      <td>Same origin only</td>
+      <td>🟢 Secure</td>
+    </tr>
+    <tr>
+      <td><code>'unsafe-inline'</code></td>
+      <td>Allows inline scripts/styles</td>
+      <td>🔴 Dangerous</td>
+    </tr>
+    <tr>
+      <td><code>'unsafe-eval'</code></td>
+      <td>Allows eval(), setTimeout(string)</td>
+      <td>🔴 Dangerous</td>
+    </tr>
+    <tr>
+      <td><code>'none'</code></td>
+      <td>Blocks all sources</td>
+      <td>🟢 Most Secure</td>
+    </tr>
+    <tr>
+      <td><code>'sha256-HASH'</code></td>
+      <td>Specific script hash</td>
+      <td>🟢 Very Secure</td>
+    </tr>
+  </table>
+
+  <h3>Progressive CSP Implementation</h3>
+  
+  <div class="warning">
+    <h4>⚠️ Step 1: Report-Only Mode</h4>
+    <p>Start with report-only to identify violations without breaking functionality:</p>
+    <div class="code-block">
+Content-Security-Policy-Report-Only: default-src 'self'; report-uri /csp-report
+    </div>
+  </div>
+
+  <div class="warning">
+    <h4>⚠️ Step 2: Basic Policy (Still Vulnerable)</h4>
+    <p>Implement basic restrictions but still allows dangerous inline code:</p>
+    <div class="code-block">
+Content-Security-Policy: 
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';  <span style="color: #e74c3c;">/* VULNERABLE TO XSS */</span>
+  style-src 'self' 'unsafe-inline';   <span style="color: #e74c3c;">/* VULNERABLE TO CSS INJECTION */</span>
+  img-src 'self' data: https:;
+  object-src 'none';
+    </div>
+  </div>
+
+  <div class="success">
+    <h4>🛡️ Step 3: Secure Policy with Nonces (Recommended)</h4>
+    <p>Use nonces for dynamic inline scripts and styles. See <a href="nginx.conf.example.txt">nginx.conf.example</a> for server-side nonce generation (sub_filter 'nonce-PLACEHOLDER' 'nonce-$cspnonce';):</p>
+    <div class="code-block">
+Content-Security-Policy: 
+  default-src 'self';
+  script-src 'self' 'nonce-$cspnonce';
+  style-src 'self' 'nonce-$cspnonce';
+  object-src 'none';
+    </div>
+    <p><strong>Nonce Example in HTML Template:</strong></p>
+    <div class="code-block">
+<span style="color: #95a5a6;">&lt;!-- Template with placeholder (nginx replaces nonce-PLACEHOLDER) --&gt;</span>
+<span style="color: #3498db;">&lt;script</span> <span style="color: #f39c12;">nonce=</span><span style="color: #2ecc71;">"nonce-PLACEHOLDER"</span><span style="color: #3498db;">&gt;</span>
+  <span style="color: #f39c12;">console.log</span>(<span style="color: #2ecc71;">'This script is allowed'</span>);
+<span style="color: #3498db;">&lt;/script&gt;</span>
+
+<span style="color: #95a5a6;">&lt;!-- After nginx processing: nonce="abc123randomvalue" --&gt;</span>
+<span style="color: #95a5a6;">&lt;!-- Injected scripts without nonce are blocked --&gt;</span>
+<span style="color: #3498db;">&lt;script&gt;</span><span style="color: #e74c3c;">alert('XSS blocked!');</span><span style="color: #3498db;">&lt;/script&gt;</span>
+    </div>
+  </div>
+
+  <div class="success">
+    <h4>🛡️ Alternative: Hash-based Policy</h4>
+    <p>Use specific hashes for static inline scripts. Use <a href="generate_sri_hash.sh">generate_sri_hash.sh</a> to calculate hashes:</p>
+    <div class="code-block">
+Content-Security-Policy: 
+  default-src 'self';
+  script-src 'self' 'sha256-SPECIFIC_HASH_OF_SCRIPT';
+  style-src 'self' 'sha256-SPECIFIC_HASH_OF_STYLE';
+  img-src 'self' data:;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+    </div>
+  </div>
+
+  <h2>🔐 Subresource Integrity (SRI)</h2>
+
+  <h3>Basic SRI Implementation</h3>
+  <div class="code-block"><span style="color: #95a5a6;">&lt;!-- External Script with SRI --&gt;</span>
+<span style="color: #3498db;">&lt;script</span> <span style="color: #f39c12;">src=</span><span style="color: #2ecc71;">"https://cdn.example.com/library.js"</span>
+        <span style="color: #f39c12;">integrity=</span><span style="color: #2ecc71;">"sha256-HASH_VALUE_HERE"</span>
+        <span style="color: #f39c12;">crossorigin=</span><span style="color: #2ecc71;">"anonymous"</span><span style="color: #3498db;">&gt;&lt;/script&gt;</span>
+
+<span style="color: #95a5a6;">&lt;!-- External CSS with SRI --&gt;</span>
+<span style="color: #3498db;">&lt;link</span> <span style="color: #f39c12;">rel=</span><span style="color: #2ecc71;">"stylesheet"</span>
+      <span style="color: #f39c12;">href=</span><span style="color: #2ecc71;">"https://cdn.example.com/styles.css"</span>
+      <span style="color: #f39c12;">integrity=</span><span style="color: #2ecc71;">"sha256-HASH_VALUE_HERE"</span>
+      <span style="color: #f39c12;">crossorigin=</span><span style="color: #2ecc71;">"anonymous"</span><span style="color: #3498db;">&gt;</span></div>
+
+  <h3>SRI Hash Generation</h3>
+  <div class="code-block"><span style="color: #95a5a6;"># Generate SHA-256 hash</span>
+<span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">dgst</span> <span style="color: #3498db;">-sha256</span> <span style="color: #3498db;">-binary</span> <span style="color: #2ecc71;">script.js</span> | <span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">base64</span> <span style="color: #3498db;">-A</span>
+
+<span style="color: #95a5a6;"># Generate SHA-384 hash (more secure)</span>
+<span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">dgst</span> <span style="color: #3498db;">-sha384</span> <span style="color: #3498db;">-binary</span> <span style="color: #2ecc71;">script.js</span> | <span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">base64</span> <span style="color: #3498db;">-A</span>
+
+<span style="color: #95a5a6;"># Generate SHA-512 hash (most secure)</span>
+<span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">dgst</span> <span style="color: #3498db;">-sha512</span> <span style="color: #3498db;">-binary</span> <span style="color: #2ecc71;">script.js</span> | <span style="color: #e74c3c;">openssl</span> <span style="color: #f39c12;">base64</span> <span style="color: #3498db;">-A</span></div>
+
+  <h3>SRI Hash Algorithms</h3>
+  <table>
+    <tr>
+      <th>Algorithm</th>
+      <th>Security</th>
+      <th>Performance</th>
+      <th>Recommendation</th>
+    </tr>
+    <tr>
+      <td>SHA-256</td>
+      <td>Good</td>
+      <td>Fast</td>
+      <td>✅ Minimum recommended</td>
+    </tr>
+    <tr>
+      <td>SHA-384</td>
+      <td>Better</td>
+      <td>Medium</td>
+      <td>✅ Recommended</td>
+    </tr>
+    <tr>
+      <td>SHA-512</td>
+      <td>Best</td>
+      <td>Slower</td>
+      <td>✅ High-security applications</td>
+    </tr>
+  </table>
+
+  <h2>🎯 Demo Protection Mechanism</h2>
+
+  <h3>Attack Scenario</h3>
+  <div class="highlight">
+    <p><strong>Phishing Email Attack:</strong></p>
+    <ol>
+      <li>Malicious email contains script that seeds SVG payload into localStorage</li>
+      <li>User visits payment page that renders localStorage content as HTML</li>
+      <li>SVG onload event executes, activating card skimmer</li>
+    </ol>
+  </div>
+
+  <h3>Protection Implementation</h3>
+  <div class="code-block"><span style="color: #95a5a6;">&lt;!-- CSP Header blocks inline scripts --&gt;</span>
+<span style="color: #3498db;">&lt;meta</span> <span style="color: #f39c12;">http-equiv=</span><span style="color: #2ecc71;">"Content-Security-Policy"</span> <span style="color: #f39c12;">content=</span><span style="color: #2ecc71;">"</span>
+  <span style="color: #f39c12;">default-src</span> <span style="color: #2ecc71;">'self'</span>;
+  <span style="color: #f39c12;">script-src</span> <span style="color: #2ecc71;">'self'</span> <span style="color: #2ecc71;">'sha256-HASH'</span>;
+  <span style="color: #f39c12;">object-src</span> <span style="color: #2ecc71;">'none'</span>;
+<span style="color: #2ecc71;">"</span><span style="color: #3498db;">&gt;</span>
+
+<span style="color: #95a5a6;">&lt;!-- SRI ensures script integrity --&gt;</span>
+<span style="color: #3498db;">&lt;script</span> <span style="color: #f39c12;">src=</span><span style="color: #2ecc71;">"payment-secure.js"</span>
+        <span style="color: #f39c12;">integrity=</span><span style="color: #2ecc71;">"sha256-HASH"</span>
+        <span style="color: #f39c12;">crossorigin=</span><span style="color: #2ecc71;">"anonymous"</span><span style="color: #3498db;">&gt;&lt;/script&gt;</span></div>
+
+  <h3>How Protection Works</h3>
+  <table>
+    <tr>
+      <th>Attack Vector</th>
+      <th>Vulnerable Page</th>
+      <th>Protected Page</th>
+    </tr>
+    <tr>
+      <td>SVG onload event</td>
+      <td>🔴 Executes</td>
+      <td>🛡️ Blocked by CSP</td>
+    </tr>
+    <tr>
+      <td>innerHTML rendering</td>
+      <td>🔴 Unsafe HTML</td>
+      <td>🛡️ Safe textContent</td>
+    </tr>
+    <tr>
+      <td>Script tampering</td>
+      <td>🔴 No verification</td>
+      <td>🛡️ SRI hash check</td>
+    </tr>
+    <tr>
+      <td>Dynamic code execution</td>
+      <td>🔴 eval() allowed</td>
+      <td>🛡️ Blocked by CSP</td>
+    </tr>
+  </table>
+
+  <h2>🚀 Implementation Best Practices</h2>
+
+  <h3>CSP Best Practices</h3>
+  <ul>
+    <li><strong>Start with report-only</strong> to identify violations</li>
+    <li><strong>Avoid 'unsafe-inline'</strong> and 'unsafe-eval' in production</li>
+    <li><strong>Use nonces or hashes</strong> for legitimate inline scripts</li>
+    <li><strong>Set object-src 'none'</strong> to block plugins</li>
+    <li><strong>Implement CSP reporting</strong> to monitor violations</li>
+  </ul>
+
+  <h3>SRI Best Practices</h3>
+  <ul>
+    <li><strong>Use SHA-384 or SHA-512</strong> for better security</li>
+    <li><strong>Always include crossorigin</strong> attribute</li>
+    <li><strong>Automate hash generation</strong> in build process</li>
+    <li><strong>Have fallback strategies</strong> for hash mismatches</li>
+    <li><strong>Monitor for SRI failures</strong> in production</li>
+  </ul>
+
+  <h3>DevOps Integration</h3>
+  <div class="code-block"><span style="color: #95a5a6;"># CI/CD Pipeline Integration</span>
+<span style="color: #95a5a6;"># 1. Generate SRI hashes during build</span>
+<span style="color: #3498db;">./generate_sri_hash.sh</span> <span style="color: #2ecc71;">payment-secure.js</span>
+
+<span style="color: #95a5a6;"># 2. Update HTML templates with new hashes</span>
+<span style="color: #e74c3c;">sed</span> <span style="color: #3498db;">-i</span> <span style="color: #2ecc71;">"s/integrity=\"sha256-[^\"]*\"/integrity=\"sha256-$HASH\"/g"</span> <span style="color: #2ecc71;">template.html</span>
+
+<span style="color: #95a5a6;"># 3. Deploy with CSP headers</span>
+<span style="color: #95a5a6;"># nginx.conf</span>
+<span style="color: #e74c3c;">add_header</span> <span style="color: #f39c12;">Content-Security-Policy</span> <span style="color: #2ecc71;">"default-src 'self'; script-src 'self' 'sha256-$HASH'"</span>;</div>
+
+  <h2>📊 Browser Support & Compatibility</h2>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Chrome</th>
+      <th>Firefox</th>
+      <th>Safari</th>
+      <th>Edge</th>
+    </tr>
+    <tr>
+      <td>CSP Level 1</td>
+      <td>✅ 25+</td>
+      <td>✅ 23+</td>
+      <td>✅ 7+</td>
+      <td>✅ 12+</td>
+    </tr>
+    <tr>
+      <td>CSP Level 2</td>
+      <td>✅ 40+</td>
+      <td>✅ 31+</td>
+      <td>✅ 10+</td>
+      <td>✅ 15+</td>
+    </tr>
+    <tr>
+      <td>SRI</td>
+      <td>✅ 45+</td>
+      <td>✅ 43+</td>
+      <td>✅ 11.1+</td>
+      <td>✅ 17+</td>
+    </tr>
+  </table>
+
+
+</div>
+
+</body>
+</html>

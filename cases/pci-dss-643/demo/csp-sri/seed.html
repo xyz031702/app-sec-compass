@@ -1,0 +1,60 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Phishing Email Simulation - Malicious Script Seeding</title>
+<style>
+  body { 
+    font: 14px/1.5 system-ui, sans-serif; 
+    margin: 0; 
+    padding: 24px;
+    background: #fff3cd;
+    border: 2px solid #856404;
+  }
+  .warning {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 16px;
+    border-radius: 6px;
+    margin: 16px 0;
+    border-left: 4px solid #dc3545;
+  }
+</style>
+
+<div class="warning">
+  <h3>⚠️ PHISHING EMAIL SIMULATION</h3>
+  <p>This simulates a malicious script from a phishing email that attempts to inject a payment card skimmer.</p>
+</div>
+
+<p>Seeding a malicious "skimmer" payload into <code>localStorage.msg</code>...</p>
+
+<script>
+  // Malicious payload from phishing email - SVG with onload event
+  const payload = `<svg xmlns="http://www.w3.org/2000/svg" onload="
+    var f=document.getElementById('card'); 
+    if(f){
+      document.getElementById('status').textContent='⚠️ Skimmer ACTIVE - Card data being stolen!';
+      document.getElementById('status').style.background='#ffebee';
+      document.getElementById('status').style.color='#c62828';
+      f.addEventListener('input',function(ev){
+        document.getElementById('log').textContent = 'STOLEN: ' + ev.target.value;
+      });
+    }
+  "></svg>`;
+  
+  localStorage.setItem('msg', payload);
+  console.log('Malicious payload seeded from phishing email');
+</script>
+
+<p>✅ Malicious script seeded. Now test the protection:</p>
+<ul>
+  <li><a href="payment_vulnerable.html">Vulnerable Payment Page</a> (original - will be exploited)</li>
+  <li><a href="payment_protected.html">Protected Payment Page</a> (CSP + SRI - blocks attack)</li>
+</ul>
+
+<div class="warning">
+  <p><strong>Demo Flow:</strong></p>
+  <ol>
+    <li>This page simulates a phishing email that seeds malicious JavaScript</li>
+    <li>The vulnerable page renders the payload unsafely via innerHTML</li>
+    <li>The protected page blocks the attack using CSP and safe rendering</li>
+  </ol>
+</div>

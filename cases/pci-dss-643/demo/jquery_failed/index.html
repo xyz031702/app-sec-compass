@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CSP Bypass Demo</title>
+<!-- ... same as before ... -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' https://code.jquery.com https://ajax.googleapis.com https://cdnjs.cloudflare.com;
+  connect-src 'self' https://api.trusted-analytics.com;
+  object-src 'none';
+">
+<style>
+  /* ... same as before ... */
+  .highlight { color: red; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>💳 Checkout</h2>
+  <label for="card">Card number:</label>
+  <input id="card" type="text" placeholder="1234 5678 9012 3456">
+  <button id="submitBtn">Submit Payment</button>
+  <p>Simulated Analytics Network Log:</p>
+  <div id="log"></div>
+  <div class="warning">
+    <b>Attack Scenario:</b> This page has a strict CSP but uses vulnerable jQuery. An external script (`main.js`) will exploit it to hijack an analytics function and steal card data.
+  </div>
+</div>
+
+<!-- 1. Load the trusted but VULNERABLE library -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<!-- 2. Load the application and attack script (allowed by 'self') -->
+<script src="main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Checkout (demo)</title>
+<style>
+  body { 
+    font: 14px/1.5 system-ui, sans-serif; 
+    margin: 0; 
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  h2 { 
+    color: #333; 
+    margin-top: 0; 
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 16px;
+  }
+  label { 
+    display: block; 
+    margin: 16px 0 8px; 
+    font-weight: 600; 
+    color: #555;
+  }
+  #card { 
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #e0e0e0; 
+    border-radius: 6px; 
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  #card:focus { 
+    outline: none; 
+    border-color: #667eea; 
+  }
+  #status { 
+    margin: 12px 0; 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    background: #e8f5e8; 
+    color: #2d5a2d; 
+    border: 1px solid #c3e6c3;
+  }
+  #msg { 
+    border: 1px dashed #ddd; 
+    padding: 12px; 
+    min-height: 28px; 
+    border-radius: 6px; 
+    background: #fafafa;
+  }
+  code { 
+    background: #f6f6f6; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 12px;
+  }
+  hr { 
+    border: none; 
+    height: 1px; 
+    background: #e0e0e0; 
+    margin: 24px 0; 
+  }
+  .info { 
+    font-size: 12px; 
+    color: #666; 
+    background: #f8f9fa; 
+    padding: 12px; 
+    border-radius: 6px; 
+    border-left: 4px solid #667eea;
+  }
+</style>
+
+<div class="container">
+  <h2>💳 Secure Checkout</h2>
+  
+  <label>Card number:
+    <input id="card" autocomplete="off" inputmode="numeric" placeholder="1234 5678 9012 3456">
+  </label>
+  
+  <div id="status">🔒 No skimmer</div>
+
+  <p>Message from <code>localStorage.msg</code> (processed with <b>jQuery 3.3.1</b> - vulnerable to CVE-2019-11358):</p>
+  <div id="msg"></div>
+
+  <p>Exfil log (demo only): <code id="log"></code></p>
+  
+  <hr>
+  <div class="info">
+    <b>⚠️ Demo Info:</b> This page uses jQuery 3.3.1 vulnerable to CVE-2019-11358 (prototype pollution).
+    The <code>$.extend()</code> function can be exploited to pollute Object.prototype.
+  </div>
+</div>
+
+<!-- jQuery 3.3.1 - Vulnerable to CVE-2019-11358 -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+
+<script>
+  // VULN: jQuery 3.3.1 prototype pollution via $.extend()
+  // This demonstrates CVE-2019-11358
+  
+  // Read message from localStorage
+  const msg = localStorage.getItem('msg') || 'Welcome! (no seeded state)';
+  
+  // Parse JSON if it looks like JSON (for prototype pollution demo)
+  let parsedMsg;
+  try {
+    parsedMsg = JSON.parse(msg);
+  } catch (e) {
+    parsedMsg = { content: msg };
+  }
+  
+  // VULNERABLE: Using $.extend() with user-controlled data
+  // This can lead to prototype pollution if parsedMsg contains "__proto__"
+  const safeDefaults = { content: 'Default message', safe: true };
+  const result = $.extend(true, safeDefaults, parsedMsg);
+  
+  // Display the message using jQuery
+  // Common use cases: 
+  // - Merge user preferences from localStorage with defaults
+  // - Display personalized messages or user session data
+  // - Show temporary cart items or form data across page reloads
+  $('#msg').html(result.content);
+  
+  // Log any prototype pollution for demo purposes
+  if (Object.prototype.polluted) {
+    $('#log').text('PROTOTYPE POLLUTED: ' + Object.prototype.polluted);
+  }
+</script>

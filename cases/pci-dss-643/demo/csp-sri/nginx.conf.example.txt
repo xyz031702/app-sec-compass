@@ -1,0 +1,34 @@
+# Nginx Configuration for CSP with Nonce Support
+
+server {
+    listen 80;
+    server_name example.com;
+    
+    root /var/www/html;
+    index index.html;
+    
+    location / {
+
+        # Generate nonce using request_id
+        set $cspnonce $request_id;
+        
+        # Enable sub_filter for nonce replacement
+        # Open for all responses
+        sub_filter_once off; 
+        # Open for all types of content
+        sub_filter_types *;
+        # Replace nonce placeholder with actual nonce
+        sub_filter 'nonce-PLACEHOLDER' 'nonce-$cspnonce';
+        
+        # Content Security Policy (CSP) with nonce for all responses
+        add_header Content-Security-Policy "
+            default-src 'self';
+            script-src 'self' 'nonce-$cspnonce';
+            style-src 'self' 'nonce-$cspnonce';
+            object-src 'none';
+        " always;
+
+        
+        try_files $uri $uri/ =404;
+    }
+}

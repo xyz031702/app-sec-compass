@@ -1,0 +1,446 @@
+﻿Malicious Code Detection in Artificial Intelligence Models: An Analysis Framework
+1.0 Executive Summary
+This report provides a deep-dive investigation into the detection of malicious code within Artificial Intelligence (AI) models, addressing a critical and evolving security challenge. The scope encompasses various model types (e.g., Large Language Models, computer vision), file formats (e.g., Pickle, ONNX, SavedModel, Safetensors), and lifecycle stages (training, deployment, inference). Key findings indicate that insecure serialization formats, particularly Python's Pickle, represent a significant vulnerability, allowing arbitrary code execution during model loading (Zanki, 2025; Sultanik & Woodruff, 2021). Furthermore, novel threats like malware embedded directly into model parameters (e.g., MaleficNet) pose stealthy risks undetectable by conventional tools (SRI International, 2025). Existing scanning solutions exhibit limitations, including high false positive rates and susceptibility to obfuscation (JFrog, 2025). These findings underscore the urgent need for robust, multi-layered security strategies, as compromised models represent a severe supply chain risk. This report proposes a comprehensive analysis framework to systematically identify, assess, and mitigate these threats, enabling organizations to adopt AI technologies more securely.
+2.0 Introduction
+2.1 Purpose and Scope
+The purpose of this report is to provide a comprehensive analysis framework for detecting malicious code embedded within or executed by Artificial Intelligence (AI) models. As AI systems become increasingly integrated into critical business functions and infrastructure, ensuring their security and integrity is paramount. This report addresses the specific problem of identifying and mitigating risks associated with malicious code intentionally introduced into AI model artifacts or their dependencies.
+The scope covers:
+* Model Types: Including, but not limited to, Large Language Models (LLMs), computer vision models, natural language processing models, and traditional machine learning classifiers.
+* Model File Formats: Focusing on common serialization and exchange formats such as Pickle (.pkl, .pt, .bin), TensorFlow SavedModel (.pb), Keras/HDF5 (.h5), ONNX (.onnx), Joblib (.joblib), Safetensors (.safetensors), and GGUF (.gguf) (Protect AI, n.d.-a; Pearce et al., 2024).
+* Lifecycle Stages: Addressing risks during model training, fine-tuning, storage (e.g., in model hubs like Hugging Face), deployment, and inference (JFrog, 2025).
+* Threat Types: Investigating code injection via serialization vulnerabilities, malware embedded within model parameters or associated files, data poisoning leading to malicious behavior, and model backdooring (Protect AI, n.d.-a; OWASP Foundation, n.d.-b; Hitaj et al., 2022).
+2.2 Problem Statement
+The proliferation of pre-trained AI models shared via public repositories (e.g., Hugging Face, PyTorch Hub) and the complexity of AI development pipelines create significant attack surfaces (Pearce et al., 2024; Zanki, 2025). Malicious actors can exploit insecure practices, such as the use of unsafe serialization formats like Pickle, to inject arbitrary code that executes when a model is loaded (Zanki, 2025; Sultanik & Woodruff, 2021). Furthermore, sophisticated techniques are emerging to embed malware directly within model parameters in ways that evade standard detection tools and minimally impact model performance (SRI International, 2025). Data poisoning attacks can also introduce vulnerabilities or backdoors triggered during inference (Turner et al., 2020; Wallace et al., 2021). The lack of standardized security practices and effective, comprehensive scanning tools across the diverse range of model formats and frameworks presents a critical challenge for organizations leveraging AI. Failure to detect and mitigate these threats can lead to system compromise, data exfiltration, denial of service, and erosion of trust in AI systems.
+2.3 Methodology Overview
+This report synthesizes information from academic research (e.g., arXiv preprints, conference proceedings from NeurIPS, ICML, USENIX Security), security conference presentations (e.g., Black Hat, DEF CON), reputable cybersecurity vendor analyses, open-source tool documentation, and standards body publications (e.g., NIST). The analysis involves:
+1. Threat Modeling: Defining potential adversaries, attack vectors, and vulnerable assets related to AI models.
+2. Literature Review: Surveying current research on AI model security, serialization vulnerabilities, malware analysis, and adversarial machine learning.
+3. Technology Assessment: Evaluating existing detection techniques (static, dynamic, behavioral analysis) and tools.
+4. Framework Development: Constructing a structured, repeatable process for analyzing AI models for malicious code.
+5. Comparative Analysis: Evaluating different strategic approaches to AI model security.
+3.0 Threat Landscape
+Understanding the threat landscape is crucial for developing effective detection and mitigation strategies. This involves defining a threat model specific to AI systems and identifying the primary ways malicious code can compromise them.
+3.1 Threat Model: Malicious Code in AI Models
+A threat model provides a structured way to identify, communicate, and understand threats and mitigations within the context of protecting valuable assets (OWASP Foundation, n.d.-a). For AI models, the assets include the model itself (architecture, weights), the training data, the inference pipeline, the underlying infrastructure, and any data the model processes or has access to (NCC Group, 2024).
+Key components of the threat model include:
+* Adversaries: Nation-states, cybercriminals, malicious insiders, researchers (potentially unintentionally).
+* Motivations: Espionage, data theft, sabotage, financial gain, disruption, demonstrating capability.
+* Assets:
+   * Model weights and architecture (confidentiality, integrity).
+   * Training data (confidentiality, integrity).
+   * Inference results (integrity, availability).
+   * Computational resources (availability, integrity).
+   * System secrets accessible by the model (e.g., API keys, credentials) (NCC Group, 2024).
+   * User data processed during inference (confidentiality).
+* Threats:
+   * Code Injection: Executing arbitrary code via vulnerabilities in model loading/processing (Protect AI, n.d.-a; Zanki, 2025).
+   * Malware Embedding: Hiding malicious payloads within model files or parameters (SRI International, 2025).
+   * Data Poisoning: Manipulating training data to introduce backdoors or biases (Turner et al., 2020; Wallace et al., 2021).
+   * Model Evasion: Crafting inputs to cause misclassification or bypass security controls (Goodfellow et al., 2015).
+   * Model Extraction/Inversion: Stealing the model or inferring sensitive training data (Tramèr et al., 2016; Carlini et al., 2021).
+   * Denial of Service (DoS): Crafting inputs or models that consume excessive resources or cause crashes (Protect AI, n.d.-b).
+Threat modeling should be applied throughout the AI lifecycle, from design to deployment and operation, and updated as new features are added or vulnerabilities are discovered (OWASP Foundation, n.d.-a; AWS Security Blog, 2023).
+3.2 Attack Vectors
+Malicious code can be introduced into AI systems through several vectors:
+1. Model Serialization Abuse: Exploiting insecure deserialization processes in formats like Pickle, Joblib, Dill, Cloudpickle, and Marshal (Pearce et al., 2024; Zanki, 2025). Malicious code is embedded directly into the serialized object stream and executed upon loading (pickle.load(), torch.load()) (Protect AI, n.d.-a; Sultanik & Woodruff, 2021). This is currently considered a high-risk vector due to the widespread use of these formats (Protect AI, n.d.-a).
+2. Malware Embedded in Model Parameters: Techniques like MaleficNet hide malware within the numerical weights of deep neural networks, using methods like spread-spectrum coding, making it extremely difficult to detect via static analysis or performance monitoring (SRI International, 2025; Hitaj et al., 2022).
+3. Compromised Dependencies: Malicious code hidden in libraries or packages used during model training, loading, or inference.
+4. Data Poisoning Leading to Malicious Execution: While often focused on altering model predictions, sophisticated poisoning could potentially trigger malicious code execution paths under specific input conditions (backdoors) (Turner et al., 2020; Wallace et al., 2021). TensorFlow/Keras Lambda layers, which allow arbitrary code execution within the model graph, are a known vector for this (JFrog, 2025; Pearce et al., 2024).
+5. Compromised Training/Serving Infrastructure: Attackers gaining access to the environment where models are trained or served could directly inject malware into models or the execution environment. Ensuring authenticated access and encrypting models at rest and in transit are crucial mitigations (Protect AI, n.d.-a).
+6. Malicious Code in Configuration/Helper Files: Models often come packaged with scripts or configuration files; these can be trojanized.
+3.3 Vulnerable Model Formats and Root Causes
+The choice of model serialization format significantly impacts security risk.
+* Pickle Variants (Pickle, PyTorch .pt/.bin, Joblib, Dill, Cloudpickle, Marshal):
+   * Risk: Very High (Protect AI, n.d.-a; Pearce et al., 2024).
+   * Root Cause: These formats are designed to serialize arbitrary Python objects. The deserialization process (unpickling) can execute arbitrary Python code, often via opcodes like REDUCE or STACK_GLOBAL, or even by importing modules that execute code upon import (Zanki, 2025; Pearce et al., 2024; Slaviero, 2011; Hugging Face, n.d.). This inherent capability makes them fundamentally insecure when loading untrusted data (Zanki, 2025; Sultanik & Woodruff, 2021). Despite warnings, their ease of use and prevalence (especially Pickle as PyTorch's default) maintain their popularity (Zanki, 2025; Slaviero et al., 2024).
+* TensorFlow SavedModel / Checkpoints / TFLite & Keras HDF5 (.h5):
+   * Risk: Medium (SavedModel) to Low (HDF5, except Lambda layers) (Protect AI, n.d.-a; Pearce et al., 2024).
+   * Root Cause: While generally safer than Pickle, these formats can still pose risks. TensorFlow formats support custom operators, and Keras .h5 files can include Lambda layers, both of which allow embedding and executing arbitrary Python code (JFrog, 2025; Pearce et al., 2024). Attackers can obfuscate malicious code within these layers (JFrog, 2025).
+* ONNX (.onnx):
+   * Risk: Low (regarding arbitrary code execution) (Protect AI, n.d.-a; Pearce et al., 2024). ⚠️ Some sources differ; one indicates potential code execution risk (HiddenLayer, 2023), while others deem it secure from code injection (Pearce et al., 2024; Hugging Face, n.d.). This discrepancy requires careful validation.
+   * Root Cause (Safety): ONNX uses Google's Protocol Buffers for serialization and defines a standard set of operators, limiting the potential for arbitrary code execution during loading (Pearce et al., 2024; Hugging Face, n.d.). It focuses on representing the computation graph and weights, not arbitrary Python objects (Pearce et al., 2024). However, architectural backdoors activated during prediction remain a possibility (JFrog, 2025).
+* Safetensors (.safetensors):
+   * Risk: Very Low (Pearce et al., 2024; Protect AI, n.d.-b).
+   * Root Cause (Safety): Developed by Hugging Face specifically to address Pickle's security flaws, Safetensors uses a simple format (JSON metadata + raw tensor data) that strictly prevents arbitrary code execution during deserialization (Pearce et al., 2024; Hugging Face, n.d.). It focuses solely on storing tensors safely and efficiently.
+* GGUF (.gguf):
+   * Risk: Low (Pearce et al., 2024; Protect AI, n.d.-b).
+   * Root Cause (Safety): Primarily used for models like Llama, GGUF is designed for efficient loading and inference, focusing on predefined operations rather than arbitrary code execution (Pearce et al., 2024). However, potential code execution specifically during the prediction stage has been noted as a risk vector (JFrog, 2025).
+* Weights-Only Formats (JSON, MsgPack, NPY/NPZ):
+   * Risk: Very Low (Pearce et al., 2024).
+   * Root Cause (Safety): These formats are designed to store data structures (like numerical arrays/weights) and generally lack mechanisms for code execution during deserialization (Pearce et al., 2024).
+The fundamental tension lies between the flexibility/ease-of-use offered by formats like Pickle and the security guarantees provided by more restrictive formats like Safetensors (Zanki, 2025).
+3.4 The Challenge of Stealthy Malware (MaleficNet)
+Beyond serialization vulnerabilities, a more insidious threat involves embedding malware directly into the parameters (weights) of deep neural networks (DNNs). The MaleficNet framework demonstrates this capability (SRI International, 2025; Hitaj et al., 2022).
+* Mechanism: MaleficNet uses techniques adapted from telecommunications, specifically Code-Division Multiple-Access (CDMA) and Low-Density Parity-Check (LDPC) error correction, to encode a malicious payload within the vast number of numerical parameters in a DNN (SRI International, 2025).
+* Stealth: This embedding is designed to be virtually undetectable by current state-of-the-art malware detection tools and statistical analysis methods (SRI International, 2025). The malware does not rely on executable code within the model file itself but is encoded within the weights.
+* Performance Impact: Models embedded with malware via MaleficNet exhibit little to no degradation in their primary task performance (e.g., image classification, text generation), making them appear benign during functional testing (SRI International, 2025).
+* Generalizability: The technique has been shown to work across various model architectures and datasets (SRI International, 2025). A follow-up, MaleficNet 2.0, demonstrates self-extracting, self-executing malware embedded in neural networks (Hitaj et al., 2024).
+* Implications: This represents a significant supply chain risk, as pre-trained models downloaded from public repositories could contain such hidden payloads (SRI International, 2025; Simula Research Laboratory, n.d.). The malware could remain dormant until triggered, potentially leading to widespread compromise. Detection requires novel approaches beyond conventional static or dynamic analysis focused on file formats. Mitigation strategies are still an active area of research, emphasizing the need to understand these vulnerabilities first (SRI International, 2025). ⚠️ Current mitigation strategies for MaleficNet-style attacks are limited, as the technique is designed to evade existing detection methods. Research focuses on detection and understanding the vulnerability (SRI International, 2025; SciSpace, n.d.; Hitaj et al., 2022).
+4.0 Analysis Framework for Malicious Code Detection
+To systematically address the threats outlined above, a structured analysis framework is essential. This framework provides a repeatable process for security analysts and MLOps teams to investigate AI models for malicious code.
+4.1 Scope Definition & Threat Modeling (Step 1)
+* Objective: Clearly define the boundaries of the analysis and understand the specific threats relevant to the target AI system.
+* Activities:
+   1. Identify the Target System: Document the AI model(s), including name, version, source (e.g., public hub, internal training), intended use case, and deployment environment.
+   2. Characterize Model Artefacts: Identify all associated files, including the primary model file(s), configuration files, dependency lists (e.g., requirements.txt), and any helper scripts. Note the specific formats (e.g., Pickle, ONNX, SavedModel, Safetensors).1
+   3. Map the AI Lifecycle: Understand how the model is trained, stored, deployed, and used for inference. Identify data flows and points of interaction (e.g., user prompts, external data sources, API calls).4
+   4. Conduct Threat Modeling: Apply a structured threat modeling methodology (e.g., STRIDE, OWASP Four Questions) to the specific AI system.5
+      * What are we working on? (Answered by steps 1-3 above).
+      * What can go wrong? Brainstorm potential threats based on the known attack vectors (Section 3.2), vulnerable formats (Section 3.3), and potential adversary goals (Section 3.1). Consider threats like code injection via deserialization, embedded malware, data poisoning backdoors, prompt injection leading to malicious actions, etc..4 Document threats as specific statements (e.g., "An attacker embeds a reverse shell in a Pickle-serialized model file, executed upon loading by torch.load").5
+      * What are we going to do about it? (This framework outlines the "doing").
+      * Did we do a good job? (Evaluated via metrics in Step 5).
+   5. Define Analysis Scope: Based on the threat model, prioritize the most relevant threats and define the specific checks to be performed. For instance, if using only Safetensors models from a trusted internal source, the risk of serialization attacks is low, and analysis might focus elsewhere. If using Pickle models from Hugging Face, serialization attacks are a high priority.1
+4.2 Source Selection & Literature Review (Step 2)
+* Objective: Gather relevant, up-to-date information on threats, vulnerabilities, attack techniques, and defensive measures related to AI model security.
+* Activities:
+   1. Identify Authoritative Sources:
+      * Academic Databases: arXiv, Google Scholar, Semantic Scholar (focus on CS > AI, CS > CR).8
+      * Security Conferences: USENIX Security, IEEE S&P, ACM CCS, Black Hat, DEF CON (especially AI Village presentations/workshops).16
+      * AI/ML Conferences: NeurIPS, ICML, ICLR (focus on adversarial ML, robustness, security tracks).8
+      * Cybersecurity Vendor/Researcher Blogs & Reports: Reputable firms actively publishing on AI security (e.g., ReversingLabs, Protect AI, JFrog, HiddenLayer, SRI, Trail of Bits, IBM Security, NVIDIA AI Red Team).1
+      * Standards Bodies & Government Agencies: NIST (e.g., AI RMF, AML Taxonomy) 31, OWASP (e.g., Top 10 for LLMs, Threat Modeling).
+      * Open Source Project Documentation: Review documentation for tools like ART, ModelScan, garak, Fickling.33
+   2. Develop Search Strategy: Use keywords like "AI model security," "malicious code detection AI," "model serialization attack," "Pickle vulnerability," "adversarial machine learning," "data poisoning backdoor," "ONNX security," "Safetensors security," "MaleficNet," specific tool names, and relevant CVEs.
+   3. Filter and Prioritize: Focus on peer-reviewed publications, reports with verifiable evidence, and recent findings (especially within the last 18 months for rapidly evolving threats). Be critical of vendor claims and seek independent verification where possible.
+   4. Synthesize Findings: Integrate information into the threat model and analysis plan. Document key attack techniques, detection methods, tool capabilities, and known limitations.
+4.3 Data / Artefact Collection Strategy (Step 3)
+* Objective: Securely obtain and preserve all necessary data and artefacts required for the analysis, ensuring integrity and enabling reproducibility.
+* Activities:
+   1. Identify Required Artefacts: Based on the scope and planned methodologies, list all items needed (see Section 7.1 for a detailed list). This typically includes:
+      * The model file(s) itself.
+      * Associated configuration files, code, and dependencies.
+      * Information about the model's origin and intended use.
+      * Logs generated during analysis (scanner outputs, sandbox activity, etc.).
+      * Analysis reports.
+   2. Establish Chain of Custody (if required): For formal investigations or potential legal proceedings, meticulously document the collection, handling, storage, and transfer of evidence to maintain its integrity and admissibility.38 This involves recording who handled the evidence, when, where, and for what purpose.
+   3. Ensure Integrity: Calculate and record cryptographic hashes (e.g., MD5, SHA256) of all collected files immediately upon collection.3 Verify hashes before and after any transfer or analysis step to detect modifications.
+   4. Secure Storage: Store collected artefacts in a secure, access-controlled location to prevent tampering or unauthorized access. Use encryption for sensitive models or data at rest.3
+   5. Documentation: Maintain detailed notes throughout the collection process, documenting sources, timestamps, tools used, and any anomalies observed.39
+4.4 Detection Methodologies (Step 4)
+* Objective: Employ a combination of techniques to analyze the collected artefacts for signs of malicious code or behavior.
+* Activities: (Detailed in Section 5.0)
+   1. Static Analysis: Examine model files, configurations, and associated code without execution.
+      * Techniques: Signature scanning (AV scanning 29), byte-pattern matching, string analysis, code decompilation/disassembly (e.g., for Pickle opcodes using tools like Fickling 7), dependency scanning, structure analysis (e.g., checking for Lambda layers in Keras 25, analyzing Pickle structure 26), configuration checks (e.g., access controls for model registries 3).
+      * Focus: Detecting known malware signatures, suspicious code constructs (e.g., network calls, file system operations, eval/exec functions) embedded in serialization formats or scripts, vulnerable dependencies.
+   2. Dynamic Analysis: Execute the model loading process or inference calls within a controlled, isolated environment (sandbox).
+      * Techniques: Sandboxed execution (using Docker containers 40 or specialized malware sandboxes 41), system call monitoring (file access, process creation, registry changes), network traffic analysis (monitoring for C2 communication, data exfiltration 44), memory analysis.44
+      * Focus: Observing actual behavior during model loading or inference, detecting malicious actions that may be obfuscated in static analysis, identifying interactions with the OS or network.
+   3. Behavioral Analysis / Anomaly Detection: Monitor the model's operational characteristics during inference for deviations from expected behavior.
+      * Techniques: Monitoring resource consumption (CPU, memory, GPU), analyzing prediction outputs/latency for anomalies, tracking network activity patterns, comparing behavior against a baseline of known-good execution.43
+      * Focus: Detecting stealthy malware (like MaleficNet variants affecting resource usage subtly), data poisoning backdoors triggered by specific inputs, or anomalous resource consumption indicating unexpected processes.
+4.5 Metrics & Success Criteria (Step 5)
+* Objective: Define measurable criteria to evaluate the effectiveness and efficiency of the detection methodologies.
+* Key Metrics:
+   * Detection Rate / True Positive Rate (TPR): Percentage of genuinely malicious models correctly identified. TPR=TP+FNTP​ (where TP = True Positives, FN = False Negatives). High TPR is crucial.
+   * False Positive Rate (FPR): Percentage of benign models incorrectly flagged as malicious. FPR=FP+TNFP​ (where FP = False Positives, TN = True Negatives). Low FPR is essential to avoid alert fatigue and unnecessary disruption.25 ⚠️ High FPR is a known issue with simplistic Pickle scanners.25
+   * Accuracy: Overall percentage of correct classifications (both malicious and benign). Accuracy=TP+TN+FP+FNTP+TN​.
+   * Precision: Percentage of models flagged as malicious that are actually malicious. Precision=TP+FPTP​. High precision reduces wasted effort investigating false alarms.
+   * Recall (Sensitivity): Same as TPR. Measures the ability to find all malicious instances.
+   * F1 Score: Harmonic mean of Precision and Recall. F1=2×Precision+RecallPrecision×Recall​. Provides a balanced measure.
+   * Performance Overhead: Impact of the analysis method on system resources.
+      * Latency: Added time for scanning (pre-deployment) or monitoring (runtime).
+      * Resource Usage: CPU, memory, network bandwidth consumed by the analysis tool/process.49
+   * Scalability: Ability of the method/tool to handle a large number of models or high inference throughput.
+   * Robustness to Evasion: How well the detection method withstands techniques designed to bypass it (e.g., obfuscation, polymorphism, sandbox evasion 42). Standardized benchmarks like RobustBench 23 or evaluations against adaptive attacks 12 are relevant here, though primarily focused on input perturbations rather than embedded code detection. NIST provides taxonomies for evaluation.31
+* Success Criteria: Define acceptable thresholds for each metric based on the risk tolerance and operational context. For example, a critical system might require a very high TPR even at the cost of a slightly higher FPR, while a less critical system might prioritize a low FPR.
+4.6 Tools & Resources (Step 6)
+* Objective: Identify specific tools, libraries, and platforms to implement the detection methodologies.
+* Tool Categories & Examples:
+   * Model Scanners (Static/Structural Analysis):
+      * Protect AI ModelScan: Open-source CLI tool. Scans H5, Pickle, SavedModel formats for unsafe code/serialization issues. Integrates into CI/CD. Outputs JSON reports.3 GitHub: https://github.com/protectai/modelscan. License: Apache-2.0.
+      * JFrog Xray (with AI scanning): Commercial platform. Claims deep decoding, decompilation, context-aware analysis for Pickle, TF, GGUF, ONNX. Aims to reduce FPs.25
+      * Protect AI Guardian: Commercial platform. Extends ModelScan capabilities with multi-layered analysis, nested archive decompression, architectural backdoor detection (ONNX, TF), dependency analysis.26
+      * Hugging Face Hub Scanner: Integrated scanner, uses Picklescan (blacklist-based) and ClamAV.1 ⚠️ Known limitations with broken files, obfuscation, and high FPs.1
+      * Fickling (Trail of Bits): Open-source decompiler, static analyzer, and bytecode rewriter specifically for Pickle files.7 GitHub: https://github.com/trailofbits/fickling. License: Apache-2.0.37
+   * Adversarial Robustness Libraries (Can be adapted for certain checks):
+      * Adversarial Robustness Toolbox (ART) (IBM/LF AI & Data): Open-source Python library. Supports various frameworks (TF, PyTorch, Sklearn, etc.). Includes implementations of evasion, poisoning, extraction, inference attacks and defenses. Useful for testing model responses and some defense mechanisms.33 GitHub: https://github.com/Trusted-AI/adversarial-robustness-toolbox. License: MIT.
+      * Counterfit (Microsoft): Open-source automation framework for assessing ML security. Integrates attacks from ART and other libraries. Command-line tool for red teaming/pen testing AI.55 GitHub: https://github.com/Azure/counterfit. ⚠️ Note: There is another unrelated project named CounterFit for IoT simulation.59
+      * garak (NVIDIA): Open-source LLM vulnerability scanner. Probes for known vulnerabilities like prompt injection, jailbreaking, data leakage, potentially malicious outputs (e.g., malware generation requests).16 GitHub: https://github.com/NVIDIA/garak. License: Apache-2.0. Version: >= v0.10.3.61
+   * Sandboxing Environments:
+      * Docker: General-purpose containerization, can be used to isolate model execution.40 Libraries like ai-code-sandbox provide wrappers.40
+      * Specialized Malware Sandboxes: Commercial (e.g., Forcepoint, MetaDefender Sandbox 41) or open-source sandboxes designed for dynamic malware analysis, often with enhanced instrumentation and evasion resistance.42 Capable of analyzing file system changes, network traffic, process activity.44
+      * Cloud Provider Sandboxes: Services offered by cloud providers for isolated execution.
+   * Behavioral Monitoring / Anomaly Detection:
+      * Cloud Monitoring Tools: (e.g., AWS CloudWatch, Azure Monitor, GCP Monitoring) for resource metrics.
+      * Network Monitoring Tools: (e.g., Wireshark, Zeek/Bro) for traffic analysis.
+      * Endpoint Detection and Response (EDR) / Extended Detection and Response (XDR): Solutions like SentinelOne, CrowdStrike, Darktrace incorporate behavioral analysis and ML for threat detection, potentially applicable to monitoring AI workload hosts.38
+      * AI-Specific Monitoring: Emerging tools focused on monitoring AI behavior, including model outputs and internal states.
+* Resource Selection: Choose tools based on the specific model formats, frameworks, deployment environment (cloud, on-prem), required analysis depth, budget, and team expertise. Prioritize tools with active development, good documentation, and community support.
+4.7 Potential Pitfalls & Mitigation Tactics (Step 7)
+* Objective: Anticipate common challenges in detecting malicious code in AI models and plan mitigation strategies.
+* Pitfalls & Mitigations:
+   * Obfuscation: Attackers hide malicious code using encoding (e.g., Base64 29), compression (e.g., non-standard archives 1), encryption, or complex code structures (e.g., within Lambda layers 25).
+      * Mitigation: Use scanners capable of deep analysis, decompression, and deobfuscation (e.g., Guardian 26). Employ dynamic analysis to observe behavior regardless of static obfuscation. Fickling can help deconstruct Pickle obfuscation.7
+   * High False Positives: Simple static scanners (especially blacklist-based like Picklescan) flag benign code constructs as malicious, leading to alert fatigue.25
+      * Mitigation: Use context-aware scanners (e.g., JFrog Xray claims this 25). Corroborate static findings with dynamic analysis. Tune detection rules. Prioritize alerts based on severity and context. Accept some risk for low-impact findings if necessary.
+   * False Negatives / Evasion: Malicious code is missed by scanners due to novel techniques, zero-day exploits, or scanner limitations (e.g., handling broken files 1, sophisticated embedding like MaleficNet 28). Sandbox evasion techniques exist.42
+      * Mitigation: Employ multiple, diverse detection methods (static + dynamic + behavioral). Use up-to-date tools and threat intelligence. Implement runtime monitoring for behavioral anomalies.47 Regularly update and test detection capabilities. For sandbox evasion, use advanced sandboxes with anti-evasion features.43
+   * Model Complexity: The sheer size (billions/trillions of parameters 28) and "black box" nature of complex DNNs make exhaustive analysis difficult. MaleficNet exploits this complexity.28
+      * Mitigation: Focus analysis on known vulnerable components (serialization, interfaces). Use behavioral monitoring to detect deviations. Promote use of simpler, more interpretable models where feasible. Research into model explainability may help.63
+   * Distinguishing Malicious vs. Benign Intent: Some code constructs flagged by scanners (e.g., system calls, network access) might be necessary for legitimate model functionality but undocumented.1
+      * Mitigation: Require documentation and approval for any model requiring unusual permissions or containing executable code.1 Establish clear policies. Use dynamic analysis to understand the context of the behavior. Escalate ambiguous cases for human review.
+   * Performance Overhead: Dynamic analysis and continuous monitoring can consume significant resources and introduce latency.49
+      * Mitigation: Optimize monitoring configurations. Sample analysis where appropriate. Select efficient tools. Balance security needs with performance requirements based on application criticality.
+   * Tool Limitations: Scanners may only support specific formats or frameworks.35 Open-source tools may lack enterprise support or features.
+      * Mitigation: Select tools matching the technology stack. Use multiple tools for broader coverage. Understand the limitations of each tool used.
+4.8 Escalation Points & Human Review (Step 8)
+* Objective: Define clear criteria for when automated analysis results require manual investigation by security experts or ML engineers.
+* Escalation Triggers:
+   1. High-Confidence Malicious Detections: Any definitive finding of known malware signatures or clearly malicious code execution (e.g., reverse shell connection 1, credential theft attempt 35). Immediate escalation for incident response.
+   2. Suspicious Code Execution Detected: Static or dynamic analysis reveals potentially harmful actions (e.g., unexpected file system writes, network connections to unknown IPs, use of dangerous functions like exec or subprocess.run 1) without clear legitimate justification. Escalate for contextual analysis.
+   3. Ambiguous Scanner Findings: Tools flag code as "suspicious" or "potentially unsafe" but cannot make a definitive determination (e.g., ModelScan severity levels 1-4 51, Fickling level 3 for PyTorch 51). Escalate for expert review to determine intent.
+   4. Significant Behavioral Anomalies: Runtime monitoring detects unexplained spikes in resource usage, anomalous network traffic patterns, or consistent prediction errors/biases potentially indicative of a backdoor or embedded malware. Escalate for deeper investigation.
+   5. Scanner Failures or Errors: Inability of tools to scan a model (e.g., due to unsupported format, corruption 1, or excessive size/complexity). Escalate to determine the cause and assess potential risk.
+   6. Detection of Obfuscation Techniques: Identification of deliberate attempts to hide code, even if the code itself isn't immediately confirmed as malicious. Escalate as this indicates potentially suspicious intent.
+   7. Findings Related to Critical Systems: Any suspicious findings, even low-confidence ones, related to models used in highly sensitive or critical applications warrant human review.
+* Review Process: Escalated findings should be reviewed by personnel with expertise in both cybersecurity/malware analysis and machine learning to interpret the technical details and assess the true risk in the context of the model's intended function.
+5.0 Detection Methodologies Deep Dive
+A multi-faceted approach combining static, dynamic, and behavioral analysis provides the most comprehensive defense against malicious code in AI models.
+5.1 Static Analysis
+Static analysis examines model artifacts without executing them, looking for known malicious patterns or suspicious constructs.64
+* Techniques:
+   * Signature Scanning: Using traditional antivirus engines or specialized signatures to detect known malware within model files or associated scripts.29 Limited by known threats.
+   * Code Analysis: Parsing and analyzing code embedded in serialization formats (like Pickle opcodes 1) or associated scripts. Tools like Fickling decompile Pickle streams.7 Scanners look for dangerous function calls (os.system, subprocess.run, eval, exec), suspicious imports (e.g., networking or crypto libraries), or hardcoded IP addresses/URLs.1
+   * Structural Analysis: Examining the model's structure for potentially risky components, such as Keras Lambda layers 25 or custom TensorFlow operators 7, which permit arbitrary code execution. Tools like ModelScan perform this.35 Protect AI Guardian performs deep structure analysis of serialized code.26
+   * Dependency Scanning: Analyzing requirements.txt or other dependency manifests for known vulnerable libraries.
+   * Metadata/Configuration Analysis: Checking for insecure configurations, lack of access controls on storage 3, or suspicious metadata.
+* Pros: Fast, can be integrated early in the CI/CD pipeline ("shift left" 48), effective against known threats and clearly embedded malicious code, lower performance overhead compared to dynamic analysis.64
+* Cons: Prone to false positives, especially with simple techniques like blacklisting function names.25 Easily bypassed by obfuscation, encryption, or novel attack techniques.1 Cannot detect runtime behavior or stealthy malware embedded in weights (like MaleficNet).28 Limited context awareness.64
+5.2 Dynamic Analysis (Sandboxing)
+Dynamic analysis involves executing the model loading or inference process in a controlled, isolated environment (sandbox) to observe its actual behavior.44
+* Techniques:
+   * Sandboxed Execution: Running the model loading (pickle.load(), torch.load(), tf.saved_model.load()) or inference calls within an isolated environment (e.g., Docker container 40, specialized VM-based sandbox 42). This prevents malicious code from directly impacting the host system.42
+   * Behavior Monitoring: Instrumenting the sandbox to monitor interactions with the operating system and network. This includes:
+      * System Calls: Tracking file creation/modification/deletion, process execution, registry changes (Windows).44
+      * Network Traffic: Capturing and analyzing network connections, protocols used, data sent/received, DNS lookups. Looking for connections to known malicious IPs/domains or unexpected data exfiltration.44
+      * Memory Analysis: Examining memory contents during/after execution for hidden processes or injected code.44
+* Pros: Detects actual behavior, effective against obfuscated code, can uncover zero-day threats based on malicious actions rather than signatures, provides deeper insights into malware functionality.44 More accurate than static analysis for runtime behavior.67
+* Cons: Slower and more resource-intensive than static analysis.44 Can be evaded by sandbox-aware malware (detecting the sandbox environment, delaying execution, using context-aware triggers).42 May not cover all possible code execution paths.64 Requires careful configuration and management of the sandbox environment.
+5.3 Behavioral Analysis & Anomaly Detection
+This approach focuses on monitoring the model's performance and operational characteristics during normal use (typically post-deployment) to detect deviations indicative of compromise or malicious activity.47
+* Techniques:
+   * Resource Monitoring: Tracking CPU, GPU, memory, and network usage over time. Unexpected spikes or sustained high usage might indicate hidden processes or resource abuse.4
+   * Prediction Analysis: Monitoring model outputs for sudden shifts in accuracy, unexpected biases, or sensitivity to specific triggers (potential backdoors).69 Analyzing prediction latency.
+   * Network Baselining: Establishing normal network communication patterns for the model/application and alerting on deviations (e.g., connections to unusual ports or geographical locations).46
+   * Input/Output Sanitization & Validation: Filtering or validating prompts (for LLMs) and model outputs to prevent injection attacks or harmful responses.5 Tools like llm-guard focus on this.70
+   * AI/ML-Driven Detection: Using secondary ML models trained to recognize anomalous behavior patterns in the primary AI system's metrics or logs.43
+* Pros: Effective against zero-day threats and novel attacks that don't match known signatures.47 Can detect stealthy malware (e.g., MaleficNet variants) through subtle performance impacts. Monitors the application in its actual production environment.72 Provides continuous protection.71
+* Cons: Primarily detective rather than preventive (detects threats after deployment/execution).48 Can generate false positives if the baseline for normal behavior is not well-defined or if legitimate behavior changes. May require significant data logging and analysis infrastructure. Can be complex to implement and tune.
+5.4 Limitations and Evasion Techniques
+No single methodology is foolproof. Static analysis struggles with obfuscation and novel threats. Dynamic analysis can be evaded by sophisticated malware aware of sandbox environments.42 Behavioral analysis relies on accurate baselines and may detect attacks only after they have begun executing.48 The high false positive rate of simplistic static scanners for formats like Pickle remains a significant challenge, potentially causing teams to ignore warnings.25 Furthermore, techniques like MaleficNet, which embed malware directly into weights without altering file structure or obvious runtime behavior, challenge all three approaches.28 A defense-in-depth strategy, combining multiple methods across the AI lifecycle, is therefore necessary.
+6.0 Solution Paths and Comparative Analysis
+Addressing the threat of malicious code in AI models requires a strategic approach. Three high-level solution paths can be considered, each with distinct advantages and disadvantages.
+6.1 Identified Solution Paths
+1. Path 1: Pre-Deployment Scanning & Hardening: This strategy focuses on analyzing and securing model artifacts before they are deployed into production environments. It emphasizes "shifting left" security practices into the MLOps pipeline.48 Key activities include rigorous static analysis of model files (e.g., using ModelScan, Fickling), dependency scanning, configuration checks, using secure serialization formats (Safetensors, ONNX), and potentially limited dynamic analysis in a pre-production sandbox.
+2. Path 2: Continuous Runtime Monitoring & Response: This strategy focuses on observing and protecting AI models while they are executing in the production environment.47 Key activities include real-time behavioral analysis, anomaly detection (resource usage, network traffic, prediction outputs), sandboxing of inference processes (if feasible), and automated response actions upon threat detection. This path assumes breaches or vulnerabilities might bypass pre-deployment checks and focuses on detecting active threats.49
+3. Path 3: Hybrid Approach (Integrated Lifecycle Security): This strategy combines elements of both pre-deployment scanning and runtime monitoring, integrating security checks throughout the entire AI lifecycle.66 It involves static/dynamic scanning in CI/CD, secure model registry practices, continuous runtime monitoring, and feedback loops where runtime findings inform pre-deployment checks and threat models.
+6.2 Risk-Benefit Matrix
+The following matrix compares the three solution paths across key criteria, drawing on insights from security practices for traditional software and cloud environments, adapted for AI model security.
+Feature/Criterion
+	Path 1: Pre-Deployment Scanning
+	Path 2: Runtime Monitoring
+	Path 3: Hybrid Approach
+	Detection Coverage (Serialization Attacks)
+	High (for known patterns)
+	Low (detects effect, not cause)
+	High
+	Detection Coverage (Embedded Malware - e.g., MaleficNet)
+	Very Low
+	Medium (via behavioral anomalies)
+	Medium (relies on behavioral detection)
+	Detection Coverage (Data Poisoning/Backdoors - Triggered)
+	Low (unless structure reveals)
+	High (detects anomalous behavior)
+	High
+	Detection Coverage (Zero-Day/Novel Threats)
+	Low
+	High (behavior-based)
+	High
+	Performance Impact (Latency/Throughput)
+	Low (scan time only)
+	Medium-High (monitoring overhead)
+	High (combined overhead)
+	Implementation Complexity
+	Medium
+	High
+	Very High
+	Operational Overhead (Alerting, Tuning)
+	Medium (scan results review)
+	High (real-time alert handling)
+	Very High
+	Infrastructure Cost (Tools, Compute)
+	Medium
+	High
+	Very High
+	Time to Detect (Post-Introduction)
+	Very Fast (pre-deployment)
+	Slow (post-deployment/execution)
+	Fast (pre-deploy) & Slow (runtime)
+	Prevention Capability (vs. Detection)
+	High (blocks bad models)
+	Low (detects post-execution)
+	Medium-High (combines both)
+	False Positive Potential
+	Medium (improving tools)
+	Medium-High (baseline drift)
+	Medium-High (compounded)
+	Evasion Resistance
+	Low (for runtime threats)
+	Medium (sandbox/behavioral)
+	High (layered defense)
+	Analysis based on principles from.47
+This comparison highlights the inherent trade-offs. Pre-deployment scanning is effective for known threats and preventing insecure artifacts from reaching production but is blind to runtime behavior and novel attacks.48 Runtime monitoring excels at detecting active, unknown threats and behavioral anomalies but incurs higher overhead and detects issues only after deployment.47 The hybrid approach offers the most comprehensive coverage but demands the greatest investment in complexity, cost, and operational effort. The optimal choice depends heavily on the organization's risk appetite, the criticality of the AI application, available resources, and the specific threat landscape anticipated.
+7.0 Evidence Management and Reporting Standards
+Robust evidence collection and standardized reporting are crucial for effective analysis, incident response, and potential legal or compliance requirements.38
+7.1 Required Evidence Artefacts
+To support findings and enable verification, the following artefacts should be collected and preserved during an investigation:
+* Original Model File(s): The suspect AI model file(s) in their original format (e.g., .pkl, .pt, .onnx, .safetensors, .h5, .pb).
+* Cryptographic Hashes: MD5 and SHA256 hashes of all original model files and collected evidence files to ensure integrity.3
+* Model Metadata: Information about the model's source, version, framework, intended use, and training details, if available.
+* Associated Files: Any configuration files, dependency lists (requirements.txt, environment.yml), loading scripts, or other files packaged with the model.
+* Scanner Configuration: Files or settings used to configure static analysis tools (e.g., ModelScan settings 35).
+* Static Analysis Logs: Raw output logs from scanners (e.g., ModelScan JSON 30, Fickling output, AV scan results). Prefer machine-readable formats like JSON.30
+* Decompiler/Disassembler Output: Output from tools like Fickling analyzing Pickle opcodes.7
+* Sandbox Configuration: Details of the sandbox environment used (OS, libraries, network settings, tool versions).40
+* Dynamic Analysis Logs:
+   * System call traces (e.g., file accesses, process creation).
+   * Network captures (PCAP files).38
+   * File system modification logs.
+   * Process execution logs.
+   * Memory dumps (if applicable).
+* Behavioral Monitoring Logs: Time-series data for resource consumption, prediction outputs/metrics, network flow logs, anomaly detection alerts.45
+* Screenshots: Visual documentation of tool outputs, specific configurations, or observed behavior.
+* Analysis Reports: Structured reports summarizing the analysis process, findings, severity assessment, evidence links, and mitigation recommendations. Signed JSON reports 35 or PDF formats are common.
+* Chain of Custody Records: Formal documentation tracking evidence handling, if required for legal or regulatory purposes.38
+Evidence should be collected promptly, especially volatile data (like memory contents or network states), following established digital forensic principles regarding the order of volatility.39 Standardized formats (JSON, PCAP, structured text logs) should be used whenever possible to facilitate automated processing and correlation.73
+7.2 APA Citation Guidelines (7th Edition)
+Consistent and accurate citation is essential for academic rigor and allows readers to verify sources. This report follows the guidelines of the Publication Manual of the American Psychological Association, 7th Edition.74
+* In-Text Citations:
+   * Basic Format: Include the author's last name and the year of publication in parentheses, e.g., (Zanki, 2025). If the author's name is part of the narrative, include only the year in parentheses, e.g., Zanki (2025) found....74
+   * Two Authors: Connect names with an ampersand within parentheses, e.g., (Sultanik & Woodruff, 2021), or 'and' in the narrative, e.g., Sultanik and Woodruff (2021).74
+   * Three or More Authors: Include the first author's last name followed by "et al." and the year, e.g., (Pearce et al., 2024).74
+   * Group/Corporate Authors: Use the organization's name. If the name is long and has a well-known abbreviation, define it at first mention, e.g., (National Institute of Standards and Technology, 2025), then use (NIST, 2025) subsequently.75 If the author and publisher are the same, use "Author" in the publisher field of the reference list entry.75
+   * Direct Quotations: Include the page number (p.) or paragraph number (para.) for non-paginated sources, e.g., (Zanki, 2025, para. 3).74
+   * Secondary Sources: Cite the source you read, e.g., (Slaviero, 2011, as cited in Pearce et al., 2024).77 List only the secondary source (Pearce et al., 2024) in the reference list.
+* Reference List:
+   * Placement: Starts on a new page titled "References" (centered, bold) at the end of the document.77
+   * Order: Entries are listed alphabetically by the first author's last name.74 Works by the same author are ordered by year (earliest first); works by the same author in the same year are ordered alphabetically by title and assigned letters (a, b, c) after the year.77
+   * Formatting: Use a hanging indent for each entry (the first line is flush left, subsequent lines are indented).74 Double-space the entire list (per official APA guidelines, though not explicitly required here).
+   * Key Formats (Examples):
+      * Journal Article: Author, A. A., Author, B. B., & Author, C. C. (Year). Title of the article: Subtitle using sentence case. Title of the Journal in Title Case and Italics, Volume(Issue), page–range. https://doi.org/xxxx 74
+      * Preprint Article (e.g., arXiv): Author, A. A., & Author, B. B. (Year). Title of preprint in italics and sentence case. arXiv preprint arXiv:xxxx.xxxxx. https://doi.org/xxxx or https://arxiv.org/abs/xxxx.xxxxx (Use DOI if available, otherwise URL) 74
+      * Conference Paper (Published Proceedings): Author, A. A. (Year). Title of paper in sentence case. In A. Editor, B. Editor, & C. Editor (Eds.), Title of Proceedings in Title Case and Italics (pp. page–range). Publisher. https://doi.org/xxxx 74
+      * Technical Report/Government Document: Author, A. A., or Organization Name. (Year). Title of report in italics and sentence case (Report No. XXX). Publisher Name (or Author if same as group author). URL 74
+      * Webpage/Blog Post: Author, A. A. or Group Name. (Year, Month Day). Title of specific page or post in italics and sentence case. Website Name. Retrieved Month Day, Year, from URL (Use retrieval date if content may change and no publication date is available).74 If Author and Website Name are the same, omit Website Name.77
+      * Book: Author, A. A. (Year). Title of book in italics and sentence case (Xth ed.). Publisher. 74
+      * Software/Code Repository: Author/Owner, A. A. or Group Name. (Year). Title of software or repository (Version X.Y). Publisher (if applicable). URL 74
+Refer to the official Publication Manual of the American Psychological Association (7th ed.) or reputable university style guides for comprehensive rules and additional examples.78
+8.0 Conclusion and Recommendations
+The analysis confirms that malicious code poses a significant and evolving threat to the security and integrity of AI models and the systems that rely on them. The widespread use of insecure serialization formats like Pickle, coupled with the emergence of sophisticated embedding techniques like MaleficNet and the potential for data poisoning to create backdoors, necessitates a paradigm shift towards proactive and comprehensive AI model security. Relying on simplistic scanning methods or assuming models from public hubs are safe is insufficient and introduces substantial risk.
+The framework presented in this report provides a structured approach for organizations to systematically assess these risks. It emphasizes the importance of threat modeling tailored to AI systems, leveraging diverse detection methodologies (static, dynamic, behavioral), employing appropriate tools, defining clear metrics, and establishing robust evidence management practices.
+Based on the findings, the following key recommendations are proposed:
+1. Prioritize Secure Formats: Mandate the use of inherently safer serialization formats like Safetensors or ONNX for model storage and exchange whenever feasible. Require explicit risk assessment and justification for using Pickle or other formats known to permit arbitrary code execution.3
+2. Implement Multi-Layered Scanning: Integrate a combination of static analysis (including deep structural checks and de-compilation for risky formats), dynamic analysis (sandboxing), and dependency scanning into the AI development and deployment lifecycle (MLOps). Do not rely on a single technique or tool.25
+3. Embed Security in MLOps: Treat AI models as critical software assets subject to supply chain risks. Integrate automated security checks (checksum verification 3, scanning) into CI/CD pipelines, model build processes, and model registries.30 Enforce access controls and encryption for model storage and transit.3
+4. Adopt Runtime Monitoring for Critical Systems: For high-risk or critical AI applications, implement continuous runtime monitoring focused on behavioral anomaly detection (resource usage, network activity, prediction patterns) to identify zero-day threats, triggered backdoors, or stealthy malware missed by pre-deployment scans.47
+5. Conduct Rigorous Threat Modeling: Regularly perform and update threat models specifically for AI applications, considering data flows, model interactions, dependencies, and known attack vectors.4
+6. Evaluate and Select Tools Carefully: Choose security tools based on demonstrated effectiveness (considering TP/FP rates), coverage of relevant model formats and frameworks, integration capabilities, performance impact, and vendor support. Leverage benchmarks and independent evaluations where available.23
+7. Foster Security Awareness: Train ML engineers, data scientists, and MLOps teams on secure development practices, the specific risks associated with AI models (especially serialization), and secure model handling procedures.30
+8. Maintain Situational Awareness: Continuously monitor research from security and AI communities (conferences, publications, vendor reports) to stay informed about emerging threats, attack techniques, and defensive strategies.8
+By adopting these recommendations and utilizing the proposed framework, organizations can significantly improve their ability to detect and mitigate malicious code threats in AI models, fostering greater trust and enabling the secure adoption of artificial intelligence.
+9.0 Annotated Bibliography
+Carlini, N., Tramer, F., Wallace, E., Jagielski, M., Herbert-Voss, A., Lee, K., Roberts, A., Brown, T. B., Song, D., Erlingsson, Ú., Oprea, A., & Raffel, C. (2021). Extracting training data from large language models. In Proceedings of the 30th USENIX Security Symposium (pp. 2633–2650). USENIX Association. https://www.usenix.org/conference/usenixsecurity21/presentation/carlini-extracting
+Annotation: This paper demonstrates the feasibility of extracting verbatim training data sequences from large language models like GPT-2 through targeted queries. It highlights significant privacy risks associated with large models and underscores the importance of considering privacy attacks (a category within the broader AML landscape) when evaluating AI system security. The findings inform the threat modeling component of the analysis framework.
+Hitaj, D., Gjomemo, R., Payer, M., & Oprea, A. (2022). MaleficNet: Hiding malware into deep neural networks using spread-spectrum channel coding. In F. Cuppens, S. Jajodia, & C. Mazurczyk (Eds.), Computer Security – ESORICS 2022 (pp. 425–444). Springer. https://doi.org/10.1007/978-3-031-17143-7_21
+Annotation: This foundational paper introduces the MaleficNet framework, detailing the novel technique of embedding malware within DNN parameters using spread-spectrum coding. It provides empirical evidence of the attack's stealth (evading detection) and minimal impact on model performance, establishing a critical, advanced threat vector beyond typical serialization attacks considered in this report's threat landscape.
+Pearce, W., et al. (2024, September 14). Systematic study of malicious code poisoning attacks on pre-trained model hubs. arXiv preprint arXiv:2409.09368. https://arxiv.org/abs/2409.09368
+Annotation: This pre-print offers a systematic study of code poisoning attacks targeting model hubs like Hugging Face. It provides a valuable taxonomy classifying model formats (Pickle variants, TF/Keras, GGUF, ONNX, Safetensors, etc.) based on their susceptibility to code injection and analyzes the root causes of these vulnerabilities. This source directly supports the report's assessment of format-specific risks and informs recommendations for secure format usage.
+SRI International. (2025, April 10). A new security threat to AI models. SRI Press Story. https://www.sri.com/press/story/a-new-security-threat-to-ai-models/
+Annotation: This article (published within the last 18 months) publicly discusses the MaleficNet framework and its implications. It explains the technique's ability to embed virtually undetectable malware within DNN parameters without degrading performance, highlighting the failure of current detection tools and the significant supply chain risk posed by compromised pre-trained models. This source provides crucial, recent context on advanced, stealthy threats.
+Trusted-AI. (n.d.). Adversarial Robustness Toolbox (ART) (Version 1.17.0). Linux Foundation AI & Data. Retrieved March 4, 2025, from https://github.com/Trusted-AI/adversarial-robustness-toolbox
+Annotation: ART is a widely used, comprehensive open-source Python library implementing numerous adversarial attacks (evasion, poisoning, extraction, inference) and defenses across major ML frameworks. It serves as a critical resource and standard toolset for evaluating model robustness and testing detection/mitigation strategies, directly relevant to the methodologies and tools discussed in this report.
+Vassilev, A., Oprea, A., Hamin, M., Fordyce, A., Anderson, H., & Davies, X. (2025, March). Adversarial machine learning: A taxonomy and terminology of attacks and mitigations (NIST AI 100-2e2025). National Institute of Standards and Technology. https://doi.org/10.6028/NIST.AI.100-2e2025
+Annotation: This recent NIST report (published within the last 18 months) provides an authoritative taxonomy and standardized terminology for the field of adversarial machine learning, covering attacks and mitigations for both predictive and generative AI. It establishes a common language and framework essential for discussing AI security threats, informing the threat modeling and methodology sections of this report.
+Zanki, K. (2025, February 6). Malicious ML models discovered on Hugging Face platform. ReversingLabs Blog. https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face
+Annotation: This blog post (published within the last 18 months) details the real-world discovery of PyTorch models on Hugging Face containing malware embedded via Pickle serialization, which bypassed existing scanners using non-standard compression. It critically analyzes the limitations of blacklist-based scanning (Picklescan) and highlights the practical dangers of insecure serialization on public model hubs, providing direct evidence for the threat landscape analysis.
+Works cited
+1. Malicious ML models discovered on Hugging Face platform, accessed April 17, 2025, https://www.reversinglabs.com/blog/rl-identifies-malware-ml-model-hosted-on-hugging-face
+2. How Do Model Export Formats Impact the Development of ML-Enabled Systems? A Case Study on Model Integration - arXiv, accessed April 17, 2025, https://arxiv.org/html/2502.00429v1
+3. modelscan/docs/model_serialization_attacks.md at main - GitHub, accessed April 17, 2025, https://github.com/protectai/modelscan/blob/main/docs/model_serialization_attacks.md
+4. Analyzing AI Application Threat Models | NCC Group, accessed April 17, 2025, https://www.nccgroup.com/us/research-blog/analyzing-ai-application-threat-models/
+5. Threat modeling your generative AI workload to evaluate security risk - AWS, accessed April 17, 2025, https://aws.amazon.com/blogs/security/threat-modeling-your-generative-ai-workload-to-evaluate-security-risk/
+6. Threat Modeling | OWASP Foundation, accessed April 17, 2025, https://owasp.org/www-community/Threat_Modeling
+7. Towards Measuring Malicious Code Poisoning Attacks on Pre-trained Model Hubs - arXiv, accessed April 17, 2025, https://arxiv.org/html/2409.09368v1
+8. Adversarial Machine Learning: Attacks, Defenses, and Open Challenges - arXiv, accessed April 17, 2025, https://arxiv.org/html/2502.05637v1
+9. Adversarial Machine Learning: Attacks, Defenses, and Open Challenges - arXiv, accessed April 17, 2025, https://www.arxiv.org/pdf/2502.05637
+10. Robustness-Congruent Adversarial Training for Secure Machine Learning Model Updates, accessed April 17, 2025, https://arxiv.org/html/2402.17390v1
+11. Taking off the Rose-Tinted Glasses: A Critical Look at Adversarial ML Through the Lens of Evasion Attacks - arXiv, accessed April 17, 2025, https://arxiv.org/html/2410.12076v1
+12. [2002.08347] On Adaptive Attacks to Adversarial Example Defenses - arXiv, accessed April 17, 2025, https://arxiv.org/abs/2002.08347
+13. Zero-Trust Artificial Intelligence Model Security Based on Moving Target Defense and Content Disarm and Reconstruction - arXiv, accessed April 17, 2025, https://arxiv.org/html/2503.01758v1
+14. A Large-Scale Exploit Instrumentation Study of AI/ML Supply Chain Attacks in Hugging Face Models - arXiv, accessed April 17, 2025, https://arxiv.org/pdf/2410.04490
+15. [PDF] An improved real time detection of data poisoning attacks in deep learning vision systems | Semantic Scholar, accessed April 17, 2025, https://www.semanticscholar.org/paper/2575b8596dc3fd3390634765e6e256ea0428bf82
+16. NVIDIA Presents AI Security Expertise at Leading Cybersecurity Conferences, accessed April 17, 2025, https://developer.nvidia.com/blog/nvidia-presents-ai-security-expertise-at-leading-cybersecurity-conferences/
+17. TL;DR: Every AI Talk from BSidesLV, Black Hat, and DEF CON 2024, accessed April 17, 2025, https://tldrsec.com/p/tldr-every-ai-talk-bsideslv-blackhat-defcon-2024
+18. AI Village @ DEF CON 26, accessed April 17, 2025, https://aivillage.org/events/DEFCON-26/
+19. URET: Universal Robustness Evaluation Toolkit (for Evasion) - USENIX, accessed April 17, 2025, https://www.usenix.org/system/files/usenixsecurity23-eykholt.pdf
+20. Machine learning adversarial attacks are a ticking time bomb - TechTalks, accessed April 17, 2025, https://bdtechtalks.com/2020/12/16/machine-learning-adversarial-attacks-against-machine-learning-time-bomb/
+21. Improving Machine Learning Security Skills at a DEF CON Competition - NVIDIA Developer, accessed April 17, 2025, https://developer.nvidia.com/blog/improving-machine-learning-security-skills-at-a-def-con-competition/
+22. Adversarial for Good? How the Adversarial ML Community's Values Impede Socially Beneficial Uses of Attacks - arXiv, accessed April 17, 2025, https://arxiv.org/pdf/2107.10302
+23. RobustBench: a standardized adversarial robustness benchmark, accessed April 17, 2025, https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/file/a3c65c2974270fd093ee8a9bf8ae7d0b-Paper-round2.pdf
+24. RobustBench: a standardized adversarial robustness benchmark, accessed April 17, 2025, https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/a3c65c2974270fd093ee8a9bf8ae7d0b-Abstract-round2.html
+25. JFrog and Hugging Face Join Forces to Expose Malicious ML Models, accessed April 17, 2025, https://jfrog.com/blog/jfrog-and-hugging-face-join-forces/
+26. 4M Models Scanned: Hugging Face + Protect AI Partnership Update, accessed April 17, 2025, https://protectai.com/blog/hugging-face-protect-ai-six-months-in
+27. Weaponizing ML Models with Ransomware - HiddenLayer, accessed April 17, 2025, https://hiddenlayer.com/innovation-hub/weaponizing-machine-learning-models-with-ransomware/
+28. A new security threat to AI models - SRI International, accessed April 17, 2025, https://www.sri.com/press/story/a-new-security-threat-to-ai-models/
+29. Model Files are Invisible Viruses - Protect AI, accessed April 17, 2025, https://protectai.com/threat-research/model-files-are-invisible-viruses
+30. ModelScan - Protection Against Model Serialization Attacks - SANS Internet Storm Center, accessed April 17, 2025, https://isc.sans.edu/diary/31692
+31. Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations - NIST Technical Series Publications, accessed April 17, 2025, https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2025.pdf
+32. Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations - NIST Technical Series Publications, accessed April 17, 2025, https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-2e2023.pdf
+33. Adversarial Robustness Toolbox (ART) - Python Library for Machine Learning Security - Evasion, Poisoning, Extraction, Inference - Red and Blue Teams - GitHub, accessed April 17, 2025, https://github.com/Trusted-AI/adversarial-robustness-toolbox
+34. Welcome to the Adversarial Robustness Toolbox — Adversarial Robustness Toolbox 1.17.0 documentation - Read the Docs, accessed April 17, 2025, https://adversarial-robustness-toolbox.readthedocs.io/
+35. protectai/modelscan: Protection against Model Serialization Attacks - GitHub, accessed April 17, 2025, https://github.com/protectai/modelscan
+36. garak/FAQ.md at main - GitHub, accessed April 17, 2025, https://github.com/NVIDIA/garak/blob/main/FAQ.md
+37. fickling/pyproject.toml at master · trailofbits/fickling - GitHub, accessed April 17, 2025, https://github.com/trailofbits/fickling/blob/master/pyproject.toml
+38. Cybersecurity Forensics: Types and Best Practices - SentinelOne, accessed April 17, 2025, https://www.sentinelone.com/cybersecurity-101/cybersecurity/cybersecurity-forensics/
+39. Cybercrime Module 6 Key Issues: Handling of Digital Evidence, accessed April 17, 2025, https://www.unodc.org/e4j/zh/cybercrime/module-6/key-issues/handling-of-digital-evidence.html
+40. typper-io/ai-code-sandbox: Secure Python sandbox for AI/ML code execution using Docker. Run LLM outputs safely. - GitHub, accessed April 17, 2025, https://github.com/typper-io/ai-code-sandbox
+41. Scanning AI Models for Security Risks - MetaDefender Sandbox - OPSWAT, accessed April 17, 2025, https://www.opswat.com/docs/filescan/datasheet/scanning-ai-models-for-security-risks
+42. What is Sandbox Security? - Forcepoint, accessed April 17, 2025, https://www.forcepoint.com/cyber-edu/sandbox-security
+43. Sandboxing Security: A Practical Guide - Perception Point, accessed April 17, 2025, https://perception-point.io/guides/sandboxing/sandboxing-security-practical-guide/
+44. The Differences Between Static and Dynamic Malware Analysis - Bitdefender, accessed April 17, 2025, https://www.bitdefender.com/en-us/blog/businessinsights/the-differences-between-static-malware-analysis-and-dynamic-malware-analysis
+45. Introducing Version 2 of Darktrace's Embedding Model for Investigation of Security Threats (DEMIST-2), accessed April 17, 2025, https://www.darktrace.com/es/blog/introducing-version-2-of-darktraces-embedding-model-for-investigation-of-security-threats-demist-2
+46. Introducing Version 2 of Darktrace's Embedding Model for Investigation of Security Threats (DEMIST-2), accessed April 17, 2025, https://darktrace.com/blog/introducing-version-2-of-darktraces-embedding-model-for-investigation-of-security-threats-demist-2
+47. Runtime Security: Importance, Tools & Best Practices, accessed April 17, 2025, https://www.plural.sh/blog/runtime-security/
+48. What is IaC Scanning? - Upwind, accessed April 17, 2025, https://www.upwind.io/glossary/what-is-iac-scanning
+49. Pre-runtime vulnerability scans or runtime protection: Which is better for your IaaS security?, accessed April 17, 2025, https://intezer.com/blog/cloud-security/pre-runtime-vulnerability-scans-or-runtime-protection-which-is-better-for-your-iaas-security/
+50. RobustBench: a standardized adversarial robustness benchmark - OpenReview, accessed April 17, 2025, https://openreview.net/pdf?id=X-sH548WreZ
+51. Zero-Trust Artificial Intelligence Model Security Based on Moving Target Defense and Content Disarm and Reconstruction - arXiv, accessed April 17, 2025, https://arxiv.org/pdf/2503.01758
+52. Peng Zhou (zpbrent@gmail.com) Shanghai University - Black Hat, accessed April 17, 2025, https://i.blackhat.com/Asia-24/Presentations/Asia-24-Zhou-HowtoMakeHuggingFace.pdf?_gl=1*ymvfd9*_gcl_au*MjEyNjc0MzYwNC4xNzMxMTM3MDA2*_ga*MTM5MTcwNjc4OS4xNzMxMTM3MDA2*_ga_K4JK67TFYV*MTczMTEzNzAwNi4xLjEuMTczMTEzODIzNi4wLjAuMA..&_ga=2.51586089.1863731842.1731137007-1391706789.1731137006
+53. Adversarial Robustness 360 - IBM, accessed April 17, 2025, https://art360.res.ibm.com/
+54. A Comprehensive Review of Adversarial Attacks on Machine Learning - arXiv, accessed April 17, 2025, https://arxiv.org/pdf/2412.11384
+55. Azure/counterfit: a CLI that provides a generic automation layer for assessing the security of ML models - GitHub, accessed April 17, 2025, https://github.com/Azure/counterfit
+56. Microsoft launches open source tool Counterfeit to prevent AI hacking | IT Pro - ITPro, accessed April 17, 2025, https://www.itpro.com/technology/artificial-intelligence-ai/359409/microsoft-open-source-counterfit-to-stop-ai-hacks
+57. Microsoft Releases Open Source 'Counterfit' Tool for Attacking AI Systems, accessed April 17, 2025, https://redmondmag.com/articles/2021/05/04/microsoft-counterfit-tool.aspx
+58. Microsoft 's 'Counterfit' Tool for Attacking AI Systems Now Open Source - Pure AI, accessed April 17, 2025, https://pureai.com/Articles/2021/05/04/Microsoft-Open-Sources-Counterfit.aspx
+59. CounterFit-IoT/CounterFit: A simulator for IoT sensors and actuators. This creates fake virtual sensors and actuators when the real ones won't fit on your counter - GitHub, accessed April 17, 2025, https://github.com/CounterFit-IoT/CounterFit
+60. NVIDIA/garak: the LLM vulnerability scanner - GitHub, accessed April 17, 2025, https://github.com/NVIDIA/garak
+61. CLI reference for garak, accessed April 17, 2025, https://reference.garak.ai/en/latest/cliref.html
+62. Releases · NVIDIA/garak - GitHub, accessed April 17, 2025, https://github.com/NVIDIA/garak/releases
+63. 7 Serious AI Security Risks and How to Mitigate Them - Wiz, accessed April 17, 2025, https://www.wiz.io/academy/ai-security-risks
+64. Static Analysis vs Dynamic Analysis - Digma AI, accessed April 17, 2025, https://digma.ai/static-analysis-vs-dynamic-analysis/
+65. Static vs. dynamic code analysis: A comprehensive guide - vFunction, accessed April 17, 2025, https://vfunction.com/blog/static-vs-dynamic-code-analysis/
+66. Static vs. Dynamic Code Analysis: How to Choose Between Them - Harness, accessed April 17, 2025, https://www.harness.io/blog/static-vs-dynamic-code-analysis
+67. Breaking Down Static VS Dynamic Security Testing for Mobile Apps - NowSecure, accessed April 17, 2025, https://www.nowsecure.com/resource/breaking-down-static-vs-dynamic-security-testing-for-mobile-apps-tony-ramirez/
+68. Runtime Behavior Monitoring: Real-Time Threat Detection Explained - Zimperium, accessed April 17, 2025, https://www.zimperium.com/glossary/runtime-behavior-monitoring/
+69. Understanding AI Data Poisoning - HiddenLayer, accessed April 17, 2025, https://hiddenlayer.com/innovation-hub/understanding-ai-data-poisoning/
+70. Protect AI - GitHub, accessed April 17, 2025, https://github.com/protectai
+71. Runtime security - Getting started - Cast AI, accessed April 17, 2025, https://docs.cast.ai/docs/sec-runtime-security
+72. What Is Runtime Security? - AccuKnox, accessed April 17, 2025, https://accuknox.com/cloudpedia/what-is-runtime-security
+73. Evidence Collection | Data Protection Compliance | Best Practices - Hyperproof, accessed April 17, 2025, https://hyperproof.io/evidence-collection-best-practices/
+74. APA 7th Ed. - Citation - LibGuides at California State University Dominguez Hills, accessed April 17, 2025, https://libguides.csudh.edu/citation/apa-7
+75. APA Citation Style, 7th edition: Government Publication - Research Guides, accessed April 17, 2025, https://guides.himmelfarb.gwu.edu/APA/book-government-publication
+76. How to Cite Sources in APA Citation Format - Mendeley, accessed April 17, 2025, https://www.mendeley.com/guides/apa-citation-guide
+77. APA citation style · Citing · Help & how-to - Concordia Library, accessed April 17, 2025, https://library.concordia.ca/help/citing/apa.php
+78. APA Citation Style Guide (7th Edition) - Research Guides - Thompson Rivers University, accessed April 17, 2025, https://libguides.tru.ca/apa
+79. Common AI Model Formats - Hugging Face, accessed April 17, 2025, https://huggingface.co/blog/ngxson/common-ai-model-formats
+80. “Security is not my field, I'm a stats guy”: A Qualitative Root Cause Analysis of Barriers to Adversarial Machine Learning - USENIX, accessed April 17, 2025, https://www.usenix.org/system/files/usenixsecurity23-mink.pdf

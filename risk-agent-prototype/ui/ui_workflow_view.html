@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Model Security Workflow</title>
+
+  <!-- highlight.js for YAML syntax coloring -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css"
+  />
+
+  <!-- vis-network UMD build (defines window.vis) -->
+  <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/vis-network.min.js"></script>
+
+  <style>
+    :root {
+      --bg-page: #f9f9f9;
+      --bg-card: #fff;
+      --bg-code: #f4f4f4;
+      --clr-border: #ddd;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+    }
+    .container {
+      width: 90%;
+      max-width: 1600px;
+      margin: 32px auto;
+      padding: 24px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+    h1, h2 { margin: 0 0 16px; }
+    .section { margin-bottom: 40px; }
+    pre {
+      background: var(--bg-code);
+      padding: 16px;
+      border-radius: 6px;
+      max-height: 40vh;
+      overflow: auto;
+    }
+    .hljs { background: var(--bg-code); }
+    #graph {
+      width: 100%;
+      height: 60vh;
+      min-height: 350px;
+      border: 1px solid var(--clr-border);
+      border-radius: 6px;
+      background: #fafbfc;
+    }
+    @media (max-width:600px) {
+      #graph { height: 50vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>AI Model Security Workflow</h1>
+
+    <div class="section">
+      <h2>Workflow YAML</h2>
+      <pre><code id="yaml-code" class="yaml"></code></pre>
+    </div>
+
+    <div class="section">
+      <h2>Workflow Node–Edge Graph (<a href="ui_workflow_view.html">Execute in AgentStudio</a>)</h2>
+      <div id="graph"></div>
+    </div>
+  </div>
+
+  <!-- highlight.js and our script -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>
+    // 1) Render YAML
+    const workflowYAML = `protocol_version: 1.0
+workflow_id: ai-model-security-v1
+compliance: [cyclonedx, vex, internal-sec-guidelines]
+
+agents:
+  - id: security_team
+    type: automated
+    description: Executes scans and reporting.
+  - id: llm_auditor
+    type: llm
+    description: Audits scan results.
+
+steps:
+  - name: Environment Setup
+    agent: security_team
+    run:
+      - git clone https://github.com/scantist/risk-agent-prototype.git
+      - cd risk-agent-prototype/design && bash setup_unified.sh
+    outputs:
+      - setup_logs: logs/setup.log
+
+  - name: Static Analysis - Basic Scan
+    agent: security_team
+    run:
+      - mcp scan --type static --input /input/model.gguf --output analysis/results/security_report.md
+    outputs:
+      - static_scan_report: analysis/results/security_report.md
+
+  - name: Audit Static Scan
+    agent: llm_auditor
+    prompt: |
+      Review the static analysis report (security_report.md) for completeness...
+    inputs:
+      - static_scan_report
+    outputs:
+      - static_audit_summary: logs/static_audit_summary.md
+
+  - name: Enhanced Analysis - Specialized Tools
+    agent: security_team
+    run:
+      - mcp scan --type enhanced --input /input/model.gguf --output analysis/results/enhanced_security_report.md
+      - mcp extract-metadata --input /input/model.gguf --output analysis/results/model_metadata.json
+      - mcp check-dependencies --input /input/model.gguf --output analysis/results/dependency_report.json
+    outputs:
+      - enhanced_scan_report: analysis/results/enhanced_security_report.md
+      - model_metadata: analysis/results/model_metadata.json
+      - dependency_report: analysis/results/dependency_report.json
+
+  - name: Audit Enhanced Scan
+    agent: llm_auditor
+    prompt: |
+      Review the enhanced analysis report (enhanced_security_report.md), model metadata...
+    inputs:
+      - enhanced_scan_report
+      - model_metadata
+      - dependency_report
+    outputs:
+      - enhanced_audit_summary: logs/enhanced_audit_summary.md
+
+  - name: Remediation (if needed)
+    agent: security_team
+    prompt: |
+      If any audit summary flags issues or recommends further action...
+    when: static_audit_summary.flags_issues == true or enhanced_audit_summary.flags_issues == true
+    outputs:
+      - remediation_logs: logs/remediation.log
+
+  - name: Finalize CycloneDX VEX Report
+    agent: security_team
+    prompt: |
+      Compile all findings, actions taken, audit summaries, and remediation logs...
+    inputs:
+      - static_scan_report
+      - enhanced_scan_report
+      - static_audit_summary
+      - enhanced_audit_summary
+      - remediation_logs
+    outputs:
+      - cyclonedx_vex_report: analysis/results/final_vex_report.xml
+
+artifacts:
+  - name: static_scan_report
+  - name: enhanced_scan_report
+  - name: static_audit_summary
+  - name: enhanced_audit_summary
+  - name: remediation_logs
+  - name: cyclonedx_vex_report
+
+output:
+  - cyclonedx_vex_report
+`;
+
+    const yamlEl = document.getElementById('yaml-code');
+    yamlEl.textContent = workflowYAML;
+    hljs.highlightElement(yamlEl);
+
+    // 2) Render the graph once DOM is ready
+    window.addEventListener('DOMContentLoaded', () => {
+      const nodes = [
+        { id: 1, label: 'Environment Setup',       group: 'security_team' },
+        { id: 2, label: 'Static Analysis',         group: 'security_team' },
+        { id: 3, label: 'Audit Static Scan',       group: 'llm_auditor' },
+        { id: 4, label: 'Enhanced Analysis',       group: 'security_team' },
+        { id: 5, label: 'Audit Enhanced Scan',     group: 'llm_auditor' },
+        { id: 6, label: 'Remediation (if needed)', group: 'security_team' },
+        { id: 7, label: 'Finalize VEX Report',     group: 'security_team' }
+      ];
+
+      const edges = [
+        { from: 1, to: 2 },
+        { from: 2, to: 3 },
+        { from: 3, to: 4 },
+        { from: 4, to: 5 },
+        { from: 5, to: 6 },
+        { from: 6, to: 7 },
+        { from: 5, to: 7, dashes: true }
+      ];
+
+      const container = document.getElementById('graph');
+      const data = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edges)
+      };
+
+      const options = {
+        nodes: {
+          shape: 'box',
+          font: { size: 16 },
+          color: { background: '#fff', border: '#888' },
+          borderWidth: 2,
+        },
+        edges: {
+          arrows: 'to',
+          smooth: { type: 'cubicBezier' },
+          color: '#1976d2',
+        },
+        groups: {
+          security_team: { color: { background: '#e3f2fd', border: '#1976d2' } },
+          llm_auditor:   { color: { background: '#fffde7', border: '#fbc02d' } }
+        },
+        layout: { improvedLayout: true },
+        physics: {
+          enabled: true,
+          barnesHut: { gravitationalConstant: -30000, springLength: 120 }
+        }
+      };
+
+      new vis.Network(container, data, options);
+    });
+  </script>
+</body>
+</html>

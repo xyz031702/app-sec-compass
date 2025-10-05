@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Security Analysis Framework - DeepThink</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.5/dist/purify.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #F5F7FA;
+            --text-color: #333333;
+            --safe-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --info-color: #3498DB;
+            --border-color: #E0E6ED;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .deepthink-container {
+            display: flex;
+            height: calc(100vh - 60px);
+            overflow: hidden; /* Prevents scrollbars on the container */
+        }
+        
+        .document-sidebar {
+            width: 220px;
+            background-color: white;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 0;
+        }
+        
+        .document-category {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .category-title {
+            font-weight: 500;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .category-title i {
+            margin-right: 8px;
+            color: var(--secondary-color);
+        }
+        
+        .document-list {
+            padding: 10px 0;
+            display: none;
+        }
+        
+        .document-list.active {
+            display: block;
+        }
+        
+        .document-item {
+            padding: 8px 15px 8px 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .document-item:hover, .document-item.active {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .document-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            position: relative;
+            min-width: 0; /* Prevents flex items from overflowing */
+        }
+        
+        .canvas-container {
+            min-height: 100%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 25px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        
+        .canvas-editable {
+            outline: none;
+            min-height: 600px;
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        
+        .canvas-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .canvas-toolbar button {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .canvas-toolbar button:hover {
+            background-color: #f1f3f5;
+        }
+        
+        .canvas-toolbar .separator {
+            width: 1px;
+            background-color: var(--border-color);
+            margin: 0 5px;
+        }
+        
+        /* Markdown content styling */
+        .canvas-editable h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .canvas-editable h2 {
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .canvas-editable h3 {
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .canvas-editable p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .canvas-editable ul, .canvas-editable ol {
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        
+        .canvas-editable li {
+            margin-bottom: 5px;
+        }
+        
+        .canvas-editable code {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #f5f7fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        .canvas-editable pre {
+            background-color: #f5f7fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .canvas-editable pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .canvas-editable blockquote {
+            border-left: 4px solid var(--secondary-color);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .canvas-editable a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+        
+        .canvas-editable a:hover {
+            text-decoration: underline;
+        }
+        
+        .canvas-editable table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .canvas-editable th,
+        .canvas-editable td {
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        .canvas-editable th {
+            background-color: #f5f7fa;
+            font-weight: 500;
+        }
+        
+        .canvas-editable tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .assistant-panel {
+            width: 280px;
+            background-color: #f8f9fa;
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .assistant-header {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .assistant-header i {
+            margin-right: 10px;
+        }
+        
+        .assistant-header span {
+            flex: 1;
+            font-weight: 500;
+        }
+        
+        .assistant-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .assistant-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background-color: white;
+        }
+        
+        .chat-message {
+            margin-bottom: 20px;
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .chat-message-user {
+            align-self: flex-end;
+            margin-left: auto;
+            background-color: #e9f2fd;
+            color: var(--text-color);
+            border-radius: 6px 6px 0 6px;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .chat-message-bot {
+            align-self: flex-start;
+            background-color: #f1f3f5;
+            border-radius: 6px 6px 6px 0;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+            font-size: 14px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-input button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            width: 40px;
+            height: 40px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s;
+        }
+        
+        .chat-input button:hover {
+            background-color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>AI Model Security</h1>
+                <p>Analysis Framework</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-search"></i>
+                    <span>New Analysis</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Analysis History</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security Reports</span>
+                </div>
+                <div class="menu-item active">
+                    <i class="fas fa-brain"></i>
+                    <span>DeepThink</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>IDE Integration</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>DeepThink Knowledge Hub</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-file-export"></i> Export Document
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search Knowledge Base
+                    </button>
+                </div>
+            </div>
+            
+            <div class="deepthink-container">
+                <div class="document-sidebar">
+                    <div class="sidebar-content">
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-flask"></i>
+                                <span>Deep Think</span>
+                            </div>
+                            <div class="document-list active">
+                                <div class="document-item active" data-document="merged_framework">Integrated Framework</div>
+                                <div class="document-item" data-document="llm_security_risks">LLM Security Risks</div>
+                            </div>
+                        </div>
+                        
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-tasks"></i>
+                                <span>Planning</span>
+                            </div>
+                            <div class="document-list">
+                                <div class="document-item" data-document="implementation_plan">Implementation Plan</div>
+                                <div class="document-item" data-document="risk_assessment">Risk Assessment</div>
+                                <div class="document-item" data-document="timeline">Project Timeline</div>
+                            </div>
+                        </div>
+                        
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-drafting-compass"></i>
+                                <span>Design</span>
+                            </div>
+                            <div class="document-list">
+                                <div class="document-item" data-document="architecture">System Architecture</div>
+                                <div class="document-item" data-document="user_manual">User Manual</div>
+                                <div class="document-item" data-document="workflow">Analysis Workflow</div>
+                            </div>
+                        </div>
+
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-drafting-compass"></i>
+                                <span>Implement</span>
+                            </div>
+                            <div class="document-list">
+                                <div class="document-item" data-document="workflow editor">Workflow Editor</div>
+                                <div class="document-item" data-document="configuration">Configuration</div>
+                                <div class="document-item" data-document="Publish as MCP">Publish as MCP App</div>
+                            </div>
+                        </div>
+                        
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Evaluation</span>
+                            </div>
+                            <div class="document-list">
+                                <div class="document-item" data-document="evaluation_plan">Evaluation Plan</div>
+                                <div class="document-item" data-document="test_cases">Test Cases</div>
+                                <div class="document-item" data-document="metrics">Performance Metrics</div>
+                            </div>
+                        </div>
+
+                        <div class="document-category">
+                            <div class="category-title">
+                                <i class="fas fa-drafting-compass"></i>
+                                <span>Report</span>
+                            </div>
+                            <div class="document-list">
+                                <div class="document-item" data-document="report">Report</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="document-content">
+                    <div class="canvas-toolbar">
+                        <button id="btn-heading"><i class="fas fa-heading"></i> Heading</button>
+                        <button id="btn-bold"><i class="fas fa-bold"></i> Bold</button>
+                        <button id="btn-italic"><i class="fas fa-italic"></i> Italic</button>
+                        <button id="btn-code"><i class="fas fa-code"></i> Code</button>
+                        <button id="btn-link"><i class="fas fa-link"></i> Link</button>
+                        <div class="separator"></div>
+                        <button id="btn-list"><i class="fas fa-list"></i> List</button>
+                        <button id="btn-quote"><i class="fas fa-quote-right"></i> Quote</button>
+                    </div>
+                    <div class="canvas-container">
+                        <h1 id="document-title">Investigation Framework for Malicious Code in AI Models</h1>
+                        <div id="document-body" class="canvas-editable" contenteditable="true"></div>
+                    </div>
+                </div>
+                
+                <div class="assistant-panel">
+                    <div class="assistant-header">
+                        <i class="fas fa-robot"></i>
+                        <span>AI Security Assistant</span>
+                    </div>
+                    <div class="assistant-body">
+                        <div class="chat-messages">
+                            <div class="chat-message chat-message-bot">
+                                Hello! I'm your AI Security Assistant. I can help answer questions about AI model security, explain concepts from the research documents, or provide guidance on using the framework. What would you like to know?
+                            </div>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text" placeholder="Type your question here...">
+                            <button><i class="fas fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <script>
+        /* ---------- 1.  static data ----------- */
+        const docs = {
+          malicious_code_in_ai_model: `# Investigation Framework for Malicious Code in AI Models
+        
+        ## Executive Summary
+        Organizations adopting AI models must remain vigilant … <!--‑‑snip‑‑-->`,
+          merged_framework: `# Integrated Framework for Detecting and Mitigating Malicious Code in AI Models
+        
+        *Merged synthesis of ChatGPT‑o3 and Gemini 2.5 reports* …`,
+          llm_security_risks: `# LLM Security Risks and Mitigations
+        
+        ## Overview
+        Large Language Models (LLMs) present unique security challenges …`,
+          evaluation_plan: `# AI Model Security Framework – Evaluation Plan
+        
+        ## Overview
+        This document outlines the comprehensive evaluation methodology …`
+        };
+        
+        /* ---------- 2.  helpers ----------- */
+        function titleFromId(id) {
+          return id
+            .split('_')
+            .map(w => w[0].toUpperCase() + w.slice(1))
+            .join(' ');
+        }
+        
+        function renderMarkdown(md, el) {
+          const raw = marked.parse(md, { breaks: true });
+          el.innerHTML = DOMPurify.sanitize(raw);
+          el.querySelectorAll('pre code').forEach(hljs.highlightElement);
+        }
+        
+        /* ---------- 3.  main ----------- */
+        document.addEventListener('DOMContentLoaded', () => {
+          const bodyEl   = document.getElementById('document-body');
+          const titleEl  = document.getElementById('document-title');
+        
+          /* sidebar accordion */
+          document.querySelectorAll('.category-title').forEach(t => {
+            t.addEventListener('click', () => t.nextElementSibling.classList.toggle('active'));
+          });
+        
+          /* document switch */
+          document.querySelectorAll('.document-item').forEach(item => {
+            item.addEventListener('click', () => {
+              /* visual state */
+              document.querySelectorAll('.document-item').forEach(i => i.classList.remove('active'));
+              item.classList.add('active');
+        
+              /* get content */
+              const id  = item.dataset.document;
+              const md  = docs[id] || `# ${titleFromId(id)}\n\n_(content coming soon)_`;
+              titleEl.textContent = titleFromId(id);
+              renderMarkdown(md, bodyEl);
+            });
+          });
+        
+          /* preload first doc */
+          document.querySelector('.document-item.active')?.click();
+        
+          /* ------- editor toolbar (document.execCommand is still fine for simple demos) */
+          const exec = (cmd, val = null) => document.execCommand(cmd, false, val);
+        
+          document.getElementById('btn-heading').onclick = () => exec('formatBlock', 'H2');
+          document.getElementById('btn-bold'   ).onclick = () => exec('bold');
+          document.getElementById('btn-italic' ).onclick = () => exec('italic');
+          document.getElementById('btn-list'   ).onclick = () => exec('insertUnorderedList');
+          document.getElementById('btn-link'   ).onclick = () => {
+              const url = prompt('Enter URL', 'https://');
+              if (url) exec('createLink', url);
+          };
+          document.getElementById('btn-quote'  ).onclick = () => exec('formatBlock', 'BLOCKQUOTE');
+          document.getElementById('btn-code'   ).onclick = () => {
+              const sel = window.getSelection();
+              if (!sel.toString()) return;
+              exec('insertHTML', `<code>${sel}</code>`);
+          };
+        
+          /* ------- chat stub ------- */
+          const chatBox   = document.querySelector('.chat-messages');
+          const chatInput = document.querySelector('.chat-input input');
+          const chatSend  = document.querySelector('.chat-input button');
+        
+          function addMsg(text, cls) {
+            const div = document.createElement('div');
+            div.className = `chat-message ${cls}`;
+            div.textContent = text;
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight;
+          }
+        
+          function botReply(q) {
+            const t = q.toLowerCase();
+            if (/pickle|serialization/.test(t))
+              return 'Pickle is dangerous … prefer Safetensors or ONNX.';
+            if (/backdoor|trojan/.test(t))
+              return 'Backdoors are hidden triggers … use Neural Cleanse or STRIP.';
+            return `I’m not sure about “${q}”. Could you be more specific?`;
+          }
+        
+          function send() {
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+            addMsg(msg, 'chat-message-user');
+            chatInput.value = '';
+            setTimeout(() => addMsg(botReply(msg), 'chat-message-bot'), 800);
+          }
+        
+          chatSend.onclick      = send;
+          chatInput.onkeydown = e => e.key === 'Enter' && send();
+        });
+        </script>
+        
+</body>
+</html>

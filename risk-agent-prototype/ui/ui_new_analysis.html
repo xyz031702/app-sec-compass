@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Consultant - New Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #F5F7FA;
+            --text-color: #333333;
+            --safe-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --info-color: #3498DB;
+            --border-color: #E0E6ED;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;<div class="analysis-source-cards" style="display:flex; gap:30px; margin-bottom:30px;">
+              <div class="source-card" style="flex:1; border:1px solid #3498DB; border-radius:10px; padding:24px; cursor:pointer;" onclick="selectAnalysisSource('deepthink')">
+                <div style="font-size:2rem; color:#3498DB; margin-bottom:10px;"><i class="fas fa-project-diagram"></i></div>
+                <h3>Build a Workflow (Deep Think)</h3>
+                <p>Create a custom analysis workflow using the Deep Think knowledge hub and workflow editor.</p>
+              </div>
+              <div class="source-card" style="flex:1; border:1px solid #27AE60; border-radius:10px; padding:24px; cursor:pointer;" onclick="selectAnalysisSource('mcp')">
+                <div style="font-size:2rem; color:#27AE60; margin-bottom:10px;"><i class="fas fa-cubes"></i></div>
+                <h3>Reuse Published MCP App</h3>
+                <p>Select and run a previously published MCP (Model Control Plane) application for repeatable analysis.</p>
+              </div>
+            </div>
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .wizard-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+        
+        .wizard-steps {
+            display: flex;
+            background-color: var(--primary-color);
+            padding: 0;
+        }
+        
+        .wizard-step {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .wizard-step.active {
+            color: white;
+            font-weight: 500;
+        }
+        
+        .wizard-step.completed {
+            color: white;
+        }
+        
+        .wizard-step:not(:last-child):after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid var(--primary-color);
+            z-index: 2;
+        }
+        
+        .wizard-step-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            margin-right: 8px;
+        }
+        
+        .wizard-step.active .wizard-step-number {
+            background-color: var(--secondary-color);
+        }
+        
+        .wizard-step.completed .wizard-step-number {
+            background-color: var(--safe-color);
+        }
+        
+        .wizard-content {
+            padding: 30px;
+        }
+        
+        .wizard-panel {
+            display: none;
+        }
+        
+        .wizard-panel.active {
+            display: block;
+        }
+        
+        .wizard-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .wizard-description {
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: 4px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--secondary-color);
+        }
+        
+        .file-upload-icon {
+            font-size: 48px;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .file-upload-text {
+            margin-bottom: 10px;
+        }
+        
+        .file-upload-subtext {
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .mode-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .mode-card {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mode-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+        
+        .mode-card.selected {
+            border-color: var(--secondary-color);
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+        
+        .mode-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .mode-card-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+        }
+        
+        .mode-card-title {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .mode-card-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .mode-card-features {
+            list-style-type: none;
+        }
+        
+        .mode-card-feature {
+            font-size: 13px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mode-card-feature i {
+            color: var(--secondary-color);
+            margin-right: 5px;
+        }
+        
+        .wizard-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px 30px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .model-info-panel {
+            background-color: var(--background-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .model-info-header {
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .model-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .model-info-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .model-info-label {
+            font-weight: 500;
+            margin-right: 10px;
+            color: #666;
+        }
+        
+        .model-info-value {
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .checkbox-group {
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .checkbox-input {
+            margin-right: 10px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .summary-label {
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .summary-value {
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Risk Consultant</h1>
+                <p>Analysis Framework</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item active">
+                    <i class="fas fa-search"></i>
+                    <span>New Analysis</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Analysis History</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security Reports</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+  <!-- Source selection cards: Build Workflow or Reuse MCP App -->
+  <div class="analysis-source-cards" style="display:flex; gap:30px; margin-bottom:30px;">
+    <div class="source-card" id="card-deepthink" style="flex:1; border:2px solid #3498DB; border-radius:10px; padding:24px; cursor:pointer; transition:box-shadow 0.2s;" onclick="selectAnalysisSource('deepthink')">
+      <div style="font-size:2rem; color:#3498DB; margin-bottom:10px;"><i class="fas fa-project-diagram"></i></div>
+      <h3>Build a Workflow (Deep Think)</h3>
+      <p>Create a custom analysis workflow using the Deep Think knowledge hub and workflow editor.</p>
+    </div>
+    <div class="source-card" id="card-mcp" style="flex:1; border:2px solid #27AE60; border-radius:10px; padding:24px; cursor:pointer; transition:box-shadow 0.2s;" onclick="selectAnalysisSource('mcp')">
+      <div style="font-size:2rem; color:#27AE60; margin-bottom:10px;"><i class="fas fa-cubes"></i></div>
+      <h3>Reuse Published MCP App</h3>
+      <p>Select and run a previously published MCP (Model Control Plane) application for repeatable analysis.</p>
+    </div>
+  </div>
+  <script>
+    function selectAnalysisSource(source) {
+      document.getElementById('card-deepthink').style.boxShadow = source === 'deepthink' ? '0 0 0 4px #3498DB33' : '';
+      document.getElementById('card-mcp').style.boxShadow = source === 'mcp' ? '0 0 0 4px #27AE6033' : '';
+      // Optionally, show/hide wizard steps based on selection
+    }
+  </script>
+
+            <div class="header">
+                <h1>New Analysis</h1>
+            </div>
+            
+            <div class="wizard-container">
+                <div class="wizard-steps">
+                    <div class="wizard-step active">
+                        <span class="wizard-step-number">1</span>
+                        <span>Model Selection</span>
+                    </div>
+                    <div class="wizard-step">
+                        <span class="wizard-step-number">2</span>
+                        <span>Analysis Mode</span>
+                    </div>
+                    <div class="wizard-step">
+                        <span class="wizard-step-number">3</span>
+                        <span>Configuration</span>
+                    </div>
+                    <div class="wizard-step">
+                        <span class="wizard-step-number">4</span>
+                        <span>Review & Start</span>
+                    </div>
+                </div>
+                
+                <div class="wizard-content">
+                    <!-- Step 1: Model Selection -->
+                    <div class="wizard-panel active">
+                        <h2 class="wizard-title">Select Model for Analysis</h2>
+                        <p class="wizard-description">Choose an AI model file to analyze for security vulnerabilities. You can upload a file or select from previously analyzed models.</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Upload Model File</label>
+                            <div class="file-upload">
+                                <div class="file-upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="file-upload-text">Drag and drop your model file here</div>
+                                <div class="file-upload-subtext">or click to browse files (GGUF, PKL, PT, ONNX, etc.)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Or Select from Recent Models</label>
+                            <select class="form-control">
+                                <option value="">-- Select a model --</option>
+                                <option value="nanollama">nanollama-Q4_K_M.gguf</option>
+                                <option value="mistral">mistral-7b-v0.1.gguf</option>
+                                <option value="phi2">phi-2.Q4_K_M.gguf</option>
+                            </select>
+                        </div>
+                        
+                        <div class="model-info-panel" style="display: none;">
+                            <h3 class="model-info-header">Model Information</h3>
+                            <div class="model-info-grid">
+                                <div class="model-info-item">
+                                    <span class="model-info-label">Name:</span>
+                                    <span class="model-info-value">nanollama-Q4_K_M.gguf</span>
+                                </div>
+                                <div class="model-info-item">
+                                    <span class="model-info-label">Format:</span>
+                                    <span class="model-info-value">GGUF</span>
+                                </div>
+                                <div class="model-info-item">
+                                    <span class="model-info-label">Size:</span>
+                                    <span class="model-info-value">1.8 GB</span>
+                                </div>
+                                <div class="model-info-item">
+                                    <span class="model-info-label">Last Modified:</span>
+                                    <span class="model-info-value">Apr 15, 2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2: Analysis Mode -->
+                    <div class="wizard-panel">
+                        <h2 class="wizard-title">Choose Analysis Mode</h2>
+                        <p class="wizard-description">Select the analysis mode that best fits your needs. Enhanced mode provides more comprehensive security analysis but requires additional tools and may take longer.</p>
+                        
+                        <div class="mode-cards">
+                            <div class="mode-card">
+                                <div class="mode-card-header">
+                                    <div class="mode-card-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <div class="mode-card-title">Basic Mode</div>
+                                </div>
+                                <div class="mode-card-description">
+                                    Essential security checks with minimal dependencies. Suitable for quick assessments.
+                                </div>
+                                <ul class="mode-card-features">
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Format verification</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Suspicious string detection</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> ModelScan</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Basic syscall monitoring</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Network activity monitoring</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="mode-card selected">
+                                <div class="mode-card-header">
+                                    <div class="mode-card-icon">
+                                        <i class="fas fa-shield-alt"></i>
+                                    </div>
+                                    <div class="mode-card-title">Enhanced Mode</div>
+                                </div>
+                                <div class="mode-card-description">
+                                    Comprehensive security analysis with specialized AI security tools.
+                                </div>
+                                <ul class="mode-card-features">
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> All basic mode checks</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Fickling for pickle security</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Advanced syscall monitoring</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> LLM-Guard</li>
+                                    <li class="mode-card-feature"><i class="fas fa-check"></i> Garak vulnerability scanning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3: Configuration -->
+                    <div class="wizard-panel">
+                        <h2 class="wizard-title">Configure Analysis Settings</h2>
+                        <p class="wizard-description">Customize the analysis settings to fit your specific requirements.</p>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Output Directory</label>
+                            <input type="text" class="form-control" value="analysis/results/enhanced_nanollama">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Analysis Components</label>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    Static Analysis
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    Dynamic Analysis
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    Behavioral Testing
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Advanced Options</label>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    Use Docker sandbox for isolation
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input" checked>
+                                    Monitor network activity
+                                </label>
+                            </div>
+                            
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" class="checkbox-input">
+                                    Generate detailed evidence report (increases analysis time)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4: Review & Start -->
+                    <div class="wizard-panel">
+                        <h2 class="wizard-title">Review & Start Analysis</h2>
+                        <p class="wizard-description">Review your analysis settings and start the security analysis.</p>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Model File</div>
+                            <div class="summary-value">nanollama-Q4_K_M.gguf</div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Analysis Mode</div>
+                            <div class="summary-value">Enhanced Mode</div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Output Directory</div>
+                            <div class="summary-value">analysis/results/enhanced_nanollama</div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Components</div>
+                            <div class="summary-value">Static, Dynamic, Behavioral</div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Sandbox</div>
+                            <div class="summary-value">Docker</div>
+                        </div>
+                        
+                        <div class="summary-item">
+                            <div class="summary-label">Estimated Time</div>
+                            <div class="summary-value">5-10 minutes</div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <p>Click "Start Analysis" to begin the security analysis process. You will be able to monitor the progress in real-time.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="wizard-footer">
+                    <button class="btn btn-outline" id="prev-btn" disabled>Previous</button>
+                    <button class="btn btn-primary" id="next-btn">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple wizard navigation
+        const wizardSteps = document.querySelectorAll('.wizard-step');
+        const wizardPanels = document.querySelectorAll('.wizard-panel');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        let currentStep = 0;
+        
+        function updateWizard() {
+            // Update steps
+            wizardSteps.forEach((step, index) => {
+                step.classList.remove('active', 'completed');
+                if (index === currentStep) {
+                    step.classList.add('active');
+                } else if (index < currentStep) {
+                    step.classList.add('completed');
+                }
+            });
+            
+            // Update panels
+            wizardPanels.forEach((panel, index) => {
+                panel.classList.remove('active');
+                if (index === currentStep) {
+                    panel.classList.add('active');
+                }
+            });
+            
+            // Update buttons
+            prevBtn.disabled = currentStep === 0;
+            if (currentStep === wizardSteps.length - 1) {
+                nextBtn.textContent = 'Start Analysis';
+            } else {
+                nextBtn.textContent = 'Next';
+            }
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateWizard();
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < wizardSteps.length - 1) {
+                currentStep++;
+                updateWizard();
+            } else {
+                // Start analysis
+                alert('Analysis started!');
+                // In a real application, this would redirect to the analysis progress page
+            }
+        });
+        
+        // Mode card selection
+        document.querySelectorAll('.mode-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html>

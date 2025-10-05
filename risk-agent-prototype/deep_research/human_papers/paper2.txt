@@ -1,0 +1,40 @@
+Malicious‑Code / Backdoor Findings in
+“A Comprehensive Survey in LLM(-Agent) Full‑Stack Safety”
+========================================================
+
+1. Pre‑training Stage
+---------------------
+* §2.5.3 highlights **advanced data‑poisoning trends**:
+  • “Fragment” or covert poisoning that evades per‑sample detectors but destabilises models at scale.  
+  • Calls for **provenance tracking, reactive purification, and XAI‑based post‑hoc detectors**.
+
+* Concrete example (§3.1): **Code‑poisoning** a neural code‑search model by renaming a single identifier, showing that poisoned code can rank in the top 11 % of search results.
+
+2. Fine‑tuning / Alignment Stage
+--------------------------------
+* §2.2 “Fine‑tuning Data Safety” lists three high‑risk vectors:
+  1. **Instruction‑tuning backdoors** – malicious prompts or data trigger unsafe outputs.  
+  2. **PEFT backdoors** – stealthy, persistent mis‑alignment injected via LoRA / adapters.  
+  3. **Federated‑learning backdoors** – durable triggers that survive many training rounds.
+
+* Mentions early **mitigation research** – e.g., *Obliviate* neutralises task‑agnostic backdoors in PEFT.
+
+3. Deployment Stage: LLM‑Agent Backdoors
+----------------------------------------
+* §6.2.2 catalogues **multi‑backdoor attacks on tool‑using agents** (e.g., DemonAgent 2025).  
+  – Suggests runtime defences such as AgentGuard (orchestrator‑driven safety constraints).
+
+4. What the survey *does not* cover
+-----------------------------------
+* No discussion of **model‑serialization threats** (Pickle RCE, malware‑in‑weights) or
+  dedicated **static/dynamic scanning pipelines**.
+* Does not detail practical toolchains (ModelScan, Fickling, sandboxing, EDR).
+
+5. Practical Take‑aways
+-----------------------
+* Combine this survey’s poisoning/backdoor taxonomy with an external scanner
+  pipeline (static scan → sandbox → behavioural monitor) for full coverage.
+* Use cited benchmarks (PoisonBench, Persistent PT Poisoning) for regression tests.
+
+Prepared 17 Apr 2025.
+

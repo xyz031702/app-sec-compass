@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance: AI-Assisted Refactoring & Debugging | AI-Assisted Programming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+        }
+        .risk-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+        .practice-card {
+            background-color: #1F2937;
+            border-left: 4px solid #5EEAD4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(94, 234, 212, 0.2), 0 4px 6px -2px rgba(94, 234, 212, 0.1);
+        }
+        .risk-title {
+            color: #C4B5FD; /* Lighter Purple */
+        }
+        .mitigation-title {
+            color: #5EEAD4; /* Teal */
+        }
+        .mitigation-box {
+            background-color: rgba(94, 234, 212, 0.05);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+        }
+        .example-box {
+            background-color: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 0.5rem;
+        }
+        .article-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="text-center p-8 md:p-12 bg-gray-900">
+        <h1 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">Maintenance: AI-Assisted Refactoring & Debugging</h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">Helpful or harmful to an existing codebase?</p>
+        <div class="mt-6">
+            <a href="index.html" class="inline-block px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md text-white font-medium transition-colors">← Back to Overview</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Left Column -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Understanding AI-Assisted Refactoring & Debugging</h2>
+                    <p class="text-gray-300 mb-4">
+                        AI-assisted refactoring and debugging tools help developers improve existing codebases by automatically identifying issues, suggesting optimizations, 
+                        and even implementing changes. These tools can analyze large codebases much faster than humans, finding patterns and potential improvements that might otherwise be missed.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        While these tools can significantly reduce maintenance effort, they also introduce risks when applied to complex, interconnected systems.
+                        The AI may not fully understand the subtle dependencies and assumptions in the codebase, leading to changes that appear correct but introduce subtle bugs or regressions.
+                    </p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Detailed Example</h2>
+                    <div class="example-box p-5 mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">The Silent Date Format Change</h3>
+                        <p class="text-gray-300 mb-3">
+                            A developer at a financial services company was tasked with optimizing date handling functions across their codebase for better performance.
+                            They used an AI tool to "refactor date functions for performance" across the entire codebase.
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            The AI identified several optimization opportunities and made changes across 15 different files, which the developer approved after a quick review.
+                            The changes looked reasonable—replacing inefficient date parsing with more optimized methods and standardizing date handling across the codebase.
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            However, the AI had silently changed the date format in several places from DD/MM/YYYY to MM/DD/YYYY, assuming the American format was more standard.
+                            This change wasn't immediately apparent in the code review, as the format was determined at runtime.
+                        </p>
+                        <p class="text-gray-300">
+                            Two weeks later, the monthly financial reports started showing inconsistent data. Investigation revealed that a downstream reporting module was silently 
+                            misinterpreting dates, causing financial data to be assigned to incorrect months. By the time the issue was discovered, several weeks of financial data had been corrupted.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Risk Details</h2>
+                    <ul class="space-y-4">
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Unintended Side Effects</h3>
+                            <p class="text-gray-300">
+                                AI refactoring tools may introduce subtle changes that have cascading effects throughout the system, especially in codebases with implicit dependencies.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Context Loss</h3>
+                            <p class="text-gray-300">
+                                AI lacks understanding of business context, historical decisions, and domain-specific requirements that influenced the original code design.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Over-Optimization</h3>
+                            <p class="text-gray-300">
+                                AI may prioritize technical optimization over readability, maintainability, or domain-specific requirements, making code harder to maintain in the long run.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Silent Failures</h3>
+                            <p class="text-gray-300">
+                                Changes that pass all tests may still introduce subtle bugs that only manifest under specific conditions or in production environments.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="lg:col-span-1">
+            <div>
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Recommended Guardrails</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Mandate Diff Log Reviews</h3>
+                                <p class="text-gray-300 text-sm">Require thorough review of all changes made by AI refactoring tools, with special attention to subtle changes in logic or data handling.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Suggestion-Only Mode</h3>
+                                <p class="text-gray-300 text-sm">Configure AI tools to suggest refactors rather than applying them automatically, allowing developers to review and understand each change.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Comprehensive Testing</h3>
+                                <p class="text-gray-300 text-sm">Implement extensive test suites that cover edge cases and integration scenarios before applying AI-suggested refactors.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Phased Rollout</h3>
+                                <p class="text-gray-300 text-sm">Implement AI-suggested changes in phases with monitoring periods between deployments to catch subtle issues before they affect critical systems.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Community Discussions</h2>
+                    <div class="space-y-4" id="articles-container">
+                        <!-- Articles will be loaded here -->
+                        <p class="text-gray-400 text-center">No articles available yet.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>AI-Assisted Programming: Managing Emerging Risks and Ensuring Digital Trust</p>
+            <p class="mt-2">© 2025 All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to load articles from the articles directory
+        async function loadArticles() {
+            // This would typically fetch articles from a server or directory
+            // For now, this is a placeholder
+            const articlesContainer = document.getElementById('articles-container');
+            
+            // In a real implementation, you would fetch articles from a server
+            // and populate them dynamically
+        }
+
+        // Load articles when the page loads
+        document.addEventListener('DOMContentLoaded', loadArticles);
+    </script>
+</body>
+</html>

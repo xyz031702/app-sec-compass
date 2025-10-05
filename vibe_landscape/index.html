@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Assisted Programming: Managing Emerging Risks and Ensuring Digital Trust</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Calculator functions
+        function appendCalcValue(value) {
+            const display = document.getElementById('calc-display');
+            if (display.textContent === '0') {
+                display.textContent = value;
+            } else {
+                display.textContent += value;
+            }
+        }
+
+        function clearCalcDisplay() {
+            document.getElementById('calc-display').textContent = '0';
+        }
+
+        function calculateResult() {
+            const display = document.getElementById('calc-display');
+            try {
+                display.textContent = eval(display.textContent);
+            } catch (error) {
+                display.textContent = 'Error';
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+        }
+        .risk-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+        .practice-card {
+            background-color: #1F2937;
+            border-left: 4px solid #5EEAD4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(94, 234, 212, 0.2), 0 4px 6px -2px rgba(94, 234, 212, 0.1);
+        }
+        .risk-title {
+            color: #C4B5FD; /* Lighter Purple */
+        }
+        .mitigation-title {
+            color: #5EEAD4; /* Teal */
+        }
+        .mitigation-box {
+            background-color: rgba(94, 234, 212, 0.05);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+        }
+        .framework-section {
+            background: #1F2937;
+            border-top: 4px solid #A78BFA;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <header class="text-center p-8 md:p-12 bg-gray-900">
+        <h1 class="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">AI-Assisted Programming</h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">Managing Emerging Risks and Ensuring Digital Trust</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        
+        <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-12">
+             <h2 class="text-3xl font-bold text-center text-white mb-6">What is AI-Assisted Coding?</h2>
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left Side - Interaction -->
+                <div class="flex justify-center items-start">
+                    <iframe src="https://theee.ai/tools/i/coding-2OToJNNvzr" width="500" height="400" style="max-width: 100%; border: none; border-radius: 8px;"></iframe>
+                </div>
+                
+                <!-- Right Side - Example -->
+                <div class="flex flex-col justify-start">
+                    <h3 class="text-xl font-bold text-teal-300 mb-4">Example: Use AI-assisted coding to generate a calculator in seconds</h3>
+                    <div class="bg-gray-900/70 p-4 rounded-lg">
+                        <div class="calculator" style="background: #2e2e3a; padding: 15px; border-radius: 12px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); max-width: 280px; margin: 0 auto;">
+                            <div id="calc-display" style="background: #111; padding: 15px; border-radius: 8px; text-align: right; font-size: 1.8rem; margin-bottom: 10px; overflow-x: auto;">0</div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;">
+                                <button onclick="clearCalcDisplay()" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #e74c3c; color: #fff;">C</button>
+                                <button onclick="appendCalcValue('(')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">(</button>
+                                <button onclick="appendCalcValue(')')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">)</button>
+                                <button onclick="appendCalcValue('/')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #ff9500; color: #fff;">÷</button>
+                                
+                                <button onclick="appendCalcValue('7')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">7</button>
+                                <button onclick="appendCalcValue('8')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">8</button>
+                                <button onclick="appendCalcValue('9')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">9</button>
+                                <button onclick="appendCalcValue('*')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #ff9500; color: #fff;">×</button>
+                                
+                                <button onclick="appendCalcValue('4')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">4</button>
+                                <button onclick="appendCalcValue('5')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">5</button>
+                                <button onclick="appendCalcValue('6')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">6</button>
+                                <button onclick="appendCalcValue('-')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #ff9500; color: #fff;">−</button>
+                                
+                                <button onclick="appendCalcValue('1')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">1</button>
+                                <button onclick="appendCalcValue('2')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">2</button>
+                                <button onclick="appendCalcValue('3')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">3</button>
+                                <button onclick="appendCalcValue('+')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #ff9500; color: #fff;">+</button>
+                                
+                                <button onclick="appendCalcValue('0')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">0</button>
+                                <button onclick="appendCalcValue('.')" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #444; color: #fff;">.</button>
+                                <button onclick="calculateResult()" style="padding: 12px 0; border: none; border-radius: 8px; font-size: 1.1rem; background-color: #32cd32; color: #fff; grid-column: span 2;">=</button>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mt-4">With just a simple prompt like "Create a calculator with HTML, CSS, and JavaScript", AI can generate a fully functional calculator app with proper styling and logic.</p>
+                </div>
+             </div>
+        </div>
+
+        <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-12">
+            <h2 class="text-3xl font-bold text-center text-white mb-6">The Big Shift: Promise and Pain</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                <div class="bg-green-900/20 border border-green-500/30 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-green-300 flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        The Promise
+                    </h3>
+                    <ul class="space-y-3 text-green-200 mb-4">
+                        <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-green-400">●</strong><span><strong>Unprecedented Speed:</strong> Move from idea to functional prototype in hours, not months.</span></li>
+                        <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-green-400">●</strong><span><strong>Radical Accessibility:</strong> Empower non-engineers to build software.</span></li>
+                        <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-green-400">●</strong><span><strong>Creative Liberation:</strong> Free developers to focus on complex architecture and innovation.</span></li>
+                    </ul>
+                    <div class="chart-container">
+                        <canvas id="benefitsChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+                    <h3 class="text-2xl font-bold text-red-300 flex items-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        The Pain
+                    </h3>
+                    <ul class="space-y-3 text-red-200 mb-4">
+                         <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-red-400">●</strong><span><strong>Hidden Security Debt:</strong> AI prioritizes functional code, not secure code, creating deep vulnerabilities.</span></li>
+                         <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-red-400">●</strong><span><strong>The Maintainability Trap:</strong> Unstructured code becomes a tangled, unmanageable mess.</span></li>
+                         <li class="flex items-start"><strong class="mr-2 mt-1 font-sans text-red-400">●</strong><span><strong>The Accountability Void:</strong> When an AI agent fails, who is responsible?</span></li>
+                    </ul>
+                    <div class="chart-container">
+                        <canvas id="risksChart"></canvas>
+                    </div>
+                </div>
+            </div>
+             <p class="text-center text-gray-400 mt-6">To harness AI's power safely, organizations need clear playbooks now.</p>
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-3xl font-bold text-center text-white mb-8">Mapping the Landscape: 6 AI Practices Across the Development Lifecycle</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">1. Design: Prompt-Based Architecting</h3>
+                    <p class="text-gray-400 mb-4">Describe it and get code... at what cost?</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">A developer prompts an AI to "create a data visualization library." The AI confidently generates code that relies on `graphi-py`, a completely non-existent, "hallucinated" library, wasting days on debugging.</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Use **prompt templates** that require specifying libraries and versions.</li>
+                            <li>Adopt a **"test-first" mindset**; write the test before generating the code.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice1.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">2. Application Building: Low-Code/No-Code Platforms</h3>
+                    <p class="text-gray-400 mb-4">Anyone can build, not everyone should ship.</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">A marketing team builds an event registration tool that collects passport numbers and stores them in a public spreadsheet, bypassing all data privacy and security review processes.</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Require mandatory **export reviews** by security before any app goes live.</li>
+                            <li>Use **compliance plugins** that enforce data handling rules within the builder.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice2.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">3. Implementation: In-IDE Coding Assistants</h3>
+                    <p class="text-gray-400 mb-4">Copilots and Vibe Coding: fast but blind.</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">An engineer accepts a code suggestion to parse a file format, not knowing it was copied from a GPL-licensed project, creating a serious license compliance violation for their proprietary product.</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Integrate **linters and license scanners** into the CI/CD pipeline.</li>
+                            <li>Enforce **peer review** for all significant AI-assisted code contributions.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice3.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+                
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">4. Maintenance: AI-Assisted Refactoring & Debugging</h3>
+                    <p class="text-gray-400 mb-4">Helpful or harmful to an existing codebase?</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">A developer uses an AI to "refactor date functions for performance." The AI silently changes the date format in 15 files, causing a downstream reporting module to fail silently and corrupt financial data.</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Mandate review of **`diff` logs** for all AI refactoring actions.</li>
+                            <li>Use AI to **suggest** refactors, not apply them automatically.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice4.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">5. Integrations: AI as 'Smart Glue'</h3>
+                    <p class="text-gray-400 mb-4">Connecting systems via well-defined protocols where the AI is a tool, not an actor.</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">An AI is asked to "sync customer data from Salesforce to the marketing DB." Using an **API** via **Function Calling**, it correctly pulls the data, but the initial prompt was too vague, causing it to pull all fields, including sensitive PII, instead of only the required 'name' and 'email'.</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                             <li>**API Interactions:** Define strict, minimal data contracts (schemas) for all API calls to prevent over-fetching.</li>
+                             <li>**Plugins:** Vet all third-party plugins and isolate their permissions to prevent unintended system access.</li>
+                             <li>**Function Calling & MCP:** Ensure called functions are narrow in scope and handle errors gracefully. Use a secure secrets manager and structured protocols.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice5.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+
+                <div class="risk-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-2">6. Autonomy: The AI as an Actor</h3>
+                    <p class="text-gray-400 mb-4">When the AI is given a role, not just a task.</p>
+                    <div class="mb-4">
+                        <p class="risk-title font-semibold">Example Vignette:</p>
+                        <p class="text-gray-300 italic mt-1">An autonomous agent is given the role of "Database Performance Optimizer." A threat actor, learning of this, crafts public support queries with subtle instructions. The agent, trying to be helpful, is manipulated into executing commands that exfiltrate sensitive data, believing it is generating a "diagnostic report."</p>
+                    </div>
+                    <div class="mitigation-box p-4 rounded-md">
+                        <p class="mitigation-title font-semibold">Guardrails:</p>
+                        <ul class="list-disc list-inside text-gray-300 mt-2">
+                            <li>Enforce **strict operational mandates** (explicit do's and don'ts) instead of open-ended goals.</li>
+                             <li>Restrict agents to **sandboxed runs** with strict budget and resource limits.</li>
+                             <li>Implement **human-in-the-loop approval** for all proposed actions that alter state or access sensitive data.</li>
+                        </ul>
+                    </div>
+                    <div class="mt-4 text-center">
+                        <a href="practice6.html" class="inline-block px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-md text-white font-medium transition-colors">More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold text-center text-white mb-8">SOTA Practices: A Framework for Digital Trust</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">Strategic Prompt Engineering</h3>
+                    <p class="text-gray-300">Crafting clear, specific, and context-rich prompts to guide the AI with precision.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Yields higher quality, more relevant, and more secure code from the start.</p>
+                </div>
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">Human-in-the-Loop (HITL)</h3>
+                    <p class="text-gray-300">Mandating expert human review, validation, and approval for all critical AI outputs and actions.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Ensures accountability and serves as the ultimate quality and security gate.</p>
+                </div>
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">Robust Testing & Validation</h3>
+                    <p class="text-gray-300">Automating comprehensive tests for correctness, performance, and security for all generated code.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Verifies AI outputs against requirements and catches flaws before deployment.</p>
+                </div>
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">"Signal Coding" Methodology</h3>
+                    <p class="text-gray-300">A disciplined approach of planning, intentional prompting, and refactoring to ensure long-term maintainability.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Prevents technical debt and creates sustainable, scalable AI-generated systems.</p>
+                </div>
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">XAI & Transparency</h3>
+                    <p class="text-gray-300">Using tools that provide visibility into *why* code was generated and tagging all AI-assisted artifacts.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Fosters trust, simplifies debugging, and enables clear, auditable trails for governance.</p>
+                </div>
+                <div class="practice-card p-6 rounded-lg">
+                    <h3 class="text-xl font-bold text-teal-300 mb-2">Ecosystem Integration</h3>
+                    <p class="text-gray-300">Ensuring AI tools adhere to existing Design Systems, Agile workflows, and secure DevOps practices.</p>
+                    <p class="text-sm mt-3 text-gray-400"><strong>Benefit:</strong> Maintains consistency, quality, and operational stability across the organization.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-16 bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+             <h2 class="text-3xl font-bold text-center text-white mb-2">The Evolving Role of the Developer</h2>
+             <p class="text-gray-400 text-center mb-8">The developer's role is shifting from manual coding to strategic orchestration of AI.</p>
+             <div class="mx-auto" style="position: relative; height:400px; max-width:800px;">
+                <canvas id="skillsChart"></canvas>
+             </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
+            <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-white mb-4">Trust by Design</h2>
+                <ul class="space-y-4">
+                    <li class="flex items-start"><span class="text-teal-400 font-bold mr-3 mt-1">▶</span><div><h3 class="font-semibold text-lg">Transparency</h3><p class="text-gray-400">Tag AI-generated artefacts and maintain clear logs.</p></div></li>
+                    <li class="flex items-start"><span class="text-teal-400 font-bold mr-3 mt-1">▶</span><div><h3 class="font-semibold text-lg">Accountability</h3><p class="text-gray-400">Record who prompted, who reviewed, and who approved.</p></div></li>
+                    <li class="flex items-start"><span class="text-teal-400 font-bold mr-3 mt-1">▶</span><div><h3 class="font-semibold text-lg">Resilience</h3><p class="text-gray-400">Automate tests, security alerts, and disaster recovery plans.</p></div></li>
+                </ul>
+            </div>
+            <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-white mb-4">Leadership Playbook</h2>
+                 <ul class="space-y-4">
+                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-3 mt-1">1.</span><div><h3 class="font-semibold text-lg">Pilot Safely</h3><p class="text-gray-400">Test AI tools in non-critical environments first.</p></div></li>
+                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-3 mt-1">2.</span><div><h3 class="font-semibold text-lg">Demand Traceability</h3><p class="text-gray-400">Invest in tools that explain and track AI actions.</p></div></li>
+                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-3 mt-1">3.</span><div><h3 class="font-semibold text-lg">Upskill Teams</h3><p class="text-gray-400">Train staff in AI security, prompting, and compliance.</p></div></li>
+                    <li class="flex items-start"><span class="text-purple-400 font-bold mr-3 mt-1">4.</span><div><h3 class="font-semibold text-lg">Invest in Foundations</h3><p class="text-gray-400">Strengthen your secure DevSecOps platform.</p></div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="framework-section rounded-lg shadow-2xl p-6 md:p-8 mt-16">
+            <h2 class="text-3xl font-bold text-center text-white mb-8">Core Pillars of a Trustworthy AI Framework</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                <div class="bg-purple-900/20 border border-purple-500/30 rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold text-purple-300 mb-4">Customer Protection by Design</h3>
+                    <ul class="space-y-3 text-gray-300 text-left">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span><strong>Regulatory Compliance:</strong> Engineer systems to comply with privacy laws (GDPR, CCPA) and provide transparency for AI-driven decisions.</span>
+                        </li>
+                         <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span><strong>Technical Safeguards:</strong> Implement secure-by-design architecture, use privacy-enhancing tech, and build robust user consent mechanisms.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-teal-900/20 border border-teal-500/30 rounded-lg p-6">
+                    <h3 class="text-2xl font-semibold text-teal-300 mb-4">Governance & Assurance</h3>
+                     <ul class="space-y-3 text-gray-300 text-left">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span><strong>Human-Led Governance:</strong> Establish an AI Review Board to set standards and oversee high-risk applications.</span>
+                        </li>
+                         <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span><strong>Continuous Assurance:</strong> Maintain immutable audit trails for all AI actions and continuously monitor models in production for drift, bias, and security flaws.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Community Discussions Section -->
+    <section class="py-16 bg-gray-900" id="community">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">Community Discussions</h2>
+            <p class="text-xl text-gray-300 text-center mb-12 max-w-3xl mx-auto">Join the conversation about AI-assisted programming practices. Share your experiences, ask questions, and learn from others.</p>
+            
+            <!-- Interaction Area -->
+            <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-12 max-w-4xl mx-auto">
+                <div class="flex flex-col md:flex-row gap-4 mb-6">
+                    <input type="text" placeholder="Search discussions..." class="bg-gray-700 text-white px-4 py-3 rounded-md flex-grow focus:outline-none focus:ring-2 focus:ring-purple-400">
+                    <button class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-md transition-colors font-medium">Search</button>
+                </div>
+                
+                <div class="flex flex-wrap gap-3 mb-6">
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#PromptEngineering</span>
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#LowCode</span>
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#CodingAssistants</span>
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#AIRefactoring</span>
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#SmartGlue</span>
+                    <span class="bg-gray-700 text-sm text-gray-300 px-3 py-1 rounded-full cursor-pointer hover:bg-purple-600 hover:text-white transition-colors">#AIAutonomy</span>
+                </div>
+                
+                <div class="flex justify-between items-center">
+                    <button class="bg-teal-600 hover:bg-teal-700 text-white px-6 py-3 rounded-md transition-colors font-medium">Start New Discussion</button>
+                    <div class="text-gray-400">
+                        <span>Sort by: </span>
+                        <select class="bg-gray-700 text-white px-3 py-2 rounded-md focus:outline-none">
+                            <option>Latest</option>
+                            <option>Popular</option>
+                            <option>Trending</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Featured Resources -->
+            <h3 class="text-2xl font-bold text-white mb-6 text-center">Featured Resources</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Resource Categories -->
+                <div class="bg-gray-800/50 rounded-lg shadow-lg p-6 hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <h4 class="text-xl font-semibold text-purple-300 mb-3">Research Papers</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://arxiv.org/abs/2302.11520" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">Prompting for Software Engineering Tasks</span>
+                                <p class="text-sm text-gray-400 mt-1">Explores how different prompting strategies affect code generation quality.</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://arxiv.org/abs/2303.07839" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">The Impact of AI on Software Development Lifecycle</span>
+                                <p class="text-sm text-gray-400 mt-1">Comprehensive analysis of AI integration across development stages.</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="text-teal-400 hover:text-teal-300 mt-4 inline-block font-medium">View all papers →</a>
+                </div>
+                
+                <div class="bg-gray-800/50 rounded-lg shadow-lg p-6 hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <h4 class="text-xl font-semibold text-purple-300 mb-3">Tools & Resources</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="https://github.com/features/copilot" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">GitHub Copilot</span>
+                                <p class="text-sm text-gray-400 mt-1">AI pair programmer that offers code suggestions based on context.</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/langchain-ai/langchain" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">LangChain</span>
+                                <p class="text-sm text-gray-400 mt-1">Framework for developing applications powered by language models.</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="text-teal-400 hover:text-teal-300 mt-4 inline-block font-medium">View all tools →</a>
+                </div>
+                
+                <div class="bg-gray-800/50 rounded-lg shadow-lg p-6 hover:transform hover:-translate-y-2 transition-transform duration-300">
+                    <h4 class="text-xl font-semibold text-purple-300 mb-3">Latest Discussions</h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="#" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">Hallucination Detection Techniques</span>
+                                <p class="text-sm text-gray-400 mt-1">Community sharing methods to identify AI hallucinations in generated code.</p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="block hover:text-purple-300 transition-colors">
+                                <span class="font-medium">Security Best Practices for AI Integration</span>
+                                <p class="text-sm text-gray-400 mt-1">Discussion on securing AI-assisted development workflows.</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="#" class="text-teal-400 hover:text-teal-300 mt-4 inline-block font-medium">View all discussions →</a>
+                </div>
+            </div>
+            
+            <!-- Daily Summary -->
+            <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold text-white mb-4">Today's Summary</h3>
+                <div class="bg-gray-700/30 p-5 rounded-lg">
+                    <p class="text-gray-300 mb-4">Hot topic: A new study from Stanford shows that AI-assisted code review can reduce security vulnerabilities by up to 42% compared to traditional methods. Community members are discussing implementation strategies and potential biases in the methodology.</p>
+                    <p class="text-gray-300">Trending hashtags: <span class="text-purple-300">#AICodeReview</span>, <span class="text-purple-300">#SecurityFirst</span>, <span class="text-purple-300">#BiasMitigation</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center p-8 mt-8 bg-gray-900">
+        <p class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">Lead the Shift, Secure the Future.</p>
+        <p class="mt-4 text-lg text-gray-400 italic max-w-3xl mx-auto">“Software will no longer be hand-written, but it must remain human-governed.”</p>
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const vibrantPalette = { purple: '#A78BFA', indigo: '#818CF8', blue: '#60A5FA', teal: '#5EEAD4', green: '#A3E636', red: '#F87171', gray: '#9CA3AF' };
+            
+            const tooltipPlugin = {
+                tooltip: {
+                    backgroundColor: 'rgba(31, 41, 55, 0.8)',
+                    titleFont: { size: 14, weight: 'bold' },
+                    bodyFont: { size: 12 },
+                    padding: 10,
+                    cornerRadius: 6,
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            return Array.isArray(label) ? label.join(' ') : label;
+                        }
+                    }
+                }
+            };
+
+            const legendPlugin = {
+                legend: {
+                    labels: {
+                        color: vibrantPalette.gray,
+                        font: { size: 12 }
+                    }
+                }
+            };
+
+            function wrapLabel(str, maxWidth = 16) {
+                if (str.length <= maxWidth) return str;
+                const words = str.split(' ');
+                const lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + ' ' + word).trim().length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = word;
+                    } else {
+                        currentLine = (currentLine + ' ' + word).trim();
+                    }
+                }
+                if (currentLine) lines.push(currentLine.trim());
+                return lines;
+            }
+
+            // Chart 1: Benefits
+            const benefitsChartCtx = document.getElementById('benefitsChart');
+            if (benefitsChartCtx) {
+                new Chart(benefitsChartCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Accelerated Innovation', 'Democratizing Development', 'Developer Productivity', 'Enhanced Creativity'],
+                        datasets: [{
+                            data: [40, 25, 25, 10],
+                            backgroundColor: [vibrantPalette.purple, vibrantPalette.blue, vibrantPalette.teal, vibrantPalette.indigo],
+                            borderColor: '#1F2937',
+                            borderWidth: 4,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            ...tooltipPlugin,
+                            legend: { ...legendPlugin.legend, position: 'top' },
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+
+            // Chart 2: Risks
+            const risksChartCtx = document.getElementById('risksChart');
+            if (risksChartCtx) {
+                new Chart(risksChartCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: [wrapLabel('Security Vulnerabilities'), wrapLabel('Technical Debt'), wrapLabel('Debugging Difficulty'), wrapLabel('Skill Attrition'), wrapLabel('Complexity Handling')],
+                        datasets: [{
+                            label: 'Risk Level',
+                            data: [90, 85, 75, 60, 70],
+                            backgroundColor: 'rgba(248, 113, 113, 0.2)',
+                            borderColor: vibrantPalette.red,
+                            pointBackgroundColor: vibrantPalette.red,
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: vibrantPalette.red,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                                grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                                pointLabels: { color: vibrantPalette.gray, font: { size: 10 } },
+                                ticks: { display: false, stepSize: 25 }
+                            }
+                        },
+                        plugins: { ...tooltipPlugin, legend: { ...legendPlugin.legend, position: 'top' }, }
+                    }
+                });
+            }
+
+            // Chart 3: Skills
+            const skillsChartCtx = document.getElementById('skillsChart');
+            if (skillsChartCtx) {
+                new Chart(skillsChartCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: [wrapLabel('Manual Coding'), wrapLabel('Prompt Engineering'), wrapLabel('System Architecture'), wrapLabel('AI Output Validation'), wrapLabel('Ethical AI Evaluation')],
+                        datasets: [
+                            { label: 'Traditional Role Focus', data: [90, 10, 60, 40, 5], backgroundColor: vibrantPalette.blue, },
+                            { label: 'AI-Assisted Role Focus', data: [20, 95, 85, 90, 75], backgroundColor: vibrantPalette.purple, }
+                        ]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { stacked: false, grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: vibrantPalette.gray } },
+                            y: { stacked: false, grid: { color: 'transparent' }, ticks: { color: vibrantPalette.gray } }
+                        },
+                        plugins: { ...tooltipPlugin, legend: { ...legendPlugin.legend, position: 'top' }, }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "nanollama-clean.gguf": {
+    "is_malicious": false,
+    "vulnerabilities": []
+  },
+  "tinyllama-clean.gguf": {
+    "is_malicious": false,
+    "vulnerabilities": []
+  },
+  "phi2-clean.gguf": {
+    "is_malicious": false,
+    "vulnerabilities": []
+  },
+  "mistral-clean.gguf": {
+    "is_malicious": false,
+    "vulnerabilities": []
+  },
+  "pickle_vulnerable.gguf": {
+    "is_malicious": true,
+    "vulnerabilities": ["pickle_deserialization", "code_execution"]
+  },
+  "backdoored.gguf": {
+    "is_malicious": true,
+    "vulnerabilities": ["backdoor", "trigger_phrase"]
+  },
+  "network_exfiltration.gguf": {
+    "is_malicious": true,
+    "vulnerabilities": ["network_exfiltration", "data_leakage"]
+  },
+  "prompt_injection.gguf": {
+    "is_malicious": true,
+    "vulnerabilities": ["prompt_injection"]
+  },
+  "maleficnet_style.gguf": {
+    "is_malicious": true,
+    "vulnerabilities": ["weight_embedded_malware", "steganography"]
+  }
+}

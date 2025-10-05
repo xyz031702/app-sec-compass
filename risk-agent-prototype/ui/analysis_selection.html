@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Security Analysis Options</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --danger: #E74C3C;
+            --warning: #F39C12;
+            --info: #3498DB;
+            --background: #F5F7FA;
+            --text: #333333;
+            --text-light: #7F8C8D;
+            --border: #E0E6ED;
+            --card-bg: #FFFFFF;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding: 30px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 16px;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .option-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-header {
+            padding: 25px;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .option-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .option-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .option-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .option-body {
+            padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .option-description {
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        
+        .option-features {
+            margin-bottom: 25px;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .feature-icon {
+            color: var(--success);
+            margin-right: 10px;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .option-footer {
+            text-align: center;
+            margin-top: auto;
+        }
+        
+        .select-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        
+        .select-btn:hover {
+            background-color: #1a2530;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Custom colors for each option */
+        .option-card.agent {
+            --primary: #3498DB;
+        }
+        
+        .option-card.screening {
+            --primary: #9B59B6;
+        }
+        
+        .option-card.dashboard {
+            --primary: #27AE60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Select Your AI Security Analysis Approach</h1>
+            <p>Choose the most suitable method for analyzing and securing your AI systems based on your specific requirements and preferences.</p>
+        </div>
+        
+        <div class="options-container">
+            <!-- Option 1: Agent Interactions -->
+            <div class="option-card agent" onclick="location.href='../prototype/risk-agent-chat.html';">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="option-title">Exploration Mode</div>
+                    <div class="option-subtitle">Conversational Security Assessment</div>
+                </div>
+                <div class="option-body">
+                    <div class="option-description">
+                        <p>Engage in a natural conversation with our intelligent security agent to analyze your AI system. The agent will guide you through the entire process, from understanding your context to delivering comprehensive results.</p>
+                    </div>
+                    <div class="option-features">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Contextual understanding through natural dialogue</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Guided workflow construction based on your specific needs</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Interactive results exploration and explanation</div>
+                        </div>
+                    </div>
+                    <div class="option-footer">
+                        <button class="select-btn">Start Conversation</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option 2: Health Screening -->
+            <div class="option-card screening" onclick="location.href='ai_security_checklist.html';">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="option-title">Screening Mode</div>
+                    <div class="option-subtitle">Structured Assessment Framework</div>
+                </div>
+                <div class="option-body">
+                    <div class="option-description">
+                        <p>Follow a comprehensive, structured approach based on the CSA guidelines for AI security. Select from a curated list of control points to create a tailored assessment for your AI system.</p>
+                    </div>
+                    <div class="option-features">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Industry-standard controls aligned with CSA guidelines</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Customizable assessment based on your security priorities</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Structured reporting with actionable recommendations</div>
+                        </div>
+                    </div>
+                    <div class="option-footer">
+                        <button class="select-btn">View Control Points</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Option 3: Dashboard -->
+            <div class="option-card dashboard" onclick="location.href='../ui/ui_dashboard.html';">
+                <div class="option-header">
+                    <div class="option-icon">
+                        <i class="fas fa-chart-network"></i>
+                    </div>
+                    <div class="option-title">Expert Mode</div>
+                    <div class="option-subtitle">Comprehensive Security Intelligence</div>
+                </div>
+                <div class="option-body">
+                    <div class="option-description">
+                        <p>Access our advanced dashboard to customize your analysis workflow with our agent framework, leveraging deep thinking processes and research-backed knowledge for comprehensive security intelligence.</p>
+                    </div>
+                    <div class="option-features">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Fully customizable analysis workflows and parameters</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Advanced visualization of security findings and metrics</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                            <div>Integration with research-backed security knowledge base</div>
+                        </div>
+                    </div>
+                    <div class="option-footer">
+                        <button class="select-btn">Open Dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 Risk Agent Security Platform. All security assessments are performed in accordance with industry best practices.</p>
+        </div>
+    </div>
+    
+    <script>
+        // Fix for Font Awesome chart-network icon which might not be available in standard free version
+        document.addEventListener('DOMContentLoaded', function() {
+            const dashboardIcon = document.querySelector('.option-card.dashboard .option-icon i');
+            if (!dashboardIcon.offsetHeight) {
+                // If icon doesn't render, replace with an alternative
+                dashboardIcon.className = 'fas fa-tachometer-alt';
+            }
+        });
+    </script>
+</body>
+</html>

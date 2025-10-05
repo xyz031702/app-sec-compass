@@ -1,0 +1,38 @@
+{
+  "model_path": "/home/scantist/.cache/huggingface/hub/models--tensorblock--nanollama-GGUF/snapshots/a2e02233b2ccc2fd10723a14ef7c8d5f4e8c458b/nanollama-Q4_K_M.gguf",
+  "repo_id": "tensorblock/nanollama-GGUF",
+  "checks": [
+    {
+      "name": "file_size",
+      "status": "warning",
+      "message": "Could not find nanollama-Q4_K_M.gguf in remote repository"
+    },
+    {
+      "name": "metadata_version",
+      "status": "passed",
+      "message": "GGUF version matches: 3"
+    },
+    {
+      "name": "metadata_tensor_count",
+      "status": "passed",
+      "message": "Tensor count matches: 57"
+    },
+    {
+      "name": "critical_first_chunk",
+      "status": "passed",
+      "message": "First chunk matches: 868d52341cec492055613cd68fd397870d746475e98a9e67c06733a63bb8c17e"
+    },
+    {
+      "name": "critical_last_chunk",
+      "status": "passed",
+      "message": "Last chunk matches: 5ae53e2eb7ddbc9f449410748e2d50c6ad41dbe0b551e061527f38257bf74a42"
+    },
+    {
+      "name": "random_samples",
+      "status": "passed",
+      "message": "All 50 random samples matched"
+    }
+  ],
+  "overall_status": "passed",
+  "timestamp": "2025-04-21 18:14:55"
+}

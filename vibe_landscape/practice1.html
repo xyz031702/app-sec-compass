@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design: Prompt-Based Architecting | AI-Assisted Programming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+        }
+        .risk-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+        .practice-card {
+            background-color: #1F2937;
+            border-left: 4px solid #5EEAD4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(94, 234, 212, 0.2), 0 4px 6px -2px rgba(94, 234, 212, 0.1);
+        }
+        .risk-title {
+            color: #C4B5FD; /* Lighter Purple */
+        }
+        .mitigation-title {
+            color: #5EEAD4; /* Teal */
+        }
+        .mitigation-box {
+            background-color: rgba(94, 234, 212, 0.05);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+        }
+        .example-box {
+            background-color: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 0.5rem;
+        }
+        .article-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="text-center p-8 md:p-12 bg-gray-900">
+        <h1 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">Design: Prompt-Based Architecting</h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">Describe it and get code... at what cost?</p>
+        <div class="mt-6">
+            <a href="index.html" class="inline-block px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md text-white font-medium transition-colors">← Back to Overview</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Left Column -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Understanding Prompt-Based Architecting</h2>
+                    <p class="text-gray-300 mb-4">
+                        Prompt-based architecting is an emerging approach to software design where developers use natural language prompts to generate
+                        code, architectural diagrams, and system designs. This practice leverages large language models (LLMs) to translate high-level
+                        descriptions into implementable solutions.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        While this approach can dramatically accelerate the design phase and reduce initial development effort, it also introduces
+                        significant risks related to hallucinated features, incorrect assumptions, and over-reliance on AI-generated solutions without
+                        proper verification.
+                    </p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Detailed Example</h2>
+                    <div class="example-box p-5 mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">The Hallucinated Library Problem</h3>
+                        <p class="text-gray-300 mb-3">
+                            A developer at a fintech startup was tasked with creating a data visualization dashboard for transaction analytics. 
+                            Under time pressure, they prompted an AI: "Create a data visualization library for financial transactions with interactive charts."
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            The AI confidently generated code that relied on a library called <code>graphi-py</code>, which it described as "a popular financial visualization library." 
+                            The code looked impressive and comprehensive.
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            The developer spent three days trying to install and configure this library before realizing it didn't exist—it was completely hallucinated by the AI. 
+                            This wasted valuable development time and created frustration.
+                        </p>
+                        <p class="text-gray-300">
+                            When they finally switched to a real library (Plotly), they had to rewrite significant portions of the code, as the AI-generated architecture was designed around the fictional library's API.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Risk Details</h2>
+                    <ul class="space-y-4">
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Hallucinated Dependencies</h3>
+                            <p class="text-gray-300">
+                                AI models may reference non-existent libraries, functions, or APIs, leading to significant debugging time and architectural rework.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Architectural Misalignment</h3>
+                            <p class="text-gray-300">
+                                Generated architectures may not align with company standards, leading to inconsistent codebases and increased maintenance costs.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Security Blind Spots</h3>
+                            <p class="text-gray-300">
+                                AI may not consider organization-specific security requirements, potentially introducing vulnerabilities that standard security reviews might miss.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Over-Complexity</h3>
+                            <p class="text-gray-300">
+                                AI tends to generate more complex solutions than necessary, creating maintenance challenges and potential performance issues.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Recommended Guardrails</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Use Prompt Templates</h3>
+                                <p class="text-gray-300 text-sm">Create standardized prompt templates that require specifying libraries and versions to be used.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Test-First Mindset</h3>
+                                <p class="text-gray-300 text-sm">Write tests before generating code to ensure the AI's output meets functional requirements.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Dependency Verification</h3>
+                                <p class="text-gray-300 text-sm">Automatically verify all libraries and dependencies referenced in AI-generated code.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Architecture Reviews</h3>
+                                <p class="text-gray-300 text-sm">Require senior developer review of AI-generated architectures before implementation begins.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Community Resources</h2>
+                    <p class="text-gray-300 mb-4">Explore the latest research papers, blogs, tools, and models related to prompt-based architecting.</p>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">Research Papers</h3>
+                        <ul class="space-y-3">
+                            <li class="article-card p-3 rounded">
+                                <a href="https://arxiv.org/abs/2302.11520" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Prompting for Software Engineering Tasks</span>
+                                    <p class="text-sm text-gray-400 mt-1">Explores how different prompting strategies affect code generation quality and reliability.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://arxiv.org/abs/2308.07124" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Evaluating the Impact of Prompt Engineering on LLM Code Generation</span>
+                                    <p class="text-sm text-gray-400 mt-1">Analysis of how prompt structure affects hallucinations and accuracy in code generation.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://arxiv.org/abs/2211.09110" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Prompt Engineering for Code: Best Practices and Pitfalls</span>
+                                    <p class="text-sm text-gray-400 mt-1">Systematic review of prompt engineering techniques for software development.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">Blogs & Articles</h3>
+                        <ul class="space-y-3">
+                            <li class="article-card p-3 rounded">
+                                <a href="https://www.promptingguide.ai/" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Prompt Engineering Guide</span>
+                                    <p class="text-sm text-gray-400 mt-1">Comprehensive guide to prompt engineering techniques and best practices.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://martinfowler.com/articles/2023-ai-architecture.html" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Architectural Considerations for LLM Applications</span>
+                                    <p class="text-sm text-gray-400 mt-1">Martin Fowler's analysis of architectural patterns for AI-assisted software design.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://eugeneyan.com/writing/llm-patterns/" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">LLM Design Patterns</span>
+                                    <p class="text-sm text-gray-400 mt-1">Emerging patterns for designing systems with large language models.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">GitHub Tools</h3>
+                        <ul class="space-y-3">
+                            <li class="article-card p-3 rounded">
+                                <a href="https://github.com/microsoft/semantic-kernel" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Semantic Kernel</span>
+                                    <p class="text-sm text-gray-400 mt-1">Microsoft's SDK for integrating LLM capabilities into applications with prompt templates.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://github.com/langchain-ai/langchain" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">LangChain</span>
+                                    <p class="text-sm text-gray-400 mt-1">Framework for developing applications powered by language models with prompt management.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://github.com/hwchase17/langchain-hub" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">LangChain Hub</span>
+                                    <p class="text-sm text-gray-400 mt-1">Repository of reusable prompt templates for various software development tasks.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">Models & Resources</h3>
+                        <ul class="space-y-3">
+                            <li class="article-card p-3 rounded">
+                                <a href="https://github.com/features/copilot" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">GitHub Copilot</span>
+                                    <p class="text-sm text-gray-400 mt-1">AI pair programmer that offers code suggestions based on natural language prompts.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://platform.openai.com/docs/guides/prompt-engineering" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">OpenAI Prompt Engineering Guide</span>
+                                    <p class="text-sm text-gray-400 mt-1">Official guide for effective prompt engineering with GPT models.</p>
+                                </a>
+                            </li>
+                            <li class="article-card p-3 rounded">
+                                <a href="https://www.anthropic.com/claude" target="_blank" class="block hover:text-purple-300 transition-colors">
+                                    <span class="font-medium">Claude</span>
+                                    <p class="text-sm text-gray-400 mt-1">AI assistant with capabilities for software architecture design through prompting.</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-white mb-3">Join the Discussion</h3>
+                        <p class="text-gray-300 mb-4">Share your experiences, questions, and insights about prompt-based architecting.</p>
+                        <div id="discussion-container" class="bg-gray-700/30 p-4 rounded-lg">
+                            <p class="text-gray-400 text-center">Discussion forum coming soon. Check back for updates!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>AI-Assisted Programming: Managing Emerging Risks and Ensuring Digital Trust</p>
+            <p class="mt-2">© 2025 All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to load articles from the articles directory
+        async function loadArticles() {
+            // This would typically fetch articles from a server or directory
+            // For now, this is a placeholder
+            const articlesContainer = document.getElementById('articles-container');
+            
+            // In a real implementation, you would fetch articles from a server
+            // and populate them dynamically
+        }
+
+        // Load articles when the page loads
+        document.addEventListener('DOMContentLoaded', loadArticles);
+    </script>
+</body>
+</html>

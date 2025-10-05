@@ -1,0 +1,134 @@
+name: AI Model Security Assessment Workflow
+description: |
+  Automated workflow for conducting security analysis of AI models, following the user manual.
+  Includes static, dynamic, and behavioral analysis, LLM-based audit after each scan, and final CycloneDX VEX reporting.
+
+agents:
+  - id: security_team
+    type: human_or_automated
+    description: Security team agent executing analysis and reporting steps.
+  - id: llm_auditor
+    type: llm
+    description: LLM agent auditing scan results after each step.
+
+steps:
+  - name: Installation - Setup Environment
+    agent: security_team
+    run:
+      - git clone [https://github.com/scantist/risk-agent-prototype.git](https://github.com/scantist/risk-agent-prototype.git)
+      - cd risk-agent-prototype/design && bash setup_unified.sh
+    outputs:
+      - setup_logs
+
+  - name: (Optional) Enhanced Tool Setup
+    agent: security_team
+    run:
+      - cd risk-agent-prototype/design && bash setup_unified.sh enhanced
+    outputs:
+      - enhanced_setup_logs
+
+  - name: Static Analysis - Basic Scan
+    agent: security_team
+    run:
+      - bash run_unified.sh --model /input/model.gguf
+    outputs:
+      - static_scan_report: analysis/results/security_report.md
+
+  - name: Audit Static Scan
+    agent: llm_auditor
+    prompt: |
+      Review the static analysis report (security_report.md) for completeness, accuracy, and alignment with the user manual.
+      Summarize findings, flag issues, and recommend next steps.
+    inputs:
+      - static_scan_report
+    outputs:
+      - static_audit_summary
+
+  - name: Enhanced Analysis - Specialized Tools
+    agent: security_team
+    run:
+      - bash run_unified.sh --mode enhanced --model /input/model.gguf
+    outputs:
+      - enhanced_scan_report: analysis/results/enhanced_security_report.md
+
+  - name: Audit Enhanced Scan
+    agent: llm_auditor
+    prompt: |
+      Review the enhanced analysis report (enhanced_security_report.md) for completeness, accuracy, and alignment with the user manual.
+      Summarize findings, flag issues, and recommend next steps.
+    inputs:
+      - enhanced_scan_report
+    outputs:
+      - enhanced_audit_summary
+
+  - name: Review Results and Remediate (if needed)
+    agent: security_team
+    prompt: |
+      If the audit summaries flag issues or recommend further actions, perform the necessary remediation using available tools.
+      Document all remediation steps and results.
+    when: static_audit_summary.flags_issues == true or enhanced_audit_summary.flags_issues == true
+    outputs:
+      - remediation_logs
+
+  - name: Finalize CycloneDX VEX Report
+    agent: security_team
+    prompt: |
+      Compile all findings, action logs, audit summaries, and remediation logs (if any) into a final CycloneDX VEX report for all detected risks.
+      Ensure the report is clear, actionable, and aligned with the security framework and user manual.
+    inputs:
+      - static_scan_report
+      - enhanced_scan_report
+      - static_audit_summary
+      - enhanced_audit_summary
+      - remediation_logs
+    outputs:
+      - cyclonedx_vex_report: analysis/results/final_vex_report.xml
+
+artifacts:
+  - name: static_scan_report
+    description: Static analysis report (basic scan).
+  - name: enhanced_scan_report
+    description: Enhanced analysis report (with specialized tools).
+  - name: static_audit_summary
+    description: LLM auditor's review of static scan.
+  - name: enhanced_audit_summary
+    description: LLM auditor's review of enhanced scan.
+  - name: remediation_logs
+    description: Actions taken to address issues flagged by the auditor.
+  - name: cyclonedx_vex_report
+    description: Final comprehensive report in CycloneDX VEX format.
+
+output:
+  - cyclonedx_vex_report  - name: Static Analysis - Basic Scan
+      agent: security_team
+      run:
+        - mcp scan --type static --input /input/model.gguf --output analysis/results/security_report.md
+      outputs:
+        - static_scan_report: analysis/results/security_report.md
+  
+    - name: Audit Static Scan
+      agent: llm_auditor
+      prompt: |
+        Review the static analysis report (security_report.md) for completeness, accuracy, and alignment with the user manual.
+        Summarize findings, flag issues, and recommend next steps.
+      inputs:
+        - static_scan_report
+      outputs:
+        - static_audit_summary
+  
+    - name: Enhanced Analysis - Specialized Tools
+      agent: security_team
+      run:
+        - mcp scan --type enhanced --input /input/model.gguf --output analysis/results/enhanced_security_report.md
+        - mcp extract-metadata --input /input/model.gguf --output analysis/results/model_metadata.json
+        - mcp check-dependencies --input /input/model.gguf --output analysis/results/dependency_report.json
+      outputs:
+        - enhanced_scan_report: analysis/results/enhanced_security_report.md
+        - model_metadata: analysis/results/model_metadata.json
+        - dependency_report: analysis/results/dependency_report.json
+  
+    - name: Audit Enhanced Scan
+      agent: llm_auditor
+      prompt: |
+        Review the enhanced analysis report (enhanced_security_report.md), model metadata, and dependency report for completeness, accuracy, and alignment with the user manual.
+        Summarize findings, flag issues, and recommend next steps.

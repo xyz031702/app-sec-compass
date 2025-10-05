@@ -1,0 +1,5 @@
+REPO ID                    REPO TYPE SIZE ON DISK NB FILES LAST_ACCESSED LAST_MODIFIED REFS LOCAL PATH                                                                
+-------------------------- --------- ------------ -------- ------------- ------------- ---- ------------------------------------------------------------------------- 
+tensorblock/nanollama-GGUF model            43.0M        1 3 days ago    4 days ago    main /home/scantist/.cache/huggingface/hub/models--tensorblock--nanollama-GGUF 
+
+Done in 0.0s. Scanned 1 repo(s) for a total of [1m[31m43.0M[0m.

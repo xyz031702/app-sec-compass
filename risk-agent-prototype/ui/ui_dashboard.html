@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Security Analysis Framework - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #F5F7FA;
+            --text-color: #333333;
+            --safe-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --info-color: #3498DB;
+            --border-color: #E0E6ED;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .dashboard-card h2 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .dashboard-card h2 i {
+            color: var(--secondary-color);
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-safe {
+            background-color: var(--safe-color);
+        }
+        
+        .status-warning {
+            background-color: var(--warning-color);
+        }
+        
+        .status-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .analysis-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .analysis-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: var(--background-color);
+        }
+        
+        .analysis-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .analysis-item-title {
+            font-weight: 500;
+        }
+        
+        .analysis-item-date {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .activity-timeline {
+            margin-top: 20px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .timeline-icon {
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 15px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .timeline-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-time {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .system-status {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-label {
+            margin-right: 10px;
+            font-size: 14px;
+        }
+        
+        .status-value {
+            font-weight: 500;
+        }
+        
+        .quick-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-right: 20px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+        
+        .stat-card:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .safe-value {
+            color: var(--safe-color);
+        }
+        
+        .warning-value {
+            color: var(--warning-color);
+        }
+        
+        .danger-value {
+            color: var(--danger-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>AI Model Security</h1>
+                <p>Analysis Framework</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-search"></i>
+                    <span>New Analysis</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Analysis History</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security Reports</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> New Analysis
+                    </button>
+                </div>
+            </div>
+            
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Total Analyses</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value safe-value">8</div>
+                    <div class="stat-label">Safe Models</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value warning-value">3</div>
+                    <div class="stat-label">Warning Models</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value danger-value">1</div>
+                    <div class="stat-label">Unsafe Models</div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h2>
+                        Recent Analyses
+                        <i class="fas fa-chart-line"></i>
+                    </h2>
+                    <div class="analysis-summary">
+                        <div class="analysis-item">
+                            <div class="analysis-item-info">
+                                <span class="analysis-item-title">nanollama-Q4_K_M.gguf</span>
+                                <span class="analysis-item-date">Today, 14:30</span>
+                            </div>
+                            <span class="status-indicator status-safe"></span>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-item-info">
+                                <span class="analysis-item-title">mistral-7b-v0.1.gguf</span>
+                                <span class="analysis-item-date">Yesterday, 09:15</span>
+                            </div>
+                            <span class="status-indicator status-warning"></span>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-item-info">
+                                <span class="analysis-item-title">custom_model_v2.pkl</span>
+                                <span class="analysis-item-date">Apr 16, 2025</span>
+                            </div>
+                            <span class="status-indicator status-danger"></span>
+                        </div>
+                        <div class="analysis-item">
+                            <div class="analysis-item-info">
+                                <span class="analysis-item-title">phi-2.Q4_K_M.gguf</span>
+                                <span class="analysis-item-date">Apr 15, 2025</span>
+                            </div>
+                            <span class="status-indicator status-safe"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h2>
+                        Activity Timeline
+                        <i class="fas fa-clock"></i>
+                    </h2>
+                    <div class="activity-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Analysis Completed</div>
+                                <div class="timeline-description">nanollama-Q4_K_M.gguf analysis completed successfully.</div>
+                                <div class="timeline-time">Today, 14:30</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Warning Detected</div>
+                                <div class="timeline-description">Potential vulnerability found in mistral-7b-v0.1.gguf.</div>
+                                <div class="timeline-time">Yesterday, 09:15</div>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Security Issue</div>
+                                <div class="timeline-description">Malicious code detected in custom_model_v2.pkl.</div>
+                                <div class="timeline-time">Apr 16, 2025</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h2>
+                        System Status
+                        <i class="fas fa-server"></i>
+                    </h2>
+                    <div class="system-status">
+                        <div class="status-item">
+                            <span class="status-label">ModelScan:</span>
+                            <span class="status-value"><span class="status-indicator status-safe"></span> Available</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Fickling:</span>
+                            <span class="status-value"><span class="status-indicator status-safe"></span> Available</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Garak:</span>
+                            <span class="status-value"><span class="status-indicator status-safe"></span> Available</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Docker:</span>
+                            <span class="status-value"><span class="status-indicator status-safe"></span> Running</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Framework Version:</span>
+                            <span class="status-value">1.2.0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-label">Last Update:</span>
+                            <span class="status-value">Apr 17, 2025</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <h2>
+                        Quick Actions
+                        <i class="fas fa-bolt"></i>
+                    </h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <button class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-search"></i> New Analysis
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%;">
+                            <i class="fas fa-file-export"></i> Export Reports
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%;">
+                            <i class="fas fa-cog"></i> Settings
+                        </button>
+                        <button class="btn btn-outline" style="width: 100%;">
+                            <i class="fas fa-question-circle"></i> Help
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

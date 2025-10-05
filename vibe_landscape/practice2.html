@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Building: Low-Code/No-Code Platforms | AI-Assisted Programming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+        }
+        .risk-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .risk-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+        .practice-card {
+            background-color: #1F2937;
+            border-left: 4px solid #5EEAD4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .practice-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(94, 234, 212, 0.2), 0 4px 6px -2px rgba(94, 234, 212, 0.1);
+        }
+        .risk-title {
+            color: #C4B5FD; /* Lighter Purple */
+        }
+        .mitigation-title {
+            color: #5EEAD4; /* Teal */
+        }
+        .mitigation-box {
+            background-color: rgba(94, 234, 212, 0.05);
+            border: 1px solid rgba(94, 234, 212, 0.2);
+        }
+        .example-box {
+            background-color: rgba(167, 139, 250, 0.05);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            border-radius: 0.5rem;
+        }
+        .article-card {
+            background-color: #1F2937;
+            border-left: 4px solid #A78BFA;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(167, 139, 250, 0.2), 0 4px 6px -2px rgba(167, 139, 250, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <header class="text-center p-8 md:p-12 bg-gray-900">
+        <h1 class="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-teal-400">Application Building: Low-Code/No-Code Platforms</h1>
+        <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-4xl mx-auto">Anyone can build, not everyone should ship.</p>
+        <div class="mt-6">
+            <a href="index.html" class="inline-block px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-md text-white font-medium transition-colors">← Back to Overview</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Left Column -->
+            <div class="lg:col-span-2">
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Understanding Low-Code/No-Code AI Platforms</h2>
+                    <p class="text-gray-300 mb-4">
+                        Low-code and no-code AI platforms democratize application development, allowing users with minimal technical expertise to build functional applications.
+                        These platforms leverage AI to simplify the development process, automatically generating code, designing interfaces, and connecting to data sources.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        While these platforms enable rapid application development and empower non-technical teams, they also introduce significant risks when deployed without proper governance.
+                        The ease of creation can lead to bypassing critical security, compliance, and data privacy considerations.
+                    </p>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Detailed Example</h2>
+                    <div class="example-box p-5 mb-6">
+                        <h3 class="text-xl font-semibold text-purple-300 mb-3">The Event Registration Data Privacy Incident</h3>
+                        <p class="text-gray-300 mb-3">
+                            A marketing team at a multinational corporation needed to quickly create an event registration system for an upcoming conference. 
+                            Under time pressure and without IT resources available, they used an AI-powered no-code platform to build the application themselves.
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            The application collected attendee information including names, email addresses, company affiliations, and—for international attendees—passport numbers for visa assistance.
+                            The marketing team configured the application to store all this data in a public cloud spreadsheet for easy access.
+                        </p>
+                        <p class="text-gray-300 mb-3">
+                            The application was deployed without security review. Two weeks later, during a routine audit, the security team discovered the unprotected spreadsheet containing sensitive personal data,
+                            including over 200 passport numbers, accessible to anyone with the link.
+                        </p>
+                        <p class="text-gray-300">
+                            This incident triggered a data breach notification process, damaged customer trust, and resulted in potential regulatory penalties under GDPR and other privacy laws.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Risk Details</h2>
+                    <ul class="space-y-4">
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Shadow IT Proliferation</h3>
+                            <p class="text-gray-300">
+                                No-code platforms enable teams to build and deploy applications outside of IT governance, creating an unmanaged landscape of applications with potential security and compliance issues.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Data Privacy Violations</h3>
+                            <p class="text-gray-300">
+                                Non-technical creators may not understand data privacy requirements, leading to improper collection, storage, or processing of sensitive information.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Inadequate Security Controls</h3>
+                            <p class="text-gray-300">
+                                Applications built without security expertise often lack proper authentication, authorization, and data protection measures, creating vulnerabilities.
+                            </p>
+                        </li>
+                        <li class="bg-gray-700/30 p-4 rounded-lg">
+                            <h3 class="text-xl font-semibold text-purple-300 mb-2">Maintenance Challenges</h3>
+                            <p class="text-gray-300">
+                                When creators leave the organization or move to different roles, no-code applications may become orphaned with no clear ownership or maintenance path.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div>
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8 mb-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Recommended Guardrails</h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Mandatory Export Reviews</h3>
+                                <p class="text-gray-300 text-sm">Require security team review and approval before any application goes live, especially those handling sensitive data.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Compliance Plugins</h3>
+                                <p class="text-gray-300 text-sm">Use platform plugins that enforce data handling rules and security best practices within the builder environment.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Application Registry</h3>
+                                <p class="text-gray-300 text-sm">Maintain a central registry of all no-code applications with ownership, data types, and review status clearly documented.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="h-5 w-5 mr-3 mt-1 flex-shrink-0 text-teal-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div>
+                                <h3 class="font-semibold text-teal-300">Creator Training</h3>
+                                <p class="text-gray-300 text-sm">Provide mandatory training on security, privacy, and compliance for anyone using no-code platforms to build applications.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-lg shadow-2xl p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-white mb-4">Community Discussions</h2>
+                    <div class="space-y-4" id="articles-container">
+                        <!-- Articles will be loaded here -->
+                        <p class="text-gray-400 text-center">No articles available yet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 py-8 mt-12">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>AI-Assisted Programming: Managing Emerging Risks and Ensuring Digital Trust</p>
+            <p class="mt-2">© 2025 All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to load articles from the articles directory
+        async function loadArticles() {
+            // This would typically fetch articles from a server or directory
+            // For now, this is a placeholder
+            const articlesContainer = document.getElementById('articles-container');
+            
+            // In a real implementation, you would fetch articles from a server
+            // and populate them dynamically
+        }
+
+        // Load articles when the page loads
+        document.addEventListener('DOMContentLoaded', loadArticles);
+    </script>
+</body>
+</html>

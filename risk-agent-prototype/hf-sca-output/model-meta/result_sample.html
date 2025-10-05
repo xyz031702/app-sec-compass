@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Detection Findings</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4A90E2;
+      --background: #F5F7FA;
+      --card-bg: #FFFFFF;
+      --text: #333333;
+      --muted: #777777;
+      --accent: #50E3C2;
+      --success: #27AE60;
+      --warning: #F39C12;
+      --danger: #E74C3C;
+      --border-radius: 8px;
+      --max-width: 900px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: var(--background); color: var(--text); line-height: 1.6; padding: 20px; }
+    h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--primary); }
+    .container { max-width: var(--max-width); margin: auto; }
+    .card { background: var(--card-bg); border-radius: var(--border-radius); box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; margin-bottom: 20px; }
+    pre { background: #F0F4F8; border-radius: var(--border-radius); padding: 15px; overflow-x: auto; font-family: Consolas, monospace; }
+    code { background: #F0F4F8; padding: 2px 4px; border-radius: 4px; }
+    .raw-label { font-size: 1.2rem; font-weight: 600; margin-bottom: 10px; }
+    dl { display: grid; grid-template-columns: auto 1fr; row-gap: 15px; column-gap: 20px; }
+    dt { font-weight: 600; color: var(--muted); }
+    dd { margin: 0; }
+    ul { list-style: none; padding-left: 0; }
+    ul li { margin-bottom: 10px; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    /* Integrity Check Styles */
+    .integrity-summary { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .integrity-status { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 16px; }
+    .integrity-status i { font-size: 20px; }
+    .integrity-passed { color: var(--success); }
+    .integrity-warning { color: var(--warning); }
+    .integrity-failed { color: var(--danger); }
+    .integrity-timestamp { color: var(--muted); font-size: 14px; }
+    
+    .integrity-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .integrity-table th { text-align: left; padding: 10px; border-bottom: 2px solid var(--border); font-weight: 600; }
+    .integrity-table td { padding: 10px; border-bottom: 1px solid var(--border); }
+    .integrity-table tr:last-child td { border-bottom: none; }
+    
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+    .badge.passed { background-color: rgba(39, 174, 96, 0.1); color: var(--success); }
+    .badge.warning { background-color: rgba(243, 156, 18, 0.1); color: var(--warning); }
+    .badge.failed { background-color: rgba(231, 76, 60, 0.1); color: var(--danger); }
+    
+    .integrity-details { background-color: #F0F4F8; padding: 15px; border-radius: var(--border-radius); margin-top: 20px; }
+    .integrity-details p { margin-bottom: 10px; }
+    .integrity-details p:last-child { margin-bottom: 0; }
+    .button { display: inline-block; padding: 10px 16px; background: var(--accent); color: #fff; border-radius: var(--border-radius); text-decoration: none; font-weight: 600; transition: background 0.2s; }
+    .button:hover { background: var(--primary); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Model SCA and Integrity Check</h1>
+    <p>We matched your model metadata to an existing quantized GGUF file and gathered key details from its original source page.</p>
+
+    <div class="card">
+      <h2>Raw Detection</h2>
+      <pre>{
+  "gguf_version": 3,
+  "metadata_count": 26,
+  "architecture": "llama",
+  "type": "model",
+  "name": "Imdatta0 Nanollama",
+  "size_label": "69M",
+  "file_type": 15,
+  "quantization_version": 2
+}</pre>
+    </div>
+
+    <div class="card">
+      <h2>Inferred Results</h2>
+      <dl>
+        <dt>Quantized Model File</dt>
+        <dd><code>nanollama-Q8_0.gguf</code> – the 8‑bit GGUF V3 build for 69M llama models</dd>
+
+        <dt>Hugging Face Repo</dt>
+        <dd><a href="https://huggingface.co/tensorblock/nanollama-GGUF" target="_blank">tensorblock/nanollama‑GGUF</a></dd>
+
+        <dt>Supported Loader</dt>
+        <dd><code>llama.cpp</code> (v0.1.0+), with native GGUF support and optimized CPU inference</dd>
+
+        <dt>Inference Highlights</dt>
+        <dd>
+          <ul>
+            <li>Near-original float16 accuracy in 8‑bit form</li>
+            <li>Fast load times from unified GGUF metadata</li>
+            <li>Edge device compatibility (low memory footprint)</li>
+          </ul>
+        </dd>
+
+        <dt>Usage Example</dt>
+        <dd>
+          <code>./main -m nanollama-Q8_0.gguf -p "Hello, world!"</code> via llama.cpp<br>
+          <small class="muted">(replace <code>-m</code> path as needed)</small>
+        </dd>
+
+        <dt>CLI Download</dt>
+        <dd>
+          <code>huggingface-cli download tensorblock/nanollama-GGUF --include "nanollama-Q8_0.gguf"</code>
+        </dd>
+
+      </dl>
+    </div>
+
+    <div class="card">
+      <h2>Integrity Check Results</h2>
+      <div class="integrity-summary">
+        <div class="integrity-status integrity-passed">
+          <i class="fas fa-check-circle"></i>
+          <span>Overall Status: Passed</span>
+        </div>
+        <div class="integrity-timestamp">Timestamp: 2025-04-21 18:14:55</div>
+      </div>
+      
+      <table class="integrity-table">
+        <thead>
+          <tr>
+            <th>Check Name</th>
+            <th>Status</th>
+            <th>Message</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="integrity-warning">
+            <td>File Size</td>
+            <td><span class="badge warning">Warning</span></td>
+            <td>Could not find nanollama-Q4_K_M.gguf in remote repository</td>
+          </tr>
+          <tr class="integrity-passed">
+            <td>Metadata Version</td>
+            <td><span class="badge passed">Passed</span></td>
+            <td>GGUF version matches: 3</td>
+          </tr>
+          <tr class="integrity-passed">
+            <td>Metadata Tensor Count</td>
+            <td><span class="badge passed">Passed</span></td>
+            <td>Tensor count matches: 57</td>
+          </tr>
+          <tr class="integrity-passed">
+            <td>Critical First Chunk</td>
+            <td><span class="badge passed">Passed</span></td>
+            <td>First chunk matches: <code>868d52341cec492055613cd68fd397870d746475e98a9e67c06733a63bb8c17e</code></td>
+          </tr>
+          <tr class="integrity-passed">
+            <td>Critical Last Chunk</td>
+            <td><span class="badge passed">Passed</span></td>
+            <td>Last chunk matches: <code>5ae53e2eb7ddbc9f449410748e2d50c6ad41dbe0b551e061527f38257bf74a42</code></td>
+          </tr>
+          <tr class="integrity-passed">
+            <td>Random Samples</td>
+            <td><span class="badge passed">Passed</span></td>
+            <td>All 50 random samples matched</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="integrity-details">
+        <p><strong>Model Path:</strong> <code>/home/scantist/.cache/huggingface/hub/models--tensorblock--nanollama-GGUF/snapshots/a2e02233b2ccc2fd10723a14ef7c8d5f4e8c458b/nanollama-Q4_K_M.gguf</code></p>
+        <p><strong>Repository ID:</strong> <code>tensorblock/nanollama-GGUF</code></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Additional Context</h2>
+      <ul>
+        <li>GGUF v3 standardizes weight & metadata packing for faster loading.</li>
+        <li>Q8_0 quantization balances model quality and memory savings.</li>
+        <li>Conversion from safetensors available via <code>convert_hf_to_gguf.py</code> in llama.cpp.</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>

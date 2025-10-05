@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Telkomsel 5G Security Strategy</title>
+<style>
+  :root{
+    --brand-blue:#0055a4;
+    --brand-accent:#ff5722;
+    --brand-light:#f5f9ff;
+    --brand-grey:#333;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  body{
+    margin:0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    line-height:1.6;
+    color:var(--brand-grey);
+    background-color:#fafafa;
+  }
+  /* ---------- HERO ---------- */
+  header{
+    background:linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+              url('images/5g-network-hero.jpg') center/cover no-repeat;
+    color:#fff;
+    text-align:center;
+    padding:100px 20px 120px;
+    position:relative;
+  }
+  header h1{
+    margin:0;
+    font-size:2.8rem;
+    font-weight:700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  }
+  header p{
+    margin:20px 0 0;
+    font-size:1.2rem;
+    opacity:.9;
+    max-width:800px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  /* ---------- LAYOUT ---------- */
+  section{
+    padding:50px 40px;
+    max-width:1100px;
+    margin:0 auto;
+    background-color:#fff;
+    border-radius:8px;
+    margin-bottom:30px;
+    box-shadow:var(--card-shadow);
+  }
+  h2{
+    color:var(--brand-blue);
+    margin-top:0;
+    font-size:1.8rem;
+    border-bottom:2px solid #eaeaea;
+    padding-bottom:10px;
+    display:flex;
+    align-items:center;
+  }
+  h2 span.section-number {
+    background-color:var(--brand-blue);
+    color:#fff;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:12px;
+    font-size:1.2rem;
+  }
+  ul,ol{
+    padding-left:22px;
+    margin:0;
+  }
+  li{
+    margin-bottom:12px;
+  }
+  /* ---------- SLIDE-STYLE CARDS ---------- */
+  .card{
+    background-color:#fff;
+    padding:30px;
+    border-radius:8px;
+    margin-bottom:20px;
+    box-shadow:var(--card-shadow);
+  }
+  .card-content {
+    width:100%;
+  }
+  .slide-title {
+    color:var(--brand-blue);
+    font-size:1.4rem;
+    font-weight:bold;
+    margin-bottom:20px;
+    border-bottom:2px solid var(--brand-blue);
+    padding-bottom:10px;
+  }
+  .impact-list li{
+    margin-bottom:16px;
+    position:relative;
+    padding-left:10px;
+  }
+  .impact-list li::before {
+    content:"";
+    position:absolute;
+    left:-10px;
+    top:10px;
+    width:12px;
+    height:12px;
+    background-color:var(--brand-accent);
+    border-radius:50%;
+  }
+  /* ---------- HIGHLIGHT BOXES ---------- */
+  .highlight-box {
+    background-color:var(--brand-light);
+    border-left:4px solid var(--brand-blue);
+    padding:15px 20px;
+    margin:20px 0;
+    border-radius:0 4px 4px 0;
+  }
+  .highlight-box p {
+    margin:0;
+  }
+  .highlight-box strong {
+    color:var(--brand-blue);
+  }
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--brand-grey);
+    color:#fff;
+    padding:30px 40px;
+    text-align:center;
+    font-size:0.9em;
+  }
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:768px){
+    header h1 {
+      font-size:2.2rem;
+    }
+    section{
+      padding:30px 20px;
+      margin-bottom:20px;
+    }
+    .card{
+      flex-direction:column;
+    }
+    .card-image-container {
+      width:100%;
+      height:200px;
+      margin-bottom:20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Building Indonesia's World‑Class, Resilient 5G Network</h1>
+  <p>Executive Brief for Telkomsel Leadership</p>
+</header>
+
+<section id="moment">
+  <h2><span class="section-number">1</span>Telkomsel's Innovation Leadership Vision</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Our Cybersecurity-First Innovation Strategy</div>
+      <ul>
+        <li><strong>hyber 5G Launch:</strong> Indonesia's most advanced 5G network with security-by-design</li>
+        <li><strong>Market Position:</strong> 170+ million subscribers across 17,000 islands</li>
+        <li><strong>Strategic Vision:</strong> Trusted digital infrastructure powering Indonesia's digital economy</li>
+        <li><strong>Competitive Edge:</strong> Cybersecurity as innovation catalyst, not just operational necessity</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Key Message:</strong> We're not just connecting the nation—we're securing it from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vendor-flaw">
+  <h2><span class="section-number">2</span>Why Proactive Security Innovation Matters</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Threat Landscape & Our Proactive Response</div>
+      <ul>
+        <li><strong>Indonesia's Challenge:</strong> 9+ major telecom security incidents since 2014</li>
+        <li><strong>Attack Progression:</strong> Device vulnerability → Remote exploit → Infrastructure pivot → Business impact</li>
+        <li><strong>Global Trend:</strong> Unpatched exploits increased 180% YoY (Verizon DBIR 2024)</li>
+        <li><strong>Our Innovation:</strong> Advanced security lab initiatives targeting exact attack surfaces</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Strategic Advantage:</strong> Learning from industry challenges to build next-generation protocol testing and security validation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="global-practice">
+  <h2><span class="section-number">3</span>Global Best Practices We Can Leverage</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Proven International Frameworks</div>
+      <ul>
+        <li><strong>NSA/CISA Framework:</strong> Step-by-step 5G cloud-hardening guides (free blueprints)</li>
+        <li><strong>NIST SP 1800-33:</strong> Reference 5G core build mapped to risk and ROI</li>
+        <li><strong>EU 5G Toolbox + NIS2:</strong> Vendor-risk scoring + 24-hour breach reporting</li>
+        <li><strong>Key Insight:</strong> Security evolving from one-off test to living C-suite metric</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Opportunity:</strong> Adopt proven global standards while tailoring to Indonesian market needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="head-start">
+  <h2><span class="section-number">4</span>Telkomsel's Current Foundation</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Strong Base + Identified Opportunities</div>
+      <ul>
+        <li><strong>✓ ISO 27001 Certified:</strong> Network ops + national SOC established</li>
+        <li><strong>✓ 5G SA Migration:</strong> Cloud-native core + Open RAN pilots underway</li>
+        <li><strong>✓ Government Partnership:</strong> "Gerakan 100 Smart City" participation</li>
+        <li><strong>⚡ Growth Opportunity:</strong> No unified protocol-fuzz or SBOM regime yet</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Ready to Scale:</strong> Solid security foundation ready for next-generation innovation lab.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="moves">
+  <h2><span class="section-number">5</span>FY 2026 Strategic Roadmap</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Five Innovation Initiatives</div>
+      <ul>
+        <li><strong>1. Innovation Test Lab:</strong> Synopsys Defensics suites (BGP, GTP, Diameter, HTTP/2, O-RAN) + AFL++</li>
+        <li><strong>2. Security Profiles:</strong> Phase-two coverage for radio units, slice managers, analytics nodes</li>
+        <li><strong>3. Test & Attest:</strong> Quarterly protocol-health attestations + live SBOM diffing to CTO Office</li>
+        <li><strong>4. Zero-Trust Blueprint:</strong> NSA/NIST aligned, KOMINFO lawful-access compliant</li>
+        <li><strong>5. Open RAN Plug-fests:</strong> University partnerships + device maker collaboration</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Goal:</strong> State-of-the-art fuzz research integrated into device acceptance workflows.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="impact">
+  <h2><span class="section-number">6</span>Business Impact & ROI</h2>
+  <div class="card">
+    <div class="card-content">
+      <div class="slide-title">Measurable Strategic Outcomes</div>
+      <ul class="impact-list">
+        <li><strong>💰 Cost Avoidance:</strong> Protocol crashes caught in lab vs. production (millions in SLA penalties saved)</li>
+        <li><strong>⚡ Speed to Resolution:</strong> SBOM-driven patching reduces vulnerability-to-fix time</li>
+        <li><strong>🏆 Market Leadership:</strong> "Telkomsel Assured" badge increases customer trust + export revenue</li>
+        <li><strong>📋 Regulatory Ready:</strong> Proactive KOMINFO compliance, ahead of competition</li>
+      </ul>
+      <div class="highlight-box">
+        <p><strong>Bottom Line:</strong> Security innovation drives competitive advantage and revenue growth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  &copy;&nbsp;2025&nbsp;&bull;&nbsp;Prepared exclusively for Telkomsel Indonesia
+</footer>
+
+</body>
+</html>

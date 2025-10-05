@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Agent Chat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --success: #27AE60;
+            --danger: #E74C3C;
+            --warning: #F39C12;
+            --info: #3498DB;
+            --background: #F5F7FA;
+            --text: #333333;
+            --text-light: #7F8C8D;
+            --border: #E0E6ED;
+            --card-bg: #FFFFFF;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --radius: 8px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .chat-container {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-header i {
+            color: var(--primary);
+            font-size: 18px;
+        }
+        
+        .chat-title {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--success);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 85%;
+        }
+        
+        .message.user {
+            margin-left: auto;
+        }
+        
+        .message-sender {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 12px;
+            background-color: var(--background);
+            position: relative;
+        }
+        
+        .message.user .message-content {
+            background-color: var(--secondary);
+            color: white;
+            border-top-right-radius: 2px;
+        }
+        
+        .message.agent .message-content {
+            background-color: var(--background);
+            border-top-left-radius: 2px;
+        }
+        
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            outline: none;
+            font-family: inherit;
+        }
+        
+        .chat-input button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .progress-panel {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        
+        .panel-header {
+            margin-bottom: 20px;
+        }
+        
+        .panel-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .panel-subtitle {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+        
+        .progress-steps {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .progress-step {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .step-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            z-index: 1;
+            color: var(--text-light);
+        }
+        
+        .step-icon.completed {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .step-line {
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            width: 2px;
+            height: calc(100% + 15px);
+            background-color: var(--border);
+            z-index: 0;
+        }
+        
+        .progress-step:last-child .step-line {
+            display: none;
+        }
+        
+        .progress-step.completed .step-line {
+            background-color: var(--success);
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .step-description {
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        
+        .results-section {
+            grid-column: span 2;
+            margin-top: 20px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .results-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .export-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            font-weight: 500;
+            color: var(--text-light);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .alert {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+        }
+        
+        .alert-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .alert-icon {
+            font-size: 20px;
+            color: var(--danger);
+        }
+        
+        .alert-content h3 {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .finding-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        
+        .finding-header {
+            padding: 12px 15px;
+            background-color: rgba(231, 76, 60, 0.1);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .finding-severity {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--danger);
+        }
+        
+        .finding-type {
+            margin-left: auto;
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .finding-body {
+            padding: 15px;
+        }
+        
+        .finding-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .finding-description {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 10px;
+        }
+        
+        .finding-meta {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+        
+        .report-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .report-link {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.2s ease;
+        }
+        
+        .report-link:hover {
+            box-shadow: var(--shadow);
+        }
+        
+        .report-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius);
+            background-color: var(--background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary);
+        }
+        
+        .report-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .report-description {
+            font-size: 12px;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <i class="fas fa-robot"></i>
+                <div class="chat-title">Risk Agent (Exploration Mode)</div>
+                <div class="status">
+                    <div class="status-dot"></div>
+                    <span>Online</span>
+                </div>
+            </div>
+            <div class="chat-messages">
+                <div class="message agent">
+                    <div class="message-sender">Risk Agent</div>
+                    <div class="message-content">
+                        Hello! I'm your Risk Agent Assistant. I can help you analyze AI models for security risks. What would you like to do today?
+                    </div>
+                </div>
+                <div class="message user">
+                    <div class="message-sender">You</div>
+                    <div class="message-content">
+                        If I share this link—https://huggingface.co/tensorblock/nanollama-GGUF/tree/main—could you outline an itemized AI testing plan ranked by feasibility?
+                    </div>
+                </div>
+                <div class="message agent">
+                    <div class="message-sender">Risk Agent</div>
+                    <div class="message-content">
+                        Since you only have access to the raw model artifacts (no training code, data pipelines, or runtime environment), we must start with purely offline, file-based checks and progressively move toward execution-based and adversarial tests. Here's a plan ranked by feasibility:<br><br>
+                        <strong>1. Model Metadata & Integrity Check</strong> - Feasibility: High<br>
+                        <strong>2. Container Schema & Compliance Validation</strong> - Feasibility: High<br>
+                        <strong>3. Model Malicious-Code Scan</strong> - Feasibility: Medium–High<br>
+                        <strong>4. Loading & Tokenizer Initialization Test</strong> - Feasibility: Medium<br>
+                        <strong>5. Inference Consistency & Determinism Test</strong> - Feasibility: Medium<br>
+                        <strong>6. Performance Benchmarking & Resource Profiling</strong> - Feasibility: Medium–Low<br>
+                        <strong>7. Training-Data Documentation & Quality Check</strong> - Feasibility: Low<br>
+                        <strong>8. Functional Capability Assessment</strong> - Feasibility: Low<br>
+                        <strong>9. Adversarial Prompt Vulnerability Assessment</strong> - Feasibility: Low<br>
+                        <strong>10. End-to-End Red-Teaming & Security Stress Test</strong> - Feasibility: Very Low
+                    </div>
+                </div>
+                <div class="message user">
+                    <div class="message-sender">You</div>
+                    <div class="message-content">
+                        Maybe perform the Model SCA
+                    </div>
+                </div>
+                <div class="message agent">
+                    <div class="message-sender">Risk Agent</div>
+                    <div class="message-content">
+                        I'd interpret that as running the Model Metadata & Integrity Check step. In other words, you'd:<br><br>
+                        - Verify that all GGUF artifacts are present and uncorrupted<br>
+                        - Check file sizes and names against the manifest<br>
+                        - Validate checksums (e.g. SHA-256) to ensure no tampering or corruption<br><br>
+                        Running the analysis now...<br><br>
+                        Please refer to the output for the results of the integrity check in the detailed report.
+                    </div>
+                </div>
+                <div class="message user">
+                    <div class="message-sender">You</div>
+                    <div class="message-content">
+                        Yes, ok, go ahead
+                    </div>
+                </div>
+                <div class="message agent">
+                    <div class="message-sender">Risk Agent</div>
+                    <div class="message-content">
+                        I've completed the malicious code scan. Please refer to the analysis results report for detailed findings.
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" placeholder="Type your message here...">
+                <button><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        
+        <div class="progress-panel">
+            <div class="panel-header">
+                <div class="panel-title">Analysis Progress</div>
+                <div class="panel-subtitle">Current workflow status</div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step completed">
+                    <div class="step-icon completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-title">Model Identification</div>
+                        <div class="step-description">Identify model type and format</div>
+                    </div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="step-icon completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-title">Integrity Check</div>
+                        <div class="step-description">Verify checksums and metadata</div>
+                    </div>
+                </div>
+                <div class="progress-step completed">
+                    <div class="step-icon completed">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-title">Malicious Code Scan</div>
+                        <div class="step-description">Detect embedded malware</div>
+                    </div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-title">Dynamic Analysis</div>
+                        <div class="step-description">Monitor runtime behavior</div>
+                    </div>
+                </div>
+                <div class="progress-step">
+                    <div class="step-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-content">
+                        <div class="step-title">Behavioral Testing</div>
+                        <div class="step-description">Test model responses</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section">
+            <div class="results-header">
+                <div class="results-title">Analysis Results</div>
+                <button class="export-btn">
+                    <i class="fas fa-file-export"></i>
+                    Export Report
+                </button>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active">Summary</div>
+                <div class="tab">Static Analysis</div>
+                <div class="tab">Dynamic Analysis</div>
+                <div class="tab">Behavioral Testing</div>
+            </div>
+            
+            <div class="tab-content active">
+                <div class="alert alert-danger">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <h3>POTENTIALLY UNSAFE</h3>
+                        <p>This model contains potentially malicious code. Review the findings below for details.</p>
+                    </div>
+                </div>
+                
+                <div class="findings-grid">
+                    <div class="finding-card">
+                        <div class="finding-header">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="finding-severity">High Severity</div>
+                            <div class="finding-type">Pickle Deserialization</div>
+                        </div>
+                        <div class="finding-body">
+                            <div class="finding-title">Unsafe Pickle Deserialization</div>
+                            <div class="finding-description">
+                                The model contains unsafe pickle code that could lead to arbitrary code execution when loaded.
+                            </div>
+                            <div class="finding-meta">
+                                Detected by: ModelScan, Fickling
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="finding-card">
+                        <div class="finding-header">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <div class="finding-severity">High Severity</div>
+                            <div class="finding-type">Network Exfiltration</div>
+                        </div>
+                        <div class="finding-body">
+                            <div class="finding-title">Unauthorized Network Communication</div>
+                            <div class="finding-description">
+                                The model attempts to establish network connections to external servers during loading.
+                            </div>
+                            <div class="finding-meta">
+                                Detected by: Dynamic Analysis
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-links">
+                    <a href="file://wsl.localhost/Ubuntu/home/scantist/github/risk-agent-prototype/hf-sca-output/model-meta/result_sample.html" class="report-link">
+                        <div class="report-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-title">Integrity Check Report</div>
+                            <div class="report-description">View detailed integrity analysis</div>
+                        </div>
+                    </a>
+                    <a href="file://wsl.localhost/Ubuntu/home/scantist/github/risk-agent-prototype/ui/ui_analysis_results.html" class="report-link">
+                        <div class="report-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="report-content">
+                            <div class="report-title">Security Analysis Report</div>
+                            <div class="report-description">View comprehensive security findings</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Static Analysis Content -->
+                <p>Static Analysis content would go here...</p>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Dynamic Analysis Content -->
+                <p>Dynamic Analysis content would go here...</p>
+            </div>
+            
+            <div class="tab-content">
+                <!-- Behavioral Testing Content -->
+                <p>Behavioral Testing content would go here...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple tab switching functionality
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and tab contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

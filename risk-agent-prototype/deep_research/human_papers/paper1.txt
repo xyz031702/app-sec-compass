@@ -1,0 +1,58 @@
+An Empirical Study of Malicious Code in the PyPI Ecosystem
+================================================================
+(arXiv:2309.11021 — Wenbo Guo et al., Sept 2023)
+
+1. Dataset & Method
+-------------------
+* Built the largest public corpus of PyPI malware:
+  – 2 035 distinct packages / 4 669 malicious files.
+  – Sources: PyPI mirrors, Snyk, Sonatype, GitHub, Exploit‑DB, VX‑Underground, StackOverflow.
+* Pipeline: automated scraping → AST feature extraction → API‑sequence spectral clustering → manual vetting.
+* Benchmarked eight detectors (Bandit4Mal, OSS‑Gadget, Aura, PyPI‑Check, VirusTotal, Snyk Code Test, ClamAV, Pyt).
+
+2. Key Findings
+---------------
+* **Attack vectors**
+  – 68 % Install‑time backdoors (`setup.py` hooks).
+  – 19 % Import‑time (indirect‐import chains).
+  – 12 % Runtime droppers.
+
+* **Malware behaviours** (overlapping):
+  – Command execution 59 %
+  – Information stealing 49 %
+  – File operations 47 %
+  – Code‑exec 2.6 %, Remote C2 < 1 %
+
+* **Evasion tricks**
+  – Code obfuscation / Base64 payloads.
+  – External payload download, multistage HTTP.
+  – *Newly reported*: indirect import, image‑steganography droppers, Python sandbox escape.
+
+* **Impact metrics**
+  – 74.8 % infections occur via **source‑code installs**; 81 % delivered through `pip`.
+  – Linux hosts suffer 77 % of downloads.
+  – 70 % of packages remain downloadable from mirrors long after disclosure; Tsinghua mirror still served 82 % of all known malware.
+
+* **Scanner reality‑check**
+  – High false‑positive or false‑negative rates across tools.
+    • Bandit4Mal: 86 % FP on benign code.
+    • VirusTotal: 54 % FN on real malware.
+  – Signature & rule engines miss obfuscated or install‑time logic.
+
+3. Practical Implications
+-------------------------
+* Integrate **build‑time sandbox + syscall audit** before artefact promotion.
+* Fail CI if `setup.py`/`pyproject.toml` invokes `subprocess`, `exec`, or dynamic imports.
+* Pin installs to `pypi.org/simple`; disable untrusted mirrors or enforce Sigstore verification.
+* Maintain an internal allow‑list of vetted wheels; forbid source installs in production images.
+* Enhance scanners with rules for:
+  – `importlib.import_module` on dynamic strings.
+  – LSB‑steganography extraction patterns.
+  – AST patterns for sandbox‑escape (`builtins.exec`, `compile`, `base64`).
+
+4. Open Resources
+-----------------
+Dataset & regex patterns: https://github.com/lxyeternal/pypi_malregistry
+
+Prepared 17 Apr 2025.
+

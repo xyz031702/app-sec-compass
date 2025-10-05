@@ -1,0 +1,970 @@
+Okay, here is the checklist generated from the "Companion Guide on Securing AI Systems" sources you provided, formatted as a YAML file. This checklist is structured based on the measures and controls outlined in sections 2.2.1 through 2.2.5 of the document.
+
+ai_security_companion_guide_checklist:
+  description: |
+    This checklist is derived from the "Companion Guide on Securing AI Systems" published by the CSA.
+    It curates practical mitigation measures and practices for securing AI systems, drawing from industry and academia.
+    This document is intended for informational purposes only and is not mandatory, prescriptive nor exhaustive.
+    System owners should refer to this Companion Guide as a resource alongside other available resources in observing the CSA’s Guidelines on Securing AI systems.
+    Measures marked with an asterisk (*) are unique to AI systems, while others are based on classical cybersecurity practices.
+  status_options: ["Yes", "No", "NA", "Not Assessed"]
+  sections:
+    - name: "2.2.1. PLANNING AND DESIGN"
+      controls:
+        - id: "1.1.1*"
+          description: "Ensure system owners and senior leaders understand threats to secure AI and their mitigations."
+          responsible_parties: ["Decision Makers"]
+          related_risks:
+            - "Incidents occurring due to poor cyber hygiene and/or knowledge"
+          example_implementation: |
+            Attending seminars on AI threats, policies, and compliance and get exposed to case studies to appreciate the many AI potential and associated risks.
+            Internal workshops and eLearning courses can inform employees on AI basics, responsible use, and relevant regulations.
+            Integrate regular security training as part of the company’s AI innovation training for a balanced approach.
+            Online resources, e.g. electronic newsletters and YouTube videos could provide a means to track AI security developments that are emerging almost daily.
+            Documentary evidence that team members have relevant security knowledge and training. These can include, where applicable:
+            - Training records
+            - Attendance records
+            - Assessments
+            - Certifications
+            Establish the right cross-functional team to ensure that security, risk, and compliance considerations are included from the start.
+          references:
+            - "Principles for the Security of Machine Learning  (UK NCSC)"
+            - "Secure by Design - Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software"
+            - "Failure modes in Machine Learning (Microsoft)"
+            - "OWASP AI Exchange"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"
+        - id: "1.1.2*"
+          description: |
+            Provide guidance to staff on Security by Design and Security by Default principles as well as unique AI security risks and failure modes as part of InfoSec training.
+            e.g. LLM security matters, common AI weaknesses and attacks.
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Attending seminars on AI threats, policies, and compliance and get exposed to case studies to appreciate the many AI potential and associated risks.
+            Internal workshops and eLearning courses can inform employees on AI basics, responsible use, and relevant regulations.
+            Integrate regular security training as part of the company’s AI innovation training for a balanced approach.
+            Online resources, e.g. electronic newsletters and YouTube videos could provide a means to track AI security developments that are emerging almost daily.
+            Documentary evidence that team members have relevant security knowledge and training. These can include, where applicable:
+            - Training records
+            - Attendance records
+            - Assessments
+            - Certifications
+            Establish the right cross-functional team to ensure that security, risk, and compliance considerations are included from the start.
+          references:
+            - "Principles for the Security of Machine Learning  (UK NCSC)"
+            - "Secure by Design - Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software"
+            - "Failure modes in Machine Learning (Microsoft)"
+            - "OWASP AI Exchange"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"
+        - id: "1.1.3"
+          description: "Train developers in secure coding practices and good practices for the AI lifecycle."
+          responsible_parties: ["Decision Makers", "AI Practitioners"]
+          related_risks:
+            - "Code vulnerabilities that could be exploited"
+          example_implementation: |
+            Attending seminars on AI threats, policies, and compliance and get exposed to case studies to appreciate the many AI potential and associated risks.
+            Internal workshops and eLearning courses can inform employees on AI basics, responsible use, and relevant regulations.
+            Integrate regular security training as part of the company’s AI innovation training for a balanced approach.
+            Online resources, e.g. electronic newsletters and YouTube videos could provide a means to track AI security developments that are emerging almost daily.
+            Documentary evidence that team members have relevant security knowledge and training. These can include, where applicable:
+            - Training records
+            - Attendance records
+            - Assessments
+            - Certifications
+            Establish the right cross-functional team to ensure that security, risk, and compliance considerations are included from the start.
+          references:
+            - "Principles for the Security of Machine Learning  (UK NCSC)"
+            - "Secure by Design - Shifting the Balance of Cybersecurity Risk: Principles and Approaches for Secure by Design Software"
+            - "Failure modes in Machine Learning (Microsoft)"
+            - "OWASP AI Exchange"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"
+        - id: "1.2.1*"
+          description: |
+            Understand AI governance and legal requirements, the impact to the system, users, organisation, if an AI component is compromised or has unexpected behaviour or there is an attack that affected AI privacy.
+            Plan for an attack and its mitigation, using the principles of CIA.
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "No triage, leading to confusion and locked or overloaded resources in the event of an AI security incident"
+            - "Slow incident response, leading to large damage done"
+            - "Slow remediation, leading to prolonged operational outage"
+            - "Slow response means that attackers could do more damage, cover their tracks e.g. using anti-forensics"
+          example_implementation: |
+            Perform a security risk assessment to determine the consequences and impact to the various stakeholders, and if the AI component does not behave as intended.
+            Understand the AI inventory of systems used and their implications and interactions.
+          references:
+            - "Reference the case studies in this document."
+            - "Singapore Model Governance Framework for Generative AI"
+            - "NIST AI Risk Management Framework"
+            - "ISO 31000: Risk Management"
+            - "MITRE ATLAS"
+            - "NCSC Risk Management Guidance"
+            - "OWASP Threat Modelling"
+            - "OWASP Machine Learning Security Top Ten"
+            - "Threats to AI using Microsoft STRIDE"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+            - "Model Artificial Intelligence Governance Framework"
+          status: "Not Assessed"
+        - id: "1.2.2*"
+          description: "Assess AI-related attacks and implement mitigating steps."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Having/Developing a play book and AI incident handling procedures that will shorten the time to remediate and reduce resources wasted on unnecessary steps.
+            Document the decision-making process of assessing potential AI threats and possible attack surfaces, as well as steps to mitigate these threats. This can be done through a threat risk assessment. Project risks may extend beyond security, e.g. newer AI models could obsolete the entire use case and business assumptions.
+          references:
+            - "Reference the case studies in this document."
+            - "Singapore Model Governance Framework for Generative AI"
+            - "NIST AI Risk Management Framework"
+            - "ISO 31000: Risk Management"
+            - "MITRE ATLAS"
+            - "NCSC Risk Management Guidance"
+            - "OWASP Threat Modelling"
+            - "OWASP Machine Learning Security Top Ten"
+            - "Threats to AI using Microsoft STRIDE"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+            - "Model Artificial Intelligence Governance Framework"
+          status: "Not Assessed"
+        - id: "1.2.3"
+          description: "Conduct a risk assessment in accordance with the relevant industry standards/best practices."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Failure to comply with industry standards/best practices may lead to insufficient, inefficient or ineffective mitigations"
+          example_implementation: |
+            Refer to the industry standards and best practices when performing risk assessment.
+          references:
+            - "Reference the case studies in this document."
+            - "Singapore Model Governance Framework for Generative AI"
+            - "NIST AI Risk Management Framework"
+            - "ISO 31000: Risk Management"
+            - "MITRE ATLAS"
+            - "NCSC Risk Management Guidance"
+            - "OWASP Threat Modelling"
+            - "OWASP Machine Learning Security Top Ten"
+            - "Threats to AI using Microsoft STRIDE"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+            - "Model Artificial Intelligence Governance Framework"
+          status: "Not Assessed"
+    - name: "2.2.2. DEVELOPMENT"
+      controls:
+        - id: "2.1.1"
+          description: "Implement Secure Coding and Development Lifecycle."
+          responsible_parties: ["Decision Makers", "AI Practitioners"]
+          related_risks:
+            - "Introduction of bugs, vulnerabilities or unwanted and malicious active content, such as AI poisoning and model backdoors"
+            - "Associated MITRE ATLAS Techniques: AML.T0018.000 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0010 ML Supply Chain Compromise"
+          example_implementation: |
+            Adopt Security by Design.
+            Apply software development lifecycle (SDLC) process.
+            Use software development tools to check for insecure coding practices.
+            Consider implementing zero trust principles in system design.
+          references:
+            - "CSA Critical Information Infrastructure Supply Chain Programme"
+            - "NCSC Supply Chain Guidance"
+            - "Supply-chain Levels for Software Artifacts (SLSA)"
+            - "MITRE Supply Chain Security Framework"
+            - "OWASP Top 10 LLM Applications"
+            - "NIST Secure Software Development Framework for Generative AI and for Dual Use Foundation Models Virtual Workshop"
+          status: "Not Assessed"
+        - id: "2.1.2"
+          description: "Supply Chain Security: Ensure data, models, compilers, software libraries, developer tools and applications from trusted sources."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            If procuring any AI System or component from a vendor, check/ensure suppliers adhere to policy and the equivalent security standards as your organisation. This could be done by establishing a Service Level Agreement (SLA) with the vendor.
+            If the above is not plausible, consider using software components only from trusted sources.
+            Verify object integrity e.g. hashes before using, opening, or running any files.
+            Associated MITRE Mitigations:
+            - AML.M0016 Vulnerability Scanning
+            - AML.M0013 Code Signing
+            - AML.M0007 Sanitize Training Data
+            - AML.M0014 Verify ML Artifacts
+            - AML.M0008 Validate ML Model
+          references:
+            - "CSA Critical Information Infrastructure Supply Chain Programme"
+            - "NCSC Supply Chain Guidance"
+            - "Supply-chain Levels for Software Artifacts (SLSA)"
+            - "MITRE Supply Chain Security Framework"
+            - "OWASP Top 10 LLM Applications"
+            - "NIST Secure Software Development Framework for Generative AI and for Dual Use Foundation Models Virtual Workshop"
+          status: "Not Assessed"
+        - id: "2.1.3*"
+          description: "Protect the integrity of data that will be used for training the model."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Data poisoning attacks"
+            - "Exposure of sensitive and classified data in the AI training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0019 Publish Poison Dataset"
+          example_implementation: |
+            Use automated data discovery tools to identify sensitive data across various environments, including databases, data lakes, and cloud storage.
+            Implement secure workflow and data flow to ensure the integrity of the data used.
+            When viable, have humans look at each data input and generate notifications where labels differ.
+            Use statistical and automated methods to check for abnormalities.
+            Associated MITRE Mitigations:
+            - AML.M0007 Sanitize Training Data
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "ETSI AI Data Supply Chain Security"
+            - "DSTL Machine Learning with Limited Data"
+          status: "Not Assessed"
+        - id: "2.1.4*"
+          description: "Consider the trade-offs when deciding to use an untrusted 3rd party model (with or without fine tuning)."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Model backdoors"
+            - "Remote code execution"
+            - "Associated MITRE ATLAS Techniques: AML.T0018 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0043 Craft Adversarial Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0050 Command and Scripting Interpreter"
+          example_implementation: |
+            Untrusted 3rd party models are models obtained from public/private repositories, whose publisher's origins cannot be verified.
+            While there are benefits to relying on 3rd party models, possible risks include less control and visibility of model development.
+            This reduced visibility may introduce backdoors injected by malicious actors. Consider the trade-offs based on your application’s requirements.
+            Associated MITRE Mitigations:
+            - AML.M0018 User Training
+            - AML.M0013 Code Signing
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.1.5*"
+          description: "Consider sandboxing untrusted models or serialised weight files where relevant."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Running the model within a virtual machine or isolated environment away from production environment.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+            - AML.M0018 User Training
+            - AML.M0013 Code Signing
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.1.6*"
+          description: "Scan models or serialised weight files."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Use scanning tools such as Picklescan, Modelscan, on model files from an external source on a separate platform/system where the production system is on.
+            Associated MITRE Mitigations:
+            - AML.M0016 Vulnerability Scanning
+            - AML.M0008 Validate ML Model
+          references:
+            - "Pickle Scanning (Hugging Face)"
+            - "Stable Diffusion Pickle Scanner GUI"
+            - "Also see Annex A – Technical Testing and System Validation"
+          status: "Not Assessed"
+        - id: "2.1.7"
+          description: "Consider the trade-offs associated with using sensitive data for model training or inference."
+          responsible_parties: ["Decision Makers", "AI Practitioners"]
+          related_risks:
+            - "Data leaks"
+            - "Compromised privacy"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+            - "Associated MITRE ATLAS Techniques: AML.T0056 LLM Meta Prompt Extraction"
+            - "Associated MITRE ATLAS Techniques: AML.T0040 ML Model Inference API Access"
+            - "Associated MITRE ATLAS Techniques: AML.T0047 ML Model Product or Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0049 Exploit Public Facing Application"
+          example_implementation: |
+            Check that data uploaded is non-sensitive or protected before submitting to the external model according to enterprise data protection policy/requirements.
+            Organisations may explore various risk mitigation measures to secure their non-public sensitive data, such as anonymisation and privacy-enhancing technologies, before making decision on the use of sensitive data for model training.
+            Pay specific attention to supplier policies on the confidentiality of user data, most notably ensure that suppliers commit that user inputs and model outputs are not subsequently used for model training.
+            If necessary, consider techniques such as anonymisation, before deciding to use sensitive data for training.
+            Associated MITRE Mitigations:
+            - AML.M0012 Encrypt Sensitive Information
+            - AML.M0016 Vulnerability Scanning
+          references:
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"
+        - id: "2.1.8"
+          description: "Apply appropriate controls for data being sent out of the organisation."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data leaks"
+            - "Compromised privacy"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+            - "Associated MITRE ATLAS Techniques: AML.T0056 LLM Meta Prompt Extraction"
+            - "Associated MITRE ATLAS Techniques: AML.T0040 ML Model Inference API Access"
+            - "Associated MITRE ATLAS Techniques: AML.T0047 ML Model Product or Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0049 Exploit Public Facing Application"
+            - "Insecure or vulnerable libraries, which can introduce unexpected attack surfaces"
+            - "Model Subversion"
+            - "Associated MITRE ATLAS Techniques: AML.T0016 Obtain Capabilities"
+          example_implementation: |
+            Implement an automated Data Loss Prevention, exfiltration countermeasures, alert triggers and possibly human intervention e.g. added confirmation via login and input confirmation.
+            Associated MITRE Mitigations:
+            - AML.M0012 Encrypt Sensitive Information
+            - AML.M0004 Restrict Number of ML Model Queries
+            - AML.M0019 Control Access to ML Models and Data in Production.
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.1.9"
+          description: "Consider evaluation of dependent software libraries, open-source models and when possible, run code checking."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Insecure or vulnerable libraries, which can introduce unexpected attack surfaces"
+            - "Model Subversion"
+            - "Associated MITRE ATLAS Techniques: AML.T0016 Obtain Capabilities"
+          example_implementation: |
+            For example, ensure the library does not have arbitrary code execution when being imported or used. This can be done by using AI code checking, a vulnerability scanning tool, or checking against a database with vulnerability information.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+            - AML.M0011 Restrict Library Loading
+            - AML.M0004 Restrict Number of ML Model Queries
+            - AML.M0008 Validate ML Model
+            - AML.M0014 Verify ML Artifacts
+            - AML.M0011 Restrict Library Loading
+          references:
+            - "CVE List"
+            - "Open-source Insights"
+            - "OSS Insight"
+          status: "Not Assessed"
+        - id: "2.1.10"
+          description: "Use software and libraries that does not have known vulnerabilities."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Insecure or vulnerable libraries, which can introduce unexpected attack surfaces"
+            - "Model Subversion"
+            - "Associated MITRE ATLAS Techniques: AML.T0016 Obtain Capabilities"
+          example_implementation: |
+            Update to the latest secure patch in a timely manner.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "CVE List"
+            - "Open-source Insights"
+            - "OSS Insight"
+          status: "Not Assessed"
+        - id: "2.2.1*"
+          description: "Assess the need to use sensitive data for training the model, or directly referenced by the model."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Privacy compromise"
+            - "Attackers may be able to extract data used for training or from vector stores via malicious queries and prompt injections"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+          example_implementation: |
+            Classify your organisation data based on sensitivity and/or enterprise data policy.
+            Consider the need to use PII or sensitive data to generate vector databases that will be referenced by the model e.g. when using Retrieval Augmented Generation (RAG).
+            Consider the trade-offs associated with using sensitive data for model training. Organisations may wish to explore various risk mitigation measures to secure their non-public sensitive data, such as anonymisation and privacy-enhancing technologies, before they decide whether to use such sensitive data for model training.
+            Associated MITRE Mitigations:
+            - AML.M0018 User Training
+          references:
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems (PDPC)"
+            - "Generative AI Scoping Matrix"
+            - "OWASP Machine Learning Security Top 10 (2023 edition) - Draft release v0.3"
+            - "OWASP Top 10 for Large Language Model Applications"
+          status: "Not Assessed"
+        - id: "2.2.2*"
+          description: "Consider Model hardening if appropriate."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Input-based attacks"
+            - "Prompt Injection"
+            - "Adversarial Attacks"
+            - "Model overfitting"
+            - "Privacy compromise"
+            - "Associated MITRE ATLAS Techniques: AML.T0043 Craft Adversarial Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0015 Evade ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0051 LLM Prompt Injection"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+            - "Associated MITRE ATLAS Techniques: AML.T0054 LLM Jailbreak"
+          example_implementation: |
+            Apply data augmentation and adversarial training to reduce the effect of adversarial robustness attacks.
+            Adversarial training: Inject adversarial text or image transformations (e.g. random flips, crops, rotation). This might impact the effectiveness of the model.
+            For LLMs, prompt engineering best practices such as usage of guardrails and wrapping instructions in a single pair of salted sequence tags can be methods to further ground the model.
+            Overfitting can increase the chance of adversarial attacks through model inversion.
+            Associated MITRE Mitigations:
+            - AML.M0003 Model Hardening
+            - AML.M0006 Use Ensemble Methods
+            - AML.M0010 Input Restoration
+            - AML.M0015 Adversarial Input Detection
+            - AML.M0004 Restrict Number of ML Model Queries
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.2.3*"
+          description: "Consider implementing techniques to strengthen/harden the system apart from strengthening the model itself."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Adversarial attacks on the model"
+            - "Associated MITRE ATLAS Techniques: AML.T0015 Evade ML Model"
+            - "Infrastructure Attacks"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Attacker Recon activities"
+            - "Associated MITRE ATLAS Techniques: AML.TA002 ATLAS Tactic Recon"
+          example_implementation: |
+            Supporting Countermeasures:
+            - Cyber threat Intelligence to analyse and predict attacks.
+            - Involve beta users (better red teaming) to test, exploit the wisdom of the crowds.
+            - Anti-recon measures via hiding, disinformation, deception (honeypots).
+            - High quality datasets to improve model performance.
+            - Data security controls for data collection, data storage, data processing, and data use as well as code and model security.
+            - For LLMs, implement guardrails or input validation.
+            - Implement endpoint security.
+            - Consider implementing Zero Trust Principles for the system.
+            Associated MITRE Mitigations:
+            - AML.M0003 Model Hardening
+            - AML.M0006 Use Ensemble Methods
+            - AML.M0010 Input Restoration
+            - AML.M0015 Adversarial Input Detection
+            - AML.M0004 Restrict Number of ML Model Queries
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.3.1"
+          description: |
+            Establishing a data lineage and software license management process. This includes documenting the data, codes, test cases and model, including any changes made and by whom.
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Loss of data integrity"
+            - "Unauthorised changes to data, model or system"
+            - "Insider threats"
+            - "Ransomware attacks"
+            - "Loss of intellectual property"
+            - "Associated MITRE ATLAS Techniques: AML.T0018.000 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0011 User Execution"
+          example_implementation: |
+            Model cards, Data cards, and Software Bill of Materials (SBOMs) may be used.
+            Associated MITRE Mitigations:
+            - AML.M0016 Vulnerability Scanning
+            - AML.M0013 Code Signing
+            - AML.M0007 Sanitize Training Data
+            - AML.M0014 Verify ML Artifacts
+            - AML.M0008 Validate ML Model
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0018 User Training
+          references:
+            - "Cybersecurity Code of Practice for Critical Information Infrastructure (CSA)"
+            - "ISO 27001: Information security, cybersecurity and privacy protection"
+          status: "Not Assessed"
+        - id: "2.3.2"
+          description: "Secure data at rest, and data in transit."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data loss and leaks."
+            - "Loss of data integrity."
+            - "Ransomware encryption."
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0054 LLM Jailbreak"
+          example_implementation: |
+            Sensitive data (model weight and python code) is stored encrypted and transferred with proper encryption protocols, and secure key management.
+            Consider saving model weights in secure formats such as safetensor, etc.
+            Associated MITRE Mitigations:
+            - AML.M0012 Encrypt Sensitive Information
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.3.3"
+          description: "Have regular backups in event of compromise."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Identify essential data to backup more frequently.
+            Implement a regular backup schedule.
+            Have redundancy to ensure availability.
+            Associated MITRE Mitigations:
+            - AML.M0014 Verify ML Artifacts
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.3.4*"
+          description: "Implement controls to limit what AI can access and generate, based on sensitivity of the data."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data leaks"
+            - "Privacy attacks"
+            - "Associated MITRE ATLAS Techniques: AML.T0036 Data from Information Repositories"
+            - "Associated MITRE ATLAS Techniques: AML.T0037 Data from Local System"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+          example_implementation: |
+            For sensitive data such as PII, explore various risk mitigation measures to secure non-public sensitive data, such as data anonymisation and privacy-enhancing techniques, before input into the AI.
+            Have filters at the output to prevent sensitive information from being leaked.
+            Associated MITRE Mitigations:
+            - AML.M0012 Encrypt Sensitive Information
+            - AML.M0019 Control Access to ML Models and Data in Production
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+            - "AML.M0005 Control Access to ML Models and Data at Rest" # This MITRE Mitigation is listed under References in the source table structure
+          status: "Not Assessed"
+        - id: "2.3.5"
+          description: "For very private data, consider if privacy enhancing technologies may be used."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data leaks"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+          example_implementation: |
+            Examples include having a Trusted Execution Environment, differential privacy or homomorphic encryption.
+            Associated MITRE Mitigations:
+            - AML.M0012 Encrypt Sensitive Information
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.4.1"
+          description: "Implement appropriate access controls to APIs, models and data, logs, and the environments that they are in."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Unauthorised access to system, data and models"
+            - "Data breaches"
+            - "Model/system compromise"
+            - "Loss of intellectual property"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0036 Data from Information Repositories"
+            - "Associated MITRE ATLAS Techniques: AML.T0037 Data from Local System"
+            - "Associated MITRE ATLAS Techniques: AML.T0012 Valid Accounts"
+            - "Associated MITRE ATLAS Techniques: AML.T0057 LLM Data Leakage"
+            - "Associated MITRE ATLAS Techniques: AML.T0053 LLM Plugin Compromise"
+            - "Associated MITRE ATLAS Techniques: AML.T0054 LLM Jailbreak"
+            - "Associated MITRE ATLAS Techniques: AML.T0044 Full ML Model Access"
+            - "Associated MITRE ATLAS Techniques: AML.T0055 Unsecured Credentials"
+            - "Associated MITRE ATLAS Techniques: AML.T0013 Discover ML Ontology"
+            - "Associated MITRE ATLAS Techniques: AML.T0014 Discover ML Family"
+            - "Associated MITRE ATLAS Techniques: AML.T0007 Discover ML Artifacts"
+            - "Associated MITRE ATLAS Techniques: AML.T0035 ML Artifact Collection"
+          example_implementation: |
+            Have secure authentication processes.
+            Rule and role-based access controls to the development environment, based on the principles of least privilege.
+            Have periodic reviews for role conflicts or violations of segregation of duties, and documentation should be retained including remediation actions.
+            Access should be promptly revoked for terminated users or when the employee no longer requires access.
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+            - AML.M0012 Encrypt Sensitive Information
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "Cybersecurity Code of Practice for Critical Information Infrastructure (CSA)"
+            - "ISO 27001: Information security, cybersecurity and privacy protection"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"
+        - id: "2.4.2"
+          description: "Implement access logging and monitoring."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Anomalies and suspicious activities not detectable"
+            - "Failed compliance and audit."
+            - "Poor transparency and accountability"
+            - "Insider threats"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0040 ML Model Inference API Access"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+          example_implementation: |
+            Log access with timestamps. Track changes to the data and model or configuration changes. Protect logs from being attacked (deleted, or tampered)
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.4.3"
+          description: "Segregate production/ development environments."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data integrity and confidentiality being compromised"
+            - "Limit the impact of potential attacks"
+            - "Risk of disruptions or conflicts between different functions/ models"
+            - "Insider attacks"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+          example_implementation: |
+            Consider keeping different project environments separate from each other. E.g. development separated from production.
+            If you are using cloud services, consider compartmentalizing your projects using VPCs, VMs, VPNs, enclaves, and containers
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "2.4.4"
+          description: "Ensure configurations are secure by default."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Unauthorized access and data breaches"
+            - "Insider threats"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+          example_implementation: |
+            Default option should be secure against common threats. E.g. Implicitly deny access to sensitive data.
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+    - name: "2.2.3. DEPLOYMENT"
+      controls:
+        - id: "3.1.1"
+          description: "Ensure contingency plans are in place to mitigate disruption or failure of AI services."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Extended downtime to availability"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+          example_implementation: |
+            Having a manual or secondary system as a fail-over/fail-safe if the AI service becomes unavailable.
+          references:
+            - "Cybersecurity Code of Practice for Critical Information Infrastructure (CSA)"
+            - "ISO 27001: Information security, cybersecurity and privacy protection"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+            - "NSA Guidance for Strengthening AI System Security"
+          status: "Not Assessed"
+        - id: "3.1.2"
+          description: "Implement appropriate access controls to APIs, models and data, logs, configuration files and the environments that they are in."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Unauthorized access to sensitive AI models and data"
+            - "Data breaches"
+            - "Loss of model integrity"
+            - "Loss of intellectual property"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0040 ML Model Inference API Access"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+          example_implementation: |
+            Have secure authentication processes.
+            Rule and role-based access controls to the deployment environment, based on the principles of least privilege.
+            Have periodic reviews for role conflicts or violations of segregation of duties, and documentation should be retained including remediation actions.
+            Access should be removed timely for terminated users or when the employee no longer requires access.
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.1.3"
+          description: "Implement access logging, monitoring and policy management"
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Unauthorized access to deployment infrastructure and environment"
+            - "Undetected Anomalies and suspicious activities"
+            - "Nonadherence to compliance and audit requirements"
+            - "Data integrity and accountability"
+            - "Insider threats"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0040 ML Model Inference API Access"
+          example_implementation: |
+            Keep a record of access to the model, inputs to the model, and output behaviour of the model. If necessary, track all AI applications, models and data.
+            Have the ability to discover all AI apps, models, and data across the system, and who they are used by.
+            Define and enforce data security policies across their environments.
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.1.4"
+          description: "Implement segregation of environments."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data integrity and confidentiality being compromised"
+            - "Limit the impact of potential attacks, Risk of disruptions or conflicts between different functions/models"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+          example_implementation: |
+            Keep different project environments separate from each other. E.g. when working on the cloud, have a separate VPC.
+            Keep the development and operational environment apart.
+            Associated MITRE Mitigations:
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.1.5"
+          description: "Ensure configurations are secure by default."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Vulnerability exploitation, Unauthorized access, Data breaches"
+            - "Insider threats"
+            - "Associated MITRE ATLAS Techniques: AML.T0024 Exfiltration via ML Inference API"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+          example_implementation: |
+            Default option should be secure against common threats. E.g. Implicitly deny access to sensitive data.
+            Associated MITRE Mitigations:
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.1.6"
+          description: "Consider implementing firewalls."
+          responsible_parties: ["Cybersecurity Practitioners"]
+          related_risks:
+            - "Unauthorized access to AI systems, models, and data"
+            - "Network-based attacks, such as denial-of-service (DoS) attacks."
+            - "Malware and intrusion attempts"
+            - "Unauthorized access to specific components of the AI systems"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0046 Spamming ML System with Chaff Data"
+          example_implementation: |
+            Consider implementing Firewalls if the model is accessible to users online.
+            Associated MITRE Mitigations:
+            - AML.M0005 Control Access to ML Models and Data at Rest
+            - AML.M0019 Control Access to ML Models and Data in Production
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.1.7"
+          description: "Implement any other relevant security controls based on cybersecurity best practice, which has not been stated above."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks: [] # Not explicitly listed for this control in the source table structure
+          example_implementation: |
+            Implement any other relevant security control based on best practice, such as ISO 27001.
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.2.1"
+          description: "Have plans to address different attack and outage scenarios. Implement measures to assist investigation."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Failed Incident Response"
+            - "Disruption to business continuity"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+          example_implementation: |
+            Have different incident response plans that address different types of outages and the potential attack scenarios, which may be blended with DOS.
+            Implement forensics support and protect against erasure of evidence.
+            Use cyber threat intelligence to support investigation.
+            Associated MITRE Mitigations:
+            - AML.M0018 User Training
+          references:
+            - "CSA Incident Response Checklist"
+          status: "Not Assessed"
+        - id: "3.2.2"
+          description: "Regularly reassess incident response plans as the system changes."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Failed Incident Response"
+            - "Disruption to business continuity"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+          example_implementation: |
+            Assess how changes to the system and AI will affect the attack surfaces.
+            Associated MITRE Mitigations:
+            - AML.M0018 User Training
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.2.3"
+          description: "Have regular backups in event of compromise."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Data Loss"
+            - "Ransomware attacks"
+            - "Operational Disruptions"
+            - "Data Integrity"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+          example_implementation: |
+            Store critical data assets in offline backups.
+            Associated MITRE Mitigations:
+            - AML.M0014 Verify ML Artifacts
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.2.4"
+          description: "When an alert has been raised or investigation has confirmed an incident, report to the relevant stakeholders"
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Regulatory non-Compliance"
+            - "Increased cost and damages to the enterprise"
+          example_implementation: |
+            Use threat hunting to determine full extent of attack and investigate attribution.
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.3.1*"
+          description: |
+            Verify models with hashes/signatures of model files and datasets before deployment or periodically, according to enterprise policy.
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Model Tampering/Poisoning"
+            - "Data Poisoning"
+            - "Backdoor/ Trojan model"
+            - "Associated MITRE ATLAS Techniques: AML.T0018.000 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+          example_implementation: |
+            Compute and share model and dataset hashes/signatures when creating new models or data and update the relevant documentation e.g. model cards.
+            Associated MITRE Mitigations:
+            - AML.M0014 Verify ML Artifacts
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "3.3.2*"
+          description: "Benchmark and test the AI models before release."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Failure to achieve trust and reliability"
+            - "Adversarial Attacks"
+            - "Lack of accountability"
+            - "Model Robustness"
+            - "Associated MITRE ATLAS Techniques: AML.T0048 External Harm"
+            - "Associated MITRE ATLAS Techniques: AML.T0043 Craft Adversarial Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+          example_implementation: |
+            Models have been validated and achieved performance targets before deployment.
+            Consider using an adversarial test set to validate model robustness, where possible.
+            Conduct AI Red-Teaming.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "Adversarial Robustness Toolbox (IBM)"
+            - "CleverHans (University of Toronto)"
+            - "TextAttack (University of Virginia)"
+            - "Prompt Bench (Microsoft)"
+            - "Counterfit (Microsoft)"
+            - "AI Verify (Infocomm Media Development Authority, Singapore)"
+            - "Moonshot (Infocomm Media Development Authority, Singapore)"
+          status: "Not Assessed"
+        - id: "3.3.3"
+          description: "Consider the need to conduct security testing on the AI systems."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Security Vulnerabilities"
+            - "Associated MITRE ATLAS Techniques: AML.T0048 External Harm"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+          example_implementation: |
+            Perform VAPT/security testing on AI systems.
+            Prioritise and focus on the most realistic and practical attacks, based on the risk assessment during the planning phase.
+            System owner and project teams to follow up on findings from security testing/red team, by assessing the criticality of vulnerabilities uncovered, apply additional measures and if necessary, seek approval from relevant entity e.g. CISO, for acceptance of residual risks, according to their enterprise risk management/cybersecurity policies.
+            Create a feedback loop to maximise the impact of the findings from security tests.
+            Associated MITRE Mitigations:
+            - AML.M0003 Model Hardening
+            - AML.M0006 Use Ensemble Methods
+            - AML.M0016 Vulnerability Scanning
+          references:
+            - "OWASP Top 10 for Large Language Model Applications"
+            - "Web LLM attacks (Portswigger)"
+          status: "Not Assessed"
+    - name: "2.2.4. OPERATIONS AND MAINTENANCE"
+      controls:
+        - id: "4.1.1*"
+          description: "Validate/Monitor inputs to the model and system for possible attacks and suspicious activity."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Adversarial Attacks"
+            - "Data exfiltration"
+            - "Associated MITRE ATLAS Techniques: AML.T0043 Craft Adversarial Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0025 Exfiltration via Cyber Means"
+          example_implementation: |
+            AI System owners may consider to monitor and validate input prompts, queries or API requests for attempts to access, modify or exfiltrate information deemed confidential by the organisation.
+            Consider use of classifiers to detect malicious inputs and log them for future review to identify potential vulnerabilities.
+            Note: Implementor should consider the current privacy regulations/guidelines when logging inputs.
+            Associated MITRE Mitigations: AML.M0015 Adversarial Input Detection
+          references:
+            - "Introduction to Logging for Security Purpose (NCSC)"
+            - "OpenAI usage policies"
+            - "Advisory Guidelines On use of Personal Data In AI Recommendation and Decision Systems (PDPC)"
+          status: "Not Assessed"
+        - id: "4.1.2"
+          description: "Monitor/Limit the rate of queries."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Denial of Service (DoS) Attacks"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0034 Cost Harvesting"
+          example_implementation: |
+            If possible, prevent users from continuously querying the model with a high frequency e.g. API throttling.
+            This mitigates the potential for membership-inference and extraction attacks.
+            Associated MITRE Mitigations:
+            - AML.M0004 Restrict Number of ML Model Queries
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "4.2.1*"
+          description: "Monitor model outputs and model performance."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Adversarial Attacks"
+            - "Operational Impact"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0048 External Harms"
+          example_implementation: |
+            Implement an alert system that monitors for anomalous or unwanted output.
+            E.g. a customer facing chatbot that is safe for work begins to output profanity instead.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "4.2.2*"
+          description: "Ensure adequate human oversight to verify model output, when viable or appropriate."
+          responsible_parties: ["AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "False Positives from the model"
+            - "Misinterpretation of Context"
+            - "Adverse Impact on Operations"
+            - "Associated MITRE ATLAS Techniques: AML.T0029 Denial of ML Service"
+            - "Associated MITRE ATLAS Techniques: AML.T0048 External" # Note: Risk name appears truncated in source.
+          example_implementation: |
+            Manual investigation of unusual or anomalous alert notifications.
+            For critical systems, ensure human oversight to verify decisions recommended by the model.
+            Associated MITRE Mitigations:
+            - AML.M0018 User Training
+            - AML.M0015 Adversarial Input Detection
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "4.3.1*"
+          description: "Treat major updates as new versions and integrate software updates with model updates and renewal."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Model Tampering/Poisoning"
+            - "Backdoor/ Trojan model"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0018.000 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0031 Erode ML Model Integrity"
+            - "Associated MITRE ATLAS Techniques: AML.T0010 ML Supply Chain Compromise"
+          example_implementation: |
+            New models to be validated, benchmarked, and be tested before release.
+            Associated MITRE Mitigations:
+            - AML.M0008 Validate ML Model
+            - AML.M0014 Verify ML Artifacts
+          references:
+            - "Principles for the Security of Machine Learning  (UK NCSC)"
+          status: "Not Assessed"
+        - id: "4.3.2*"
+          description: "Treat new input data used for training as new data."
+          responsible_parties: ["AI Practitioners"]
+          related_risks:
+            - "Data Poisoning"
+            - "Poison/Backdoor/Trojan model"
+            - "Associated MITRE ATLAS Techniques: AML.T0020.000 Poison Training Data"
+            - "Associated MITRE ATLAS Techniques: AML.T0018.000 Backdoor ML Model"
+            - "Associated MITRE ATLAS Techniques: AML.T0010 ML Supply Chain Compromise"
+          example_implementation: |
+            Subject new input to the same verification and validation as new data.
+            Associated MITRE Mitigations:
+            - AML.M0007 Sanitize Training Data
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+        - id: "4.4.1"
+          description: "Maintain open lines of communication."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Regulatory non-Compliance" # Listed as "Possible Risk Mitigated" in source
+          example_implementation: |
+            Set up channels to allow users to provide feedback on security and usage.
+          references:
+            - "SingCERT Vulnerability Disclosure Policy (CSA)"
+            - "UK NCSC Vulnerability Disclosure Toolkit"
+            - "CVE List"
+            - "AI CWE List"
+            - "ATLAS Case Studies"
+          status: "Not Assessed"
+        - id: "4.4.2"
+          description: "Share findings with appropriate stakeholders."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Regulatory non-Compliance" # Listed as "Possible Risk Mitigated" in source
+          example_implementation: |
+            Share discoveries of vulnerabilities to relevant stakeholders such as the company CISO.
+          references: [] # Not explicitly listed for this control in the source table structure
+          status: "Not Assessed"
+    - name: "2.2.5. END OF LIFE"
+      controls:
+        - id: "5.1.1"
+          description: "Ensure proper and secure disposal/destruction of data and models in accordance with data privacy standards and/or relevant rules and regulations."
+          responsible_parties: ["Decision Makers", "AI Practitioners", "Cybersecurity Practitioners"]
+          related_risks:
+            - "Regulatory non-Compliance"
+            - "Sensitive data loss"
+          example_implementation: |
+            Examples include crypto shredding or degaussing
+          references:
+            - "Personal Data Protection Act (PDPA)"
+            - "Advisory Guidelines on use of Personal Data in AI Recommendation and Decision Systems"
+          status: "Not Assessed"

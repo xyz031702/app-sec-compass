@@ -1,0 +1,5 @@
+=== Basic Model Information ===
+Model Path: /home/scantist/.cache/huggingface/hub/models--tensorblock--nanollama-GGUF/snapshots/a2e02233b2ccc2fd10723a14ef7c8d5f4e8c458b/nanollama-Q4_K_M.gguf
+Size: 4.0K
+SHA256: 54f88cce2bd7fb1e6a99bf469d8d002af898d3567b284f7bc20e2ade1a609df8
+Created: 2025-04-17 23:32:04.281686303 +0800

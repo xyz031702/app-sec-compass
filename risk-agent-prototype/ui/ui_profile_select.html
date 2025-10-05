@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>risk profile selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #3498DB;
+            --background-color: #F5F7FA;
+            --text-color: #333333;
+            --safe-color: #27AE60;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --info-color: #3498DB;
+            --border-color: #E0E6ED;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .container { display: flex; min-height: 100vh; }
+        .sidebar {
+            width: 250px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar-header { padding: 0 20px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        .sidebar-header h1 { font-size: 18px; margin-bottom: 5px; }
+        .sidebar-header p { font-size: 12px; opacity: 0.7; }
+        .main-content { flex: 1; padding: 40px 0 0 0; display: flex; flex-direction: column; align-items: center; }
+        .header { width: 100%; display: flex; justify-content: center; align-items: center; margin-bottom: 36px; }
+        .header h1 { font-size: 28px; color: var(--primary-color); font-weight: 700; }
+        .profile-section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            padding: 32px 48px;
+            width: 90%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .profile-section h2 {
+            font-size: 22px;
+            color: var(--secondary-color);
+            margin-bottom: 18px;
+            font-weight: 500;
+        }
+        .profile-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+        .profile-card {
+            background: var(--background-color);
+            border-radius: 10px;
+            box-shadow: 0 1px 4px rgba(44,62,80,0.07);
+            padding: 28px 32px;
+            min-width: 220px;
+            max-width: 270px;
+            flex: 1 1 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s, border 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .profile-card:hover {
+            box-shadow: 0 4px 16px rgba(44,62,80,0.13);
+            border: 2px solid var(--secondary-color);
+        }
+        .profile-card i {
+            font-size: 36px;
+            margin-bottom: 16px;
+            color: var(--secondary-color);
+        }
+        .profile-card-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            font-size: 1.18rem;
+            text-align: center;
+        }
+        .profile-card-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h1>Risk Consultant</h1>
+                <p>Profile Selection</p>
+            </div>
+        </div>
+        <div class="main-content" style="width:100%; display:flex; flex-direction:row; gap:40px; align-items:flex-start;">
+            <div class="profile-section two-col" style="flex:1 1 360px; max-width:370px; min-width:270px; margin:40px 0 0 0;">
+                <h2 style="margin-bottom:18px;">Select a Risk Profile</h2>
+                <div class="profile-list two-col" style="flex-direction:column; gap:18px;">
+                    <div class="profile-card" id="ai-model-security-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="profile-card-title">AI Model Security</div>
+                        <div class="profile-card-desc">Comprehensive security analysis for AI/ML models.</div>
+                    </div>
+                    <div class="profile-card" id="sca-card">
+                        <i class="fas fa-wrench"></i>
+                        <div class="profile-card-title">Remediation for SCA</div>
+                        <div class="profile-card-desc">Automated remediation for software composition analysis findings.</div>
+                    </div>
+                    <div class="profile-card" id="sast-card">
+                        <i class="fas fa-tools"></i>
+                        <div class="profile-card-title">Remediation for SAST</div>
+                        <div class="profile-card-desc">Remediation suggestions for static application security testing issues.</div>
+                    </div>
+                    <div class="profile-card" id="redteaming-card">
+                        <i class="fas fa-user-secret"></i>
+                        <div class="profile-card-title">AI Redteaming</div>
+                        <div class="profile-card-desc">Adversarial testing and red teaming for AI models.</div>
+                    </div>
+                    <div class="profile-card" id="defender-card">
+                        <i class="fas fa-shield-virus"></i>
+                        <div class="profile-card-title">AI Model Defender</div>
+                        <div class="profile-card-desc">Active defense and monitoring for deployed AI models.</div>
+                    </div>
+                    <div class="profile-card" id="deep-binary-sca-card">
+                        <i class="fas fa-microchip"></i>
+                        <div class="profile-card-title">Deep Binary SCA</div>
+                        <div class="profile-card-desc">Deep software composition analysis for binaries and firmware.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Details column -->
+            <div id="profile-detail-view" style="flex:2 1 600px; min-width:320px; margin:40px 0 0 0; display:block; animation: fadeIn 0.4s;">
+                <div id="profile-detail-content" style="display:none;"></div>
+                <div id="profile-detail-placeholder" style="background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(44,62,80,0.11); padding:44px 48px 36px 48px; color:#aaa; text-align:center; font-size:1.1rem;">
+                    <i class="fas fa-arrow-left" style="font-size:24px; color:#ddd;"></i><br>
+                    Select a profile on the left to view details here.
+                </div>
+            </div>
+        </div>
+    </div>
+            100% { opacity:1; transform:translateY(0); }
+        }
+        .profile-section { transition:box-shadow 0.3s, opacity 0.3s; }
+        .profile-card.selected, .profile-card:focus {
+            border: 2px solid var(--secondary-color);
+            background: #eaf4fb;
+            box-shadow: 0 2px 12px rgba(52,152,219,0.13);
+        }
+    </style>
+    <script>
+        // Two-column graceful in-page view logic
+        const aiCard = document.getElementById('ai-model-security-card');
+        const detailContent = document.getElementById('profile-detail-content');
+        const detailPlaceholder = document.getElementById('profile-detail-placeholder');
+        const allCards = document.querySelectorAll('.profile-card');
+
+        function showAIDetails() {
+            // Deselect all
+            allCards.forEach(card => card.classList.remove('selected'));
+            aiCard.classList.add('selected');
+            detailPlaceholder.style.display = 'none';
+            detailContent.innerHTML = `
+                <div style="background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(44,62,80,0.11); padding:44px 48px 36px 48px;">
+                    <div style="display:flex; align-items:center; gap:18px; margin-bottom:20px;">
+                        <i class="fas fa-shield-alt" style="font-size:36px; color:#3498DB;"></i>
+                        <h2 style="color:#3498DB; margin:0; font-size:2rem;">AI Model Security Profile</h2>
+                    </div>
+                    <div style="font-size:16px; color:#333; line-height:1.8;">
+                     <div class="profile-summary">
+  <h2>AI Model Security Profile</h2>
+  <h3>Deep Research</h3>
+  <p>
+    Comprehensive study of attack vectors, vulnerabilities, and threat models for AI/ML models. The framework draws on state-of-the-art literature, real-world incidents, and covers threats such as embedded logic in model weights, poisoned training data, and runtime code injection. Key references include academic papers, industry reports, and continuous monitoring of security advisories. The approach combines static scanning (ModelScan, Fickling), sandboxed execution monitoring, and behavioral testing (Neural Cleanse, STRIP), with risk–benefit analysis and clear escalation criteria.
+  </p>
+  <h3>Design</h3>
+  <p>
+    Protocol-driven workflow based on best practices, covering static analysis, dynamic monitoring, behavioral testing, and compliance. The workflow is modular and practical, prioritizing actionable security checks and evidence-based assessment. Directory structures, tool selection, and clear reporting are emphasized, with flexibility for both basic and enhanced analysis modes.
+  </p>
+  <h3>Implement</h3>
+  <p>
+    Utilizes open-source tools (ModelScan, Fickling, Docker, Falco, strace, NumPy/SciPy, etc.) for static and dynamic scans, metadata extraction, dependency checks, and secure sandboxing. Automated scripts and configuration templates are provided for environment setup, model acquisition, and analysis execution. All steps are designed for traceability and reproducibility.
+  </p>
+  <h3>Evaluate</h3>
+  <p>
+    LLM-based auditors review scan results for completeness, accuracy, and alignment with the user manual. Issues are flagged, summarized, and remediation is recommended. The evaluation phase consolidates findings, assesses risk, and ensures actionable recommendations.
+  </p>
+  <h3>Report</h3>
+  <p>
+    All findings, actions, audit summaries, and remediation logs are compiled into a final CycloneDX VEX report, ensuring traceability and actionable intelligence for model risk management. The reporting process is structured, clear, and aligned with governance best practices.
+  </p>
+</div>
+                    </div>
+                </div>
+            `;
+            detailContent.style.display = 'block';
+        }
+        aiCard.addEventListener('click', showAIDetails);
+        // Optionally, add similar listeners for other profiles
+    </script>
+</body>
+</html>

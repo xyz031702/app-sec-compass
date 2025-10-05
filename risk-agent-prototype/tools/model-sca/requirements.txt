@@ -1,0 +1,10 @@
+huggingface_hub[cli]
+jq
+pip-licenses
+safety
+# AI Model Composition Analysis dependencies
+torch>=1.10.0
+transformers>=4.20.0
+numpy>=1.20.0
+modelscan>=0.1.0
+matplotlib>=3.5.0

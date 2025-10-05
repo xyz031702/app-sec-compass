@@ -1,0 +1,128 @@
+{
+  "tensor_analysis": {
+    "output_norm.weight": {
+      "mean": -Infinity,
+      "std": Infinity,
+      "min": -2.568078182848248e+38,
+      "max": 1.3865478093296518e+38,
+      "sparsity": 0.0
+    },
+    "blk.0.attn_norm.weight": {
+      "mean": NaN,
+      "std": NaN,
+      "min": NaN,
+      "max": NaN,
+      "sparsity": 0.0
+    }
+  },
+  "weight_fingerprint": "bd2ab08253a5760aef478360a55a83f912892843795dd2b4483737d3b7d30a08",
+  "vocab_analysis": {
+    "vocab_size": 32000,
+    "special_tokens": {
+      "ggml.bos": {
+        "id": 1,
+        "token": "<s>"
+      },
+      "ggml.eos": {
+        "id": 2,
+        "token": "</s>"
+      },
+      "ggml.unknown": {
+        "id": 0,
+        "token": "<unk>"
+      }
+    },
+    "suspicious_tokens": [],
+    "token_length_distribution": {
+      "5": 4968,
+      "3": 4733,
+      "4": 5968,
+      "6": 3971,
+      "2": 2147,
+      "8": 2013,
+      "16": 16,
+      "12": 248,
+      "7": 2862,
+      "9": 1351,
+      "13": 138,
+      "10": 856,
+      "14": 78,
+      "11": 486,
+      "15": 36,
+      "1": 2129
+    },
+    "character_distribution": {
+      "\u2581": 16529,
+      "e": 14703,
+      "i": 9575,
+      "a": 9468,
+      "r": 9154,
+      "t": 8840,
+      "n": 8566,
+      "o": 8022,
+      "s": 7643,
+      "l": 5908,
+      "c": 4872,
+      "d": 4201,
+      "u": 4054,
+      "m": 3408,
+      "p": 3348,
+      "g": 2903,
+      "h": 2476,
+      "b": 1783,
+      "f": 1639,
+      "v": 1527,
+      "y": 1526,
+      "k": 1185,
+      "\u043e": 1038,
+      "w": 1013,
+      "\u0430": 882,
+      "\u0435": 808,
+      "S": 805,
+      "x": 775,
+      "\u0438": 755,
+      "C": 690,
+      "\u0440": 674,
+      "A": 667,
+      "z": 636,
+      "\u043d": 636,
+      "\u0442": 560,
+      "E": 552,
+      "\u0441": 552,
+      "P": 512,
+      "M": 510,
+      "T": 484,
+      "R": 478,
+      "B": 475,
+      "\u0432": 464,
+      "D": 456,
+      "I": 430,
+      "\u043b": 426,
+      "L": 419,
+      "F": 393,
+      "j": 382,
+      "\u043a": 367
+    }
+  },
+  "embedding_analysis": {
+    "embedding_size": 0,
+    "clusters": {},
+    "outliers": []
+  },
+  "provenance": {
+    "claimed_source": "tensorblock/nanollama-GGUF",
+    "verification_result": "name_match"
+  },
+  "anomalies": [],
+  "security_assessment": {
+    "risk_level": "low",
+    "confidence": "medium",
+    "findings": [],
+    "recommendations": [
+      "Perform dynamic analysis to monitor model behavior during inference",
+      "Test model with known backdoor triggers to verify security",
+      "Verify model provenance with the original source",
+      "Consider fine-tuning the model on trusted data before deployment"
+    ]
+  }
+}

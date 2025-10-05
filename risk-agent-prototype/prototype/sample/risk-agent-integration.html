@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Agent Integration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2C3E50;
+            --primary-dark: #1a2530;
+            --secondary: #3498DB;
+            --danger: #E74C3C;
+            --warning: #F39C12;
+            --success: #27AE60;
+            --info: #3498DB;
+            --gray-100: #F5F7FA;
+            --gray-200: #E0E6ED;
+            --gray-400: #ced4da;
+            --gray-500: #adb5bd;
+            --gray-600: #6c757d;
+            --gray-700: #495057;
+            --gray-800: #343a40;
+            --gray-900: #212529;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05);
+            --radius: 4px;
+            --radius-lg: 8px;
+            --transition: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--gray-100);
+            color: var(--gray-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        
+        .app-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .app-logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .app-logo-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+        
+        .app-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--gray-300);
+            color: var(--gray-700);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .conversation-panel {
+            display: flex;
+            flex-direction: column;
+            height: 500px;
+        }
+        
+        .conversation-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .conversation-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--secondary);
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+        }
+        
+        .conversation-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .message {
+            margin-bottom: 16px;
+            max-width: 85%;
+        }
+        
+        .message-user {
+            margin-left: auto;
+        }
+        
+        .message-agent {
+            margin-right: auto;
+        }
+        
+        .message-bubble {
+            padding: 12px 16px;
+            border-radius: 16px;
+            position: relative;
+        }
+        
+        .message-user .message-bubble {
+            background-color: var(--primary);
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .message-agent .message-bubble {
+            background-color: var(--gray-200);
+            color: var(--gray-800);
+            border-top-left-radius: 4px;
+        }
+        
+        .message-sender {
+            font-size: 12px;
+            color: var(--gray-600);
+            margin-bottom: 4px;
+        }
+        
+        .conversation-footer {
+            padding: 16px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .message-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: 24px;
+            outline: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .message-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .send-button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .progress-panel {
+            height: 100%;
+        }
+        
+        .panel-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+        
+        .panel-subtitle {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        
+        .panel-body {
+            padding: 16px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .progress-step {
+            display: flex;
+            margin-bottom: 24px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 16px;
+        }
+        
+        .step-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: var(--gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .step-circle.completed {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .step-circle.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .step-line {
+            width: 2px;
+            flex: 1;
+            background-color: var(--gray-200);
+        }
+        
+        .step-line.completed {
+            background-color: var(--secondary);
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 500;
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+        }
+        
+        .step-description {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        
+        .results-section {
+            margin-bottom: 32px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 24px;
+        }
+        
+        .tab {
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: var(--radius);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        
+        .alert-danger {
+            background-color: rgba(234, 67, 53, 0.1);
+            border-left: 4px solid var(--danger);
+        }
+        
+        .alert-icon {
+            font-size: 20px;
+            color: var(--danger);
+        }
+        
+        .alert-content h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+        }
+        
+        .alert-content p {
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+        
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .finding-card {
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .finding-card:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        
+        .finding-header {
+            padding: 12px 16px;
+            background-color: rgba(234, 67, 53, 0.1);
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .finding-severity {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--danger);
+        }
+        
+        .finding-type {
+            font-size: 12px;
+            color: var(--gray-700);
+            margin-left: auto;
+        }
+        
+        .finding-body {
+            padding: 16px;
+        }
+        
+        .finding-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--gray-800);
+        }
+        
+        .finding-description {
+            font-size: 13px;
+            color: var(--gray-700);
+            margin-bottom: 12px;
+        }
+        
+        .finding-meta {
+            font-size: 12px;
+            color: var(--gray-600);
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .report-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+        
+        .report-link {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .report-link:hover {
+            box-shadow: var(--shadow);
+            border-color: var(--gray-300);
+        }
+        
+        .report-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius);
+            background-color: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .report-content {
+            flex: 1;
+        }
+        
+        .report-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 4px;
+        }
+        
+        .report-description {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <div class="app-logo">
+                <div class="app-logo-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="app-logo-text">Risk Agent</div>
+            </div>
+            <div class="app-actions">
+                <button class="btn btn-outline">
+                    <i class="fas fa-history"></i>
+                    Analysis History
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    New Analysis
+                </button>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="card conversation-panel">
+                <div class="conversation-header">
+                    <i class="fas fa-robot"></i>
+                    <div class="conversation-title">Risk Agent Assistant</div>
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Online</span>
+                    </div>
+                </div>
+                <div class="conversation-body">
+                    <div class="message message-agent">
+                        <div class="message-sender">Risk Agent</div>
+                        <div class="message-bubble">
+                            Hello! I'm your Risk Agent Assistant. I can help you analyze AI models for security risks. What would you like to do today?
+                        </div>
+                    </div>
+                    <div class="message message-user">
+                        <div class="message-sender">You</div>
+                        <div class="message-bubble">
+                            If I share this link—https://huggingface.co/tensorblock/nanollama-GGUF/tree/main—could you outline an itemized AI testing plan ranked by feasibility?
+                        </div>
+                    </div>
+                    <div class="message message-agent">
+                        <div class="message-sender">Risk Agent</div>
+                        <div class="message-bubble">
+                            Since you only have access to the raw model artifacts (no training code, data pipelines, or runtime environment), we must start with purely offline, file-based checks and progressively move toward execution-based and adversarial tests. Here's a plan ranked by feasibility:
+                            <br><br>
+                            <strong>1. Model Metadata & Integrity Check</strong> - Feasibility: High<br>
+                            <strong>2. Container Schema & Compliance Validation</strong> - Feasibility: High<br>
+                            <strong>3. Model Malicious-Code Scan</strong> - Feasibility: Medium–High<br>
+                            <strong>4. Loading & Tokenizer Initialization Test</strong> - Feasibility: Medium<br>
+                            <strong>5. Inference Consistency & Determinism Test</strong> - Feasibility: Medium<br>
+                            <strong>6. Performance Benchmarking & Resource Profiling</strong> - Feasibility: Medium–Low<br>
+                            <strong>7. Training-Data Documentation & Quality Check</strong> - Feasibility: Low<br>
+                            <strong>8. Functional Capability Assessment</strong> - Feasibility: Low<br>
+                            <strong>9. Adversarial Prompt Vulnerability Assessment</strong> - Feasibility: Low<br>
+                            <strong>10. End-to-End Red-Teaming & Security Stress Test</strong> - Feasibility: Very Low
+                        </div>
+                    </div>
+                    <div class="message message-user">
+                        <div class="message-sender">You</div>
+                        <div class="message-bubble">
+                            Maybe perform the Model SCA
+                        </div>
+                    </div>
+                    <div class="message message-agent">
+                        <div class="message-sender">Risk Agent</div>
+                        <div class="message-bubble">
+                            I'd interpret that as running the Model Metadata & Integrity Check step. In other words, you'd:
+                            <br><br>
+                            - Verify that all GGUF artifacts are present and uncorrupted<br>
+                            - Check file sizes and names against the manifest<br>
+                            - Validate checksums (e.g. SHA-256) to ensure no tampering or corruption
+                            <br><br>
+                            Running the analysis now...
+                            <br><br>
+                            Please refer to the output for the results of the integrity check in the detailed report.
+                        </div>
+                    </div>
+                    <div class="message message-user">
+                        <div class="message-sender">You</div>
+                        <div class="message-bubble">
+                            Yes, ok, go ahead
+                        </div>
+                    </div>
+                    <div class="message message-agent">
+                        <div class="message-sender">Risk Agent</div>
+                        <div class="message-bubble">
+                            I've completed the malicious code scan. Please refer to the analysis results report for detailed findings.
+                        </div>
+                    </div>
+                </div>
+                <div class="conversation-footer">
+                    <input type="text" class="message-input" placeholder="Type your message here...">
+                    <button class="send-button">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="card progress-panel">
+                <div class="panel-header">
+                    <div class="panel-title">Analysis Plan</div>
+                    <div class="panel-subtitle">Current workflow status</div>
+                </div>
+                <div class="panel-body">
+                    <div class="progress-steps">
+                        <div class="progress-step">
+                            <div class="step-indicator">
+                                <div class="step-circle completed">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="step-line completed"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-title">Model Identification</div>
+                                <div class="step-description">Identify model type and format</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-step">
+                            <div class="step-indicator">
+                                <div class="step-circle completed">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="step-line completed"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-title">Integrity Check</div>
+                                <div class="step-description">Verify checksums and metadata</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-step">
+                            <div class="step-indicator">
+                                <div class="step-circle completed">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-title">Malicious Code Scan</div>
+                                <div class="step-description">Detect embedded malware</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-step">
+                            <div class="step-indicator">
+                                <div class="step-circle">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <div class="step-line"></div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-title">Dynamic Analysis</div>
+                                <div class="step-description">Monitor runtime behavior</div>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-step">
+                            <div class="step-indicator">
+                                <div class="step-circle">
+                                    <i class="fas fa-flask"></i>
+                                </div>
+                            </div>
+                            <div class="step-content">
+                                <div class="step-title">Behavioral Testing</div>
+                                <div class="step-description">Test model responses</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section">
+            <div class="section-header">
+                <div class="section-title">Analysis Results</div>
+                <button class="btn btn-outline">
+                    <i class="fas fa-file-export"></i>
+                    Export Report
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="tab-navigation">
+                    <div class="tab active">Summary</div>
+                    <div class="tab">Static Analysis</div>
+                    <div class="tab">Dynamic Analysis</div>
+                    <div class="tab">Behavioral Testing</div>
+                </div>
+                
+                <div class="tab-content active">
+                    <div class="alert alert-danger">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-content">
+                            <h3>POTENTIALLY UNSAFE</h3>
+                            <p>This model contains potentially malicious code. Review the findings below for details.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="findings-grid">
+                        <div class="finding-card">
+                            <div class="finding-header">
+                                <i class="fas fa-exclamation-circle" style="color: var(--danger);"></i>
+                                <div class="finding-severity">High Severity</div>
+                                <div class="finding-type">Pickle Deserialization</div>
+                            </div>
+                            <div class="finding-body">
+                                <div class="finding-title">Unsafe Pickle Deserialization</div>
+                                <div class="finding-description">
+                                    The model contains unsafe pickle code that could lead to arbitrary code execution when loaded.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: ModelScan</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="finding-card">
+                            <div class="finding-header">
+                                <i class="fas fa-exclamation-circle" style="color: var(--danger);"></i>
+                                <div class="finding-severity">High Severity</div>
+                                <div class="finding-type">Network Exfiltration</div>
+                            </div>
+                            <div class="finding-body">
+                                <div class="finding-title">Unauthorized Network Communication</div>
+                                <div class="finding-description">
+                                    The model attempts to establish network connections to external servers during loading.
+                                </div>
+                                <div class="finding-meta">
+                                    <span>Detected by: Dynamic Analysis</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-links">
+                        <a href="file://wsl.localhost/Ubuntu/home/scantist/github/risk-agent-prototype/hf-sca-output/model-meta/result_sample.html" class="report-link">
+                            <div class="report-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="report-content">
+                                <div class="report-title">Integrity Check Report</div>
+                                <div class="report-description">View detailed integrity analysis</div>
+                            </div>
+                        </a>
+                        <a href="file://wsl.localhost/Ubuntu/home/scantist/github/risk-agent-prototype/ui/ui_analysis_results.html" class="report-link">
+                            <div class="report-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="report-content">
+                                <div class="report-title">Security Analysis Report</div>
+                                <div class="report-description">View comprehensive security findings</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Static Analysis Content -->
+                    <p style="padding: 16px;">Static Analysis content would go here...</p>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Dynamic Analysis Content -->
+                    <p style="padding: 16px;">Dynamic Analysis content would go here...</p>
+                </div>
+                
+                <div class="tab-content">
+                    <!-- Behavioral Testing Content -->
+                    <p style="padding: 16px;">Behavioral Testing content would go here...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Simple tab switching functionality
+        document.querySelectorAll('.tab').forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and tab contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.querySelectorAll('.tab-content')[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

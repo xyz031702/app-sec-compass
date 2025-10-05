@@ -1,0 +1,35 @@
+{
+  "name": "vulnerable-payment-site",
+  "version": "1.0.0",
+  "description": "Demo payment site vulnerable to CVE-2019-11358 (jQuery prototype pollution)",
+  "main": "web-server.py",
+  "scripts": {
+    "start": "python3 web-server.py",
+    "demo": "python3 demo.py"
+  },
+  "dependencies": {
+    "jquery": "3.3.1"
+  },
+  "keywords": [
+    "jquery",
+    "prototype-pollution",
+    "cve-2019-11358",
+    "xss",
+    "security",
+    "demo"
+  ],
+  "author": "Security Demo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/example/vulnerable-payment-demo"
+  },
+  "vulnerabilities": {
+    "jquery": {
+      "version": "3.3.1",
+      "cve": "CVE-2019-11358",
+      "severity": "medium",
+      "description": "Prototype pollution in jQuery before 3.4.0 via Object.prototype pollution"
+    }
+  }
+}

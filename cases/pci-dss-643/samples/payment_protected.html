@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Checkout (CSP + SRI Protected)</title>
+<!-- CSP Policy: Block inline scripts, unsafe-eval, and restrict script sources -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'sha256-47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+">
+<style>
+  body { 
+    font: 14px/1.5 system-ui, sans-serif; 
+    margin: 0; 
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+  }
+  .container {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  }
+  h2 { 
+    color: #333; 
+    margin-top: 0; 
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 16px;
+  }
+  label { 
+    display: block; 
+    margin: 16px 0 8px; 
+    font-weight: 600; 
+    color: #555;
+  }
+  #card { 
+    width: 100%; 
+    padding: 12px; 
+    border: 2px solid #e0e0e0; 
+    border-radius: 6px; 
+    font-size: 16px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  #card:focus { 
+    outline: none; 
+    border-color: #667eea; 
+  }
+  #status { 
+    margin: 12px 0; 
+    padding: 8px 12px; 
+    border-radius: 6px; 
+    font-size: 13px; 
+    background: #e8f5e8; 
+    color: #2d5a2d; 
+    border: 1px solid #c3e6c3;
+  }
+  #msg { 
+    border: 1px dashed #ddd; 
+    padding: 12px; 
+    min-height: 28px; 
+    border-radius: 6px; 
+    background: #fafafa;
+  }
+  code { 
+    background: #f6f6f6; 
+    padding: 2px 6px; 
+    border-radius: 4px; 
+    font-size: 12px;
+  }
+  hr { 
+    border: none; 
+    height: 1px; 
+    background: #e0e0e0; 
+    margin: 24px 0; 
+  }
+  .info { 
+    font-size: 12px; 
+    color: #666; 
+    background: #f8f9fa; 
+    padding: 12px; 
+    border-radius: 6px; 
+    border-left: 4px solid #667eea;
+  }
+  .security-info {
+    background: #e8f5e8;
+    border-left: 4px solid #4caf50;
+    padding: 12px;
+    margin: 16px 0;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .csp-blocked {
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    padding: 12px;
+    margin: 16px 0;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #c62828;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🔒 CSP + SRI Protected Checkout</h2>
+  
+  <div class="security-info">
+    <b>🛡️ Security Status:</b> CSP Active - Inline scripts and unsafe-eval blocked
+  </div>
+  
+  <label>Card number:
+    <input id="card" autocomplete="off" inputmode="numeric" placeholder="1234 5678 9012 3456">
+  </label>
+  
+  <div id="status">🔒 Protected by CSP</div>
+
+  <p>Message from <code>localStorage.msg</code> (safely rendered as <b>text</b>):</p>
+  <div id="msg"></div>
+
+  <p>Exfil log (demo only): <code id="log">CSP blocks malicious scripts</code></p>
+  
+  <div id="csp-violations"></div>
+  
+  <hr>
+  <div class="info">
+    <b>🛡️ Protection Info:</b> This page uses CSP to block inline scripts and SRI for script integrity.
+    The malicious SVG onload from seed.html will be blocked by CSP.
+    <br><br>
+    📖 <a href="csp-sri-guide.html">Learn more about CSP + SRI Implementation</a>
+  </div>
+</div>
+
+<!-- External script with SRI integrity hash -->
+<script src="payment-secure.js" 
+        integrity="sha256-PLACEHOLDER_HASH_WILL_BE_GENERATED" 
+        crossorigin="anonymous"></script>
+
+<!-- CSP Violation Reporting -->
+<script>
+document.addEventListener('securitypolicyviolation', function(e) {
+  const violationDiv = document.getElementById('csp-violations');
+  const violation = document.createElement('div');
+  violation.className = 'csp-blocked';
+  violation.innerHTML = `
+    <b>🚫 CSP Violation Blocked:</b><br>
+    <b>Directive:</b> ${e.violatedDirective}<br>
+    <b>Blocked URI:</b> ${e.blockedURI}<br>
+    <b>Source:</b> ${e.sourceFile}:${e.lineNumber}
+  `;
+  violationDiv.appendChild(violation);
+});
+</script>
+
+</body>
+</html>

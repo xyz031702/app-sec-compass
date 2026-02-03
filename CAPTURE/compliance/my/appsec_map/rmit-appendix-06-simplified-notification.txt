@@ -1,0 +1,46 @@
+Risk Management in Technology
+
+55 of 80
+
+Appendix 6 Criteria for Simplified Notification for IT Services Enhancements
+Guiding principles for simplified notification
+1. Where the enhancement does not result in:
+(a) any introduction of new technology to the institution or industry;
+(b) any material changes in application architecture or network design (e.g.
+changes to cybersecurity tools, add-on features to existing digital
+services channel or existing approved platform such as loan
+applications, new non-complex activity e.g. chatbot); or
+(c) the transmission of confidential or sensitive data (e.g. motor underwriting
+engine by third party for calculation of motor premium).
+2. Service expansion leveraging approved website / mobile application for
+digital services within financial group.
+3. Integration with IT services operated by third party service providers that are
+subject to regulation by local or foreign authorities ("regulated entities").
+Non-exhaustive list of technical arrangements for participation with regulated
+entities
+(a) IT services operated by the Bank (e.g. RENTAS).
+(b) IT services operated by institutions regulated by the Bank such as:
+(i) Payment services of approved payment system operators and
+registered merchant acquirers (e.g. Real-time Retail Payments
+Platform);
+(ii) Financial services operated by approved participants in the
+Financial Technology Regulatory Sandbox;
+(iii) Remittance services (e.g. by Western Union, Merchantrade,
+Paypal); and
+(iv) approved e-money issuers.
+(c) Telecommunication services regulated by the Malaysian Communications
+and Multimedia Commission (MCMC).
+(d) Participation in investment services and schemes regulated by local
+authorities:
+(i) Investment services approved by Securities Commission (e.g. Digital
+Investment Management);
+(ii) Regulated pilgrimage fund (e.g. Tabung Haji); or
+(iii) Approved investment funds (e.g. Amanah Saham National Berhad,
+Skim Simpanan Pendidikan Nasional).
+(e) IT services provided by the Government of Malaysia, including those
+operated by the appointed third party service providers (e.g. e-invoicing by
+the Lembaga Hasil Dalan Negeri, MyEG, Financial Link, Rexit, Bestinet, etc).
+(f) IT services provided by third party service providers regulated by
+international regulatory authorities e.g. SWIFT.
+
+Issued on: 28 November 2025

@@ -1,0 +1,206 @@
+Risk Management in Technology
+
+45 of 80
+
+Appendix 3 Control Measures for Digital Services
+1.
+
+A financial institution must ensure the adequacy of security controls implemented
+for digital services, which include the following, where relevant:
+(a)
+
+ensure registration or enrolment of digital services is subject to robust
+authentication and verification;
+
+(b)
+
+ensure transactions are performed over secured channels such as the
+latest version of Transport Layer Security (TLS);
+
+(c)
+
+ensure that both client and host application systems encrypt all confidential
+information prior to transmission over the network;
+
+(d)
+
+implement strong mutual authentication between the users' end-point
+devices and financial institutions' servers, such as the use of the latest
+version of Extended Validation SSL certificate (EV SSL);
+
+(e)
+
+ensure secure user and session handling management;
+
+(f)
+
+ensure sufficient and relevant digital service logs are retained for
+investigations and forensic purposes for at least three years;
+
+(g)
+
+put in place additional authentication protocols to enable customers to
+identify the financial institution's genuine website such as deploying image
+or word verification authentication or similar controls. The system shall
+require the customer to acknowledge that the image or word is correct
+before the password box is displayed to the customer;
+
+(h)
+
+ensure resilience against brute-force attacks39;
+
+(i)
+
+for new customers, the default transfer limit shall be set at a conservatively
+low level (such as RM1,000 per day). However, customers shall be
+provided with the option to change the limit via secure channels (e.g. online
+with multi-factor authentication (MFA) or at branches); and
+
+(j)
+
+apply appropriate verification and cooling-off period for first time enrolment
+of digital services or secure device, transaction limit increase or other
+activities which deemed necessary.
+
+39 A brute-force attack is a method used by attackers to gain unauthorised access to a system by
+
+systematically trying possible combinations or attempting to guess passwords or encryption keys.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+46 of 80
+
+2.
+
+A financial institution must ensure technology used in identity proofing and
+authentication methods are (a) secure, highly resistant to cyber threats40 affecting customer devices,
+including but not limited to malware, phishing, unauthorised access and
+data leakage;
+(b) accurate, have a minimal false acceptance rate to ensure confidentiality,
+integrity and non-repudiation of transactions across all authentication
+methods, including biometrics, tokenized processes, and contactless
+systems; and
+(c) compliant with internationally recognised standards where available and
+ensuring consistency and reliability in the security and performance of
+digital services.
+
+3.
+
+A financial institution must strengthen security controls for registration and update
+of mobile device and customer details (such as mobile number, email and postal
+address) used for authentication of digital service transactions to prevent
+fraudsters from initiating funds transfers using stolen credentials. This shall
+include(a) ensure secure binding and unbinding processes for restricting that
+authentication of digital service transactions by default to one mobile device
+or secure device per account holder (or to designated devices in the case
+of joint or business accounts), except when specifically requested by
+customers who understand and accept the risks of dispensing with this
+control;
+(b) ensure all customers are immediately alerted upon detecting access to the
+customer's account from a new device, or when customer details are
+changed;
+(c) ensure that the registration of new mobile phone number or replacement of
+existing mobile phone number is only processed after applying robust
+verification methods to confirm the authenticity of the customer;
+(d) adopt efficient measures to promptly verify and assist customers who need
+to change devices or update their personal details; and
+(e) apply appropriate verification and cooling-off period for first time enrolment
+of digital services or secure device and multiple successive high-volume
+transactions or other abnormal transaction patterns. Transaction limit
+increase must also be subject to appropriate verification.
+
+4.
+
+A financial institution must implement controls to authenticate devices and users,
+authorise transactions, and support non-repudiation and accountability for
+transactions performed via digital services. These measures must include, at a
+minimum, the following:
+(a) adopt MFA for financial and high-risk non-financial transactions. This
+includes when registering an account as a "favourite" beneficiary and, for
+all subsequent funds transfer to the favourite beneficiary;
+(b) request users to verify details of the transaction prior to execution; and
+(c) provide timely notification to customers that is sufficiently descriptive of the
+nature of the transaction.
+
+40 This includes but not limited to malware, phishing, transaction fraud or data leakage.
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+47 of 80
+
+5.
+
+A financial institution must ensure the MFA solution used to authenticate financial
+transactions are adequately secure and resistant to phishing attacks, which
+includes the following:
+(a) activation of MFA must be subject to robust verification by the financial
+institution;
+(b) timely notification to customers of any activation of and changes to the MFA
+solution via the customers' verified communication channel; and
+(c) deployment of MFA technology and channels that are more secure than
+unencrypted SMS.
+
+6.
+
+A financial institution must ensure that the security controls of MFA solutions
+include adherence to the following requirements:
+(a) the MFA solution is resistant to interception or manipulation by any third
+party throughout the authentication process;
+(b) payer / sender must be made aware and prompted to confirm details of the
+identified beneficiary and amount of the transaction;
+(c) authentication code must be initiated and generated locally by the payer /
+sender using MFA;
+(d) authentication code generated by payer / sender must be specific to the
+confirmed identified beneficiary and amount;
+(e) secure underlying technology must be established to ensure the
+authentication code accepted by the financial institution corresponds to the
+confirmed transaction details; and
+(f) notification must be provided to the payer / sender of the transaction.
+
+7.
+
+Where a financial institution deploys OTP as an additional factor of
+authentication, the following features must be implemented:
+(a) OTP must be dynamic where it changes each time it is required and timebound;
+(b) binding of the transaction details to the OTP generated by the device (e.g.
+beneficiary account number, amount of transaction); and
+(c) generation of the OTP from the customer's device and not from the bank's
+server to mitigate the risk of manipulating OTP in the financial institution's
+infrastructure and increase customer control over authentication process.
+
+8.
+
+Where a financial institution decides not to adopt MFA for financial transactions
+below RM10,000 to customer's own account, the financial institution must
+implement adequate safeguards to protect customer from digital fraud. This shall
+include(a) SLA of T+3 calendar days (or less), T being the date of event reported by
+customer, for reversal of any unauthorised first-party transactions reported
+by customer;
+(b) set appropriate limits on a per-transaction basis, and on a cumulative basis;
+(c) provide a convenient means for customers to reduce the limits described in
+paragraph (b) or to opt for MFA; and
+(d) provide its customers with adequate notice of the safeguards set out in
+paragraphs (a) to (c).
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+9.
+
+48 of 80
+
+A financial institution must offer to its customer a robust cryptographic key-based
+authentication41 such as digital certificate or passwordless as an alternative to
+existing password based authentication method to mitigate the risk of credential
+of password being compromised or stolen. The enrolment of this method must
+be subject to robust verification and resilient against cyber threats and fraud
+techniques.
+
+41 Cryptographic-key-based authentication is a method used to verify the identity of a user or system
+
+through the use of cryptographic keys, typically involving a challenge-response handshake to prove
+one's identity.
+Issued on: 28 November 2025

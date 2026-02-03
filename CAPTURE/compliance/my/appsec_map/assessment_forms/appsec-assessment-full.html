@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Security Gap Assessment</title>
+    <style>
+        :root {
+            --bd-black: #000000;
+            --bd-purple: #9F81BD;
+            --bd-purple-light: #E8E0F0;
+            --bd-purple-dark: #7B5FA0;
+            --bd-white: #FFFFFF;
+            --bd-gray-100: #F7F7F8;
+            --bd-gray-200: #E5E5E7;
+            --bd-gray-300: #D1D1D4;
+            --bd-gray-500: #71717A;
+            --bd-gray-700: #3F3F46;
+            --bd-gray-900: #18181B;
+        }
+
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-size: 9pt;
+            line-height: 1.35;
+            color: var(--bd-gray-900);
+            background: var(--bd-gray-100);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 8mm;
+            margin: 0 auto 10mm;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        @media print {
+            body { background: white; }
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            .no-print { display: none; }
+        }
+
+        /* Header with Logo */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--bd-purple);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .header-title {
+            border-left: 2px solid var(--bd-gray-300);
+            padding-left: 12px;
+        }
+
+        .header-title h1 {
+            font-size: 14pt;
+            font-weight: 700;
+            color: var(--bd-black);
+            letter-spacing: -0.5px;
+        }
+
+        .header-title h2 {
+            font-size: 9pt;
+            font-weight: 400;
+            color: var(--bd-purple-dark);
+            margin-top: 2px;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 8pt;
+            color: var(--bd-gray-500);
+        }
+
+        .header-right .field {
+            margin-bottom: 4px;
+        }
+
+        .header-right .field-label {
+            color: var(--bd-gray-700);
+            font-weight: 500;
+        }
+
+        .header-right .field-input {
+            border: none;
+            border-bottom: 1px solid var(--bd-gray-300);
+            width: 120px;
+            font-size: 8pt;
+            padding: 2px 4px;
+            background: transparent;
+        }
+
+        /* Role Bar */
+        .role-bar {
+            background: var(--bd-gray-100);
+            padding: 8px 12px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--bd-gray-200);
+        }
+
+        .role-bar label {
+            font-weight: 600;
+            color: var(--bd-gray-700);
+            font-size: 8pt;
+        }
+
+        .role-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .role-option {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 8pt;
+        }
+
+        .checkbox-box {
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid var(--bd-gray-500);
+            border-radius: 2px;
+        }
+
+        /* Sections */
+        .section {
+            border: 1px solid var(--bd-gray-200);
+            margin-bottom: 8px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--bd-black);
+            color: var(--bd-white);
+            padding: 8px 12px;
+            font-size: 10pt;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-badge {
+            background: var(--bd-purple);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 7pt;
+            font-weight: 500;
+        }
+
+        /* Legend Bar */
+        .legend-bar {
+            display: flex;
+            background: var(--bd-purple-light);
+            padding: 6px 12px;
+            gap: 8px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 7pt;
+            background: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        .legend-num {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8pt;
+            font-weight: 700;
+            color: white;
+        }
+
+        .l0 { background: var(--bd-gray-500); }
+        .l1 { background: #DC2626; }
+        .l2 { background: #F59E0B; }
+        .l3 { background: #10B981; }
+        .l4 { background: var(--bd-purple); }
+
+        /* Rating Table */
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 8pt;
+        }
+
+        .rating-table th {
+            background: var(--bd-gray-100);
+            padding: 6px 4px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--bd-gray-200);
+            font-size: 7pt;
+            color: var(--bd-gray-700);
+        }
+
+        .rating-table th.item-header {
+            text-align: left;
+            width: 46%;
+        }
+
+        .rating-table th.rmit-header {
+            width: 10%;
+        }
+
+        .rating-table td {
+            padding: 6px 4px;
+            border: 1px solid var(--bd-gray-200);
+            vertical-align: middle;
+        }
+
+        .rating-table tr:nth-child(even) {
+            background: var(--bd-gray-100);
+        }
+
+        .item-cell { text-align: left; }
+        .rmit-cell {
+            text-align: center;
+            font-size: 7pt;
+            color: var(--bd-purple-dark);
+            font-weight: 500;
+        }
+        .rating-cell { text-align: center; width: 8%; }
+
+        .item-title {
+            font-weight: 600;
+            color: var(--bd-black);
+        }
+
+        .item-desc {
+            font-size: 7pt;
+            color: var(--bd-gray-500);
+            margin-top: 1px;
+        }
+
+        .circle {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--bd-gray-300);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .tool-input {
+            border: none;
+            border-bottom: 1px dashed var(--bd-gray-300);
+            width: 100%;
+            font-size: 7pt;
+            margin-top: 3px;
+            padding: 2px 0;
+            color: var(--bd-gray-500);
+            background: transparent;
+        }
+
+        .tool-input::placeholder {
+            color: var(--bd-gray-300);
+            font-style: italic;
+        }
+
+        /* Score Row */
+        .score-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            background: var(--bd-black);
+            color: white;
+        }
+
+        .score-label {
+            font-weight: 600;
+            font-size: 9pt;
+        }
+
+        .score-box {
+            background: var(--bd-purple);
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-size: 11pt;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+
+        /* Priorities Section */
+        .priorities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .priority-box {
+            background: var(--bd-gray-100);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--bd-gray-200);
+        }
+
+        .priority-box h4 {
+            font-size: 8pt;
+            color: var(--bd-black);
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--bd-purple);
+        }
+
+        .priority-inputs {
+            display: flex;
+            gap: 12px;
+        }
+
+        .priority-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .priority-label {
+            font-size: 7pt;
+            color: var(--bd-gray-500);
+            font-weight: 500;
+        }
+
+        .priority-input {
+            width: 26px;
+            height: 22px;
+            border: 2px solid var(--bd-purple);
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 9pt;
+        }
+
+        .barrier-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 8px;
+        }
+
+        .barrier-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 7.5pt;
+        }
+
+        /* Quadrant */
+        .quadrant-container {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            padding: 10px;
+        }
+
+        .quadrant {
+            border: 2px solid var(--bd-black);
+            flex-shrink: 0;
+        }
+
+        .quadrant-row {
+            display: flex;
+        }
+
+        .quadrant-cell {
+            width: 55px;
+            height: 32px;
+            border: 1px solid var(--bd-gray-200);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6pt;
+            text-align: center;
+            padding: 2px;
+        }
+
+        .quadrant-cell.header {
+            background: var(--bd-gray-100);
+            font-weight: 600;
+            color: var(--bd-gray-700);
+        }
+
+        .quadrant-cell.label {
+            background: var(--bd-gray-100);
+            font-weight: 500;
+            color: var(--bd-gray-700);
+        }
+
+        .quadrant-cell.optimal { background: var(--bd-purple-light); color: var(--bd-purple-dark); font-weight: 600; }
+        .quadrant-cell.good { background: #D1FAE5; }
+        .quadrant-cell.risk { background: #FEE2E2; }
+
+        .quadrant-info {
+            flex-grow: 1;
+            font-size: 7.5pt;
+        }
+
+        .quadrant-info h4 {
+            color: var(--bd-black);
+            margin-bottom: 6px;
+            font-size: 9pt;
+        }
+
+        .quadrant-info p {
+            margin-bottom: 4px;
+            color: var(--bd-gray-700);
+        }
+
+        .quadrant-info .insight {
+            background: var(--bd-purple-light);
+            padding: 6px 8px;
+            border-radius: 4px;
+            margin-top: 8px;
+            border-left: 3px solid var(--bd-purple);
+        }
+
+        /* Success Section */
+        .success-content {
+            padding: 10px;
+        }
+
+        .success-content label {
+            font-size: 8pt;
+            font-weight: 600;
+            color: var(--bd-black);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .text-area {
+            border: 1px solid var(--bd-gray-300);
+            min-height: 28px;
+            width: 100%;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7pt;
+            color: var(--bd-gray-500);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--bd-gray-200);
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-logo {
+            height: 16px;
+            opacity: 0.7;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--bd-black);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11pt;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: var(--bd-purple-dark);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+    <!-- PAGE 1: Process Maturity -->
+    <div class="page">
+        <div class="header">
+            <div class="header-left">
+                <img src="logo.png" alt="Logo" class="logo">
+                <div class="header-title">
+                    <h1>APPLICATION SECURITY GAP ASSESSMENT</h1>
+                    <h2>Process Maturity & Tool Coverage Analysis</h2>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="field">
+                    <span class="field-label">Company:</span>
+                    <input type="text" class="field-input" placeholder="">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date:</span>
+                    <input type="text" class="field-input" placeholder="">
+                </div>
+                <div class="field" style="margin-top: 4px; font-size: 7pt;">
+                    <span style="color: var(--bd-purple);">CONFIDENTIAL</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="role-bar">
+            <label>Your Role:</label>
+            <div class="role-options">
+                <div class="role-option"><span class="checkbox-box"></span> CISO</div>
+                <div class="role-option"><span class="checkbox-box"></span> CIO</div>
+                <div class="role-option"><span class="checkbox-box"></span> Tech Lead</div>
+                <div class="role-option"><span class="checkbox-box"></span> Security Architect</div>
+                <div class="role-option"><span class="checkbox-box"></span> Other: __________</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span>SECTION 1: PROCESS MATURITY</span>
+                <span class="section-badge">Compliance-Linked</span>
+            </div>
+            <div class="legend-bar">
+                <div class="legend-item"><span class="legend-num l0">0</span> Not Present</div>
+                <div class="legend-item"><span class="legend-num l1">1</span> Ad-hoc</div>
+                <div class="legend-item"><span class="legend-num l2">2</span> Defined</div>
+                <div class="legend-item"><span class="legend-num l3">3</span> Measured</div>
+                <div class="legend-item"><span class="legend-num l4">4</span> Optimized</div>
+            </div>
+            <table class="rating-table">
+                <thead>
+                    <tr>
+                        <th class="item-header">Process Area</th>
+                        <th class="rmit-header">RMIT</th>
+                        <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">1. Secure SDLC Process</div>
+                            <div class="item-desc">Security integrated into development lifecycle</div>
+                        </td>
+                        <td class="rmit-cell">Ch 10.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">2. Security Requirements Process</div>
+                            <div class="item-desc">Security requirements defined, validated, tracked</div>
+                        </td>
+                        <td class="rmit-cell">Ch 9.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">3. Security Testing Process</div>
+                            <div class="item-desc">Test planning, execution, remediation workflow</div>
+                        </td>
+                        <td class="rmit-cell">Ch 10.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">4. Vulnerability Management Process</div>
+                            <div class="item-desc">Discovery → triage → remediation → verification</div>
+                        </td>
+                        <td class="rmit-cell">Ch 11.3</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">5. Third-Party / Supply Chain Risk Process</div>
+                            <div class="item-desc">Vendor assessment, dependency governance</div>
+                        </td>
+                        <td class="rmit-cell">App 8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">6. Security Training & Awareness Process</div>
+                            <div class="item-desc">Training program, tracking, effectiveness</div>
+                        </td>
+                        <td class="rmit-cell">Ch 15</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">7. Security Metrics & Reporting Process</div>
+                            <div class="item-desc">KPIs defined, reported to management/board</div>
+                        </td>
+                        <td class="rmit-cell">Ch 8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">8. Incident Response Process (AppSec)</div>
+                            <div class="item-desc">Detection, containment, remediation for app vulns</div>
+                        </td>
+                        <td class="rmit-cell">Ch 11.4</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="score-row">
+                <span class="score-label">PROCESS MATURITY TOTAL</span>
+                <div class="score-box">___/32</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">PROCESS PRIORITIES & BARRIERS</div>
+            <div class="priorities-grid">
+                <div class="priority-box">
+                    <h4>Top 3 Process Priorities (write item #)</h4>
+                    <div class="priority-inputs">
+                        <div class="priority-item">
+                            <span class="priority-label">1st:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">2nd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">3rd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="priority-box">
+                    <h4>Biggest Process Barrier (check ONE)</h4>
+                    <div class="barrier-grid">
+                        <div class="barrier-item"><span class="checkbox-box"></span> No ownership</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Lack of documentation</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> No management support</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Siloed teams</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Unclear requirements</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Other: _______</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">
+                <img src="logo.png" alt="" class="footer-logo">
+                <span>Framework: BSIMM15, BNM RMIT</span>
+            </div>
+            <span>Page 1 of 2</span>
+        </div>
+    </div>
+
+    <!-- PAGE 2: Tool Coverage + Summary -->
+    <div class="page">
+        <div class="header">
+            <div class="header-left">
+                <img src="logo.png" alt="Logo" class="logo">
+                <div class="header-title">
+                    <h1>APPLICATION SECURITY GAP ASSESSMENT</h1>
+                    <h2>Process Maturity & Tool Coverage Analysis</h2>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="field">
+                    <span class="field-label">Company:</span>
+                    <input type="text" class="field-input" placeholder="">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date:</span>
+                    <input type="text" class="field-input" placeholder="">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span>SECTION 2: TOOL COVERAGE</span>
+                <span class="section-badge">Capability Assessment</span>
+            </div>
+            <div class="legend-bar">
+                <div class="legend-item"><span class="legend-num l0">0</span> None</div>
+                <div class="legend-item"><span class="legend-num l1">1</span> Pilot (&lt;25%)</div>
+                <div class="legend-item"><span class="legend-num l2">2</span> Partial (25-75%)</div>
+                <div class="legend-item"><span class="legend-num l3">3</span> Comprehensive (&gt;75%)</div>
+                <div class="legend-item"><span class="legend-num l4">4</span> Optimized</div>
+            </div>
+            <table class="rating-table">
+                <thead>
+                    <tr>
+                        <th class="item-header">Tool Category</th>
+                        <th class="rmit-header">RMIT</th>
+                        <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">1. SAST (Static Analysis)</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 3,4,5</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">2. DAST (Dynamic Testing)</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 3,4,5</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">3. SCA (Dependency Scanning)</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 4,5,8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">4. SBOM (Software Inventory)</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 5,8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">5. Container / IaC Security</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 10</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">6. API Security Testing</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 5.E</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">7. Mobile App Security</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">App 4</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">8. Secret Detection</div>
+                            <input type="text" class="tool-input" placeholder="Tool(s): ">
+                        </td>
+                        <td class="rmit-cell">Ch 11</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="score-row">
+                <span class="score-label">TOOL COVERAGE TOTAL</span>
+                <div class="score-box">___/32</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">TOOL PRIORITIES & BARRIERS</div>
+            <div class="priorities-grid">
+                <div class="priority-box">
+                    <h4>Top 3 Tool Priorities (write item #)</h4>
+                    <div class="priority-inputs">
+                        <div class="priority-item">
+                            <span class="priority-label">1st:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">2nd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">3rd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="priority-box">
+                    <h4>Biggest Tool Barrier (check ONE)</h4>
+                    <div class="barrier-grid">
+                        <div class="barrier-item"><span class="checkbox-box"></span> Budget</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Integration complexity</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Lack of skills</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> False positives</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Developer pushback</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Other: _______</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">SECTION 3: MATURITY SUMMARY</div>
+            <div class="quadrant-container">
+                <div>
+                    <table class="quadrant">
+                        <tr class="quadrant-row">
+                            <td class="quadrant-cell header" style="width:45px;"></td>
+                            <td class="quadrant-cell header">Low<br>0-10</td>
+                            <td class="quadrant-cell header">Med<br>11-21</td>
+                            <td class="quadrant-cell header">High<br>22-32</td>
+                        </tr>
+                        <tr class="quadrant-row">
+                            <td class="quadrant-cell label">High<br>22-32</td>
+                            <td class="quadrant-cell good">Process<br>Focused</td>
+                            <td class="quadrant-cell good">Balanced<br>Growth</td>
+                            <td class="quadrant-cell optimal">OPTIMAL</td>
+                        </tr>
+                        <tr class="quadrant-row">
+                            <td class="quadrant-cell label">Med<br>11-21</td>
+                            <td class="quadrant-cell risk">Early<br>Stage</td>
+                            <td class="quadrant-cell good">Typical</td>
+                            <td class="quadrant-cell good">Tool<br>Focused</td>
+                        </tr>
+                        <tr class="quadrant-row">
+                            <td class="quadrant-cell label">Low<br>0-10</td>
+                            <td class="quadrant-cell risk">STARTING</td>
+                            <td class="quadrant-cell risk">Tool-Led</td>
+                            <td class="quadrant-cell risk">Tool-<br>Heavy</td>
+                        </tr>
+                    </table>
+                    <div style="text-align:center; font-size:6pt; margin-top:3px; color:var(--bd-gray-500);">← TOOL COVERAGE →</div>
+                </div>
+                <div class="quadrant-info">
+                    <h4>Your Position</h4>
+                    <p><strong>Process:</strong> ____/32 &nbsp; <strong>Tools:</strong> ____/32</p>
+                    <p><strong>Quadrant:</strong> _______________________</p>
+                    <div class="insight">
+                        <strong>Key Insight:</strong><br>
+                        Tools without process = ignored alerts<br>
+                        Process without tools = doesn't scale<br>
+                        <strong>Both together = effective AppSec</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">SECTION 4: SUCCESS DEFINITION (12 Months)</div>
+            <div class="success-content">
+                <label>Process improvement to report to Board:</label>
+                <div class="text-area"></div>
+                <label>Tool metric to report to Board:</label>
+                <div class="text-area"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">
+                <img src="logo.png" alt="" class="footer-logo">
+                <span>Framework: BSIMM15, BNM RMIT | Supply Chain MAP</span>
+            </div>
+            <span>Page 2 of 2</span>
+        </div>
+    </div>
+</body>
+</html>

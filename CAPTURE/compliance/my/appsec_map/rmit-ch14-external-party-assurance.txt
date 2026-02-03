@@ -1,0 +1,78 @@
+Risk Management in Technology
+
+36 of 80
+
+14
+
+External Party Assurance
+
+S
+
+14.1
+
+A financial institution shall appoint a technically competent external service
+provider to carry out a production data centre resilience and risk assessment
+(DCRA). The assessment must consider all major risks and determine the
+current level of resilience of the production data centre. A financial institution
+must ensure the assessment is conducted at least once every three years or
+when there is a material change in the data centre infrastructure, whichever is
+earlier. The assessment shall, at a minimum, include a consideration of
+whether the requirements in paragraphs 10.24 to 10.28 have been adhered
+to. For data centres managed by third party service providers, a financial
+institution shall only rely on independent third party assurance reports
+provided such reliance is consistent with the financial institution's risk appetite
+and tolerance, and the independent assurance has considered similar risks
+and meets the requirements in this paragraph for conducting the DCRA. The
+designated board-level committee specified in paragraph 8.3 must deliberate
+the outcome of the assessment.
+
+S
+
+14.2
+
+A financial institution shall appoint a technically competent external service
+provider to carry out regular network resilience and risk assessments (NRA)
+and set proportionate controls aligned with its risk appetite. The assessment
+must be conducted at least once in three years or whenever there is a material
+change in the network design, whichever is earlier. The assessment must
+consider all major risks and determine the current level of resilience. This shall
+include an assessment of the financial institution's adherence to the
+requirements in paragraphs 10.36 to 10.43. The designated board-level
+committee specified in paragraph 8.3 must deliberate the outcome of the
+assessment.
+
+15
+
+Security Awareness and Education
+
+S
+
+15.1
+
+A financial institution must provide adequate and regular technology and
+cybersecurity awareness education for all staff in undertaking their respective
+roles and measure the effectiveness of its education and awareness
+programs. This cybersecurity awareness education must be conducted at
+least annually and must reflect the evolving cyber threat landscape and
+emerging risks. Where appropriate, the financial institution shall also include
+its third party service providers in their relevant training as outlined in
+paragraph 10.48(i).
+
+S
+
+15.2
+
+A financial institution must provide adequate and continuous training for staff
+involved in technology operations, cybersecurity and risk management in
+order to ensure that the staff are competent and suitably certified to effectively
+perform their roles and responsibilities.
+
+S
+
+15.3
+
+A financial institution must provide its board members with regular training and
+information on technology developments to enable the board to effectively
+discharge its oversight role.
+
+Issued on: 28 November 2025

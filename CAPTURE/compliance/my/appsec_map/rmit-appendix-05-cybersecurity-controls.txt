@@ -1,0 +1,291 @@
+Risk Management in Technology
+
+50 of 80
+
+Appendix 5 Control Measures on Cybersecurity
+A financial institution must adopt robust control measures to enhance its network
+resilience against cyber threats.
+Part A: Network Security
+1.
+
+A financial institution must ensure technology networks are segregated into
+multiple zones according to threat profile. Each zone shall be adequately
+protected by various security devices including but not limited to firewall and
+Intrusion Prevention System (IPS). This must include network for delivery of
+digital services and wireless networks as well.
+
+2.
+
+A financial institution must ensure security controls for server-to-server external
+network connections include the following:
+(a) use PKI-based authentication method or equivalent alternatives;
+(b) use of secure tunnels such as Transport Layer Security (TLS) and Virtual
+Private Network (VPN) IPSec; and
+(c) deploying staging servers with adequate perimeter defences and protection
+such as firewall, IPS and antivirus.
+
+3.
+
+A financial institution must ensure security controls for remote access to server
+include the following:
+(a) restrict access to only hardened and locked down end-point devices;
+(b) use secure tunnels such as TLS and VPN IPSec;
+(c) deploy 'gateway' server with adequate perimeter defences and protection
+such as firewall, IPS and antivirus;
+(d) close relevant ports immediately upon expiry of remote access; and
+(e) implement multi-factor authentication (MFA) for all remote access sessions.
+
+4.
+
+A financial institution must ensure overall security controls are implemented
+including the following:
+(a) dedicated firewalls at all critical segments. All external-facing firewalls must
+be deployed on High Availability (HA) configuration and "fail-close" mode
+activated;
+(b) IPS at all critical network segments with the capability to inspect and monitor
+encrypted network traffic;
+(c) web and email filtering systems such as web-application firewalls, webproxy, URL filtering, sandboxing features, spam filter and anti-spoofing
+controls;
+(d) end-point protection solution to detect and remove security threats such as
+malware;
+(e) enforce full hard disk encryption for all endpoints and systems;
+(f) solution to mitigate advanced persistent threats including zero-day and
+signatureless malware; and
+(g) capture the full network packets to rebuild relevant network sessions to aid
+forensics in the event of incidents.
+
+5.
+
+A financial institution must synchronise and protect the Network Time Protocol
+(NTP) server against tampering.
+
+6.
+
+A financial institution must ensure its technology systems and infrastructure,
+including critical systems outsourced to or hosted by third party service providers,
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+51 of 80
+
+are adequately protected against all types of Distributed Denial of Service (DDoS)
+attacks (including Domain Name Service (DNS) based, volumetric, protocol and
+application layer attacks) through the following measures:
+(a)
+(b)
+
+(c)
+
+subscribing to DDoS mitigation services, which include automatic 'clean
+pipe' services to filter and divert any potential malicious traffic away from
+the network bandwidth; and
+regularly assessing the capability of the provider to expand network
+bandwidth on-demand including upstream provider capability, adequacy of
+the provider's incident response plan and its responsiveness to an attack;
+and
+implementing geolocation controls based on customer profile location, trend
+or behaviours, in order to restrict access from unauthorised regions and
+reduce exposure to malicious traffic.
+
+Part B: Data Security
+1.
+
+A financial institution shall ensure that all data-at-rest of Personal Identifiable
+Information (PII) and transaction data are securely protected and rendered
+unreadable to unauthorised access through the implementation of robust
+encryption mechanisms or equivalent capabilities.
+
+2.
+
+A financial institution must design internal control procedures and implement
+appropriate technology in all applications and access points to enforce Data Loss
+Prevention (DLP) policies and trigger any policy violations. The technology
+deployed must cover the following:
+(a) data in-use – data being processed by IT resources;
+(b) data in-motion – data being transmitted on the network; and
+(c) data at-rest – data stored in storage mediums such as servers, backup
+media and databases.
+
+3.
+
+A financial institution must implement appropriate policies for the removal of data
+on technology equipment, mobile devices or storage media to prevent
+unauthorised access to data.
+
+4.
+
+A financial institution must establish a clear DLP strategy and processes in order
+to ensure that proprietary and customer and counterparty information is identified,
+classified and secured. At a minimum, a financial institution must (a) ensure that data owners are accountable and responsible for identifying and
+appropriately classifying data;
+(b) undertake a data discovery process prior to the development of a data
+classification scheme and data inventory; and
+(c) ensure that data accessible by third parties is clearly identified and policies
+must be implemented to safeguard and control third party access. This
+includes adequate contractual agreements to protect the interests of the
+financial institution and its customers.
+
+5.
+
+A financial institution must ensure adequate security controls are in place to
+safeguard against customer information breach (CIB)44, which include:
+
+44 This is also applicable to the financial institution intermediaries as well as their third party service
+
+providers.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+(a)
+
+(b)
+(c)
+(d)
+
+52 of 80
+
+conducting continuous review to ensure that CIB does not occur in the IT
+environments of the financial institution, its intermediaries, or third party
+service providers. The financial institution shall also incorporate scanning
+or screening of customer information into the scope of periodic security
+assessments (e.g. penetration testing, red teaming, or other security
+validation exercises) to detect accidental exposure of customer information
+on financial institution's systems;
+enhancing cybersecurity operations to promptly detect and strengthen the
+safeguards against CIB;
+ensure that the scope of financial institutions' internal audit reviews
+encompasses the management and security controls pertaining to CIB; and
+conduct a thorough investigation to identify the technical root cause(s) of all
+CIBs with appropriate action and consequence management to mitigate
+recurrence.
+
+Part C: Security Operations Centre (SOC)
+1. A financial institution must ensure its SOC, has adequate capabilities for
+proactive monitoring of its technology security posture. This shall enable the
+financial institution to detect anomalous user or network activities, flag potential
+breaches and establish the appropriate response supported by skilled
+resources based on the level of complexity of the alerts. The outcome of the
+SOC activities shall also inform the financial institution's reviews of its
+cybersecurity posture and strategy.
+2. The SOC must be able to perform the following functions:
+(a) adequate log collection and the implementation of an event correlation
+engine with parameter-driven use cases such as Security Information and
+Event Management (SIEM);
+(b) incident coordination and response;
+(c) vulnerability management;
+(d) threat hunting;
+(e) remediation functions including the ability to perform forensic artifact
+handling, malware and implant analysis;
+(f) provision of situational awareness to detect adversaries and threats
+including threat intelligence analysis and operations and monitoring
+Indicators of Compromise (IoCs). This includes advanced behavioural
+analysis to detect signature-less and file-less malware and to identify
+anomalies that may pose security threats including at endpoints and
+network layers; and
+(g) has a well-documented and standardized playbook that covers common
+and plausible cyber threat scenarios, such as ransomware attacks.
+3. A financial institution must ensure that the SOC provides monthly threat
+assessment report, which shall include, at a minimum, the following:
+(a) trends and statistics of cyber events and incidents categorised by type of
+attacks, target and source IP addresses, location of data centres and
+criticality of applications; and
+(b) intelligence on emerging and potential threats including Tactics, Techniques
+and Procedures (TTP).
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+53 of 80
+
+4. A financial institution must subscribe to reputable threat intelligence services to
+identify emerging cyber threats, uncover new cyber-attack techniques and
+support the implementation of countermeasures.
+5. A financial institution must ensure the following:
+(a) the SOC is located in a physically secure environment with proper access
+controls;
+(b) the SOC operates on a 24x7 basis with disaster recovery capability to
+ensure continuous availability; and
+(c) the SOC has a holistic and end-to-end view of the financial institution's
+infrastructure including internal and external facing perimeters.
+Part D: Vulnerability Assessment and Penetration Test (VAPT)
+1. A financial institution must establish standard operating procedures (SOP) for
+VAPT activities to continuously identify vulnerabilities, assess potential risks
+and remediate the identified gaps. The SOP must outline the relevant control
+measures including but not limited to ensuring that the activities of external
+penetration testers are within the defined scope and are always subject to
+continuous oversight, validating the event logs and ensuring data purging.
+2. A financial institution must perform a quarterly vulnerability assessment of
+external and internal network components that support all critical systems.
+3. A financial institution must conduct annual intelligence-led penetration tests on
+its internal and external network infrastructure, critical systems as well as digital
+services including web, mobile and all external-facing applications. The test
+shall reflect extreme but plausible cyber-attack scenarios based on emerging
+and evolving threat scenarios. A financial institution must engage suitably
+accredited penetration testers and service providers to perform this function.
+4. In addition to the periodic testing, a financial institution must also conduct
+intelligence-led penetration tests prior to introducing new systems for the new
+products or services to ensure the IT infrastructure is not accidently exposed
+due to unchecked network configuration.
+5. A financial institution must ensure the outcome of the penetration testing
+exercise is properly documented and escalated in a timely manner to senior
+management to identify and monitor the implementation of relevant remedial
+actions.
+6. A financial institution must undertake an independent compromise assessment
+on the technology infrastructure of its critical systems at least once every three
+years and ensure the results of such assessments are escalated to senior
+management and the board in a timely manner. The financial institution may
+leverage their group-level cyber risk management functions to support this
+requirement.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+54 of 80
+
+Part E: Application Programming Interface (API) Security
+1. A financial institution must ensure that the level of API security implemented is
+commensurate with the potential risks involved. At a minimum, the financial
+institution is required to implement the following measures to mitigate
+cybersecurity risks associated with APIs:
+(a)
+
+(b)
+(c)
+
+(d)
+(e)
+(f)
+(g)
+(h)
+(i)
+(j)
+
+implement and maintain a centralised API inventory. The inventory must
+comprehensively encompass identification, classification and prioritisation
+of all associated API connections and dependencies;
+ensure availability of API service by designing APIs to be scalable for
+handling high level of traffic and implementing measures to mitigate denial
+of service attacks;
+undertake secure coding practices during API development, which shall
+include but not be limited to validating security of third party code and
+libraries, implementing robust error handling, input validation and
+appropriate security headers;
+employ robust encryption standards and effective key management
+controls;
+deploy anti brute-force mechanisms, including but not limited to rate
+limiting, account lockout, and others;
+implement strong and robust authorisation and authentication protocols that
+commensurate with the risks presented by the APIs;
+consider utilizing an API gateway to manage access, authentication, and
+authorization of the APIs;
+conduct periodic security assessments on APIs, including penetration
+testing and static / dynamic security testing;
+continuous monitoring for APIs to ensure visibility into the utilization and
+performance of the APIs, for prompt identification and detection of potential
+suspicious activities; and
+establish process to effectively revoke access token or API keys in the
+event of a compromise.
+
+Issued on: 28 November 2025

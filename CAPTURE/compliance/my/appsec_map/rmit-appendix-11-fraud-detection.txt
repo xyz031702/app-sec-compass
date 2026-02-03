@@ -1,0 +1,185 @@
+Risk Management in Technology
+
+78 of 80
+
+Appendix 11 Fraud Detection Standards
+A financial institution is required to adhere to the specified requirements, which include
+carrying out financial transactions conducted via digital services for retail customer.
+While compliance with the minimum standards is essential, a financial institution is
+encouraged to exceed these standards to stay ahead of emerging threat. The financial
+institution shall continuously upgrade and refine their fraud detection capability to
+ensure it remains robust against the anticipated level of threat.
+1.
+
+A financial institution must establish detailed and comprehensive risk profiles for
+each customer as a reference point when performing fraud detection based on
+behavioural analysis of the financial institution's customer and fraud profiles.
+Examples of relevant factors to be considered may include:
+(a) demographics information e.g. age, gender, race, occupation, salary,
+language, etc;
+(b) geographical information e.g. city, state, countries, IP address;
+(c) historical transactional patterns e.g. monetary transfer amount, time of
+transaction, velocity, new beneficiaries / favourite transfer; and
+(d) behavioural patterns e.g. time taken to make transfer, typing speed, mouse
+hovering pattern.
+
+2.
+
+A financial institution must be able to detect and block suspicious or fraudulent
+transactions on a real-time basis based on individual customer risk profiles
+established in accordance with paragraph 1 through the fraud risk analytics. At
+minimum, the fraud risk analytics must include the parameters or indicators
+outlined below:
+(a) Access to or conduct of a deposit account by a customer for a period of time
+following specific activities which could indicate elevated risk of identity theft
+or fraud, such as:
+i)
+newly enrolled e-banking account;
+ii)
+activation of online banking access for existing customer;
+iii)
+registration of multi-factor authentication (MFA) method on a new
+device;
+iv)
+increase in transaction limit;
+v)
+password reset;
+vi)
+change of personal information such as phone number, email, and
+postal address;
+vii)
+registration of third party payee details (favourite accounts); and
+viii) upliftment of fixed deposit accounts or linked investment / unit trust
+accounts.
+(b) Transaction patterns observed in a customer's account, which could indicate
+elevated risk of identity theft or fraud, such as:
+i)
+high volume of debits in a short period to new beneficiaries within a
+day or next few days following such activities as specified in 2(a).
+ii)
+sudden change in transaction patterns (e.g. increases in frequency
+or cumulative value over a short period, or large withdrawals
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+iii)
+
+iv)
+v)
+
+vi)
+
+vii)
+viii)
+
+79 of 80
+
+resulting in low account balance inconsistent with the customer's
+normal transaction patterns);
+activities that may be inconsistent with the customer's risk profile or
+history (e.g. transaction time, high debits from a previously inactive
+account);
+large deposit made into a newly opened deposit account and
+withdrawn in a short period (e.g. within a few days);
+transactions initiated from an unusual geographical location (not the
+customer's typical location) or consecutive transactions from
+different locations within a short period of time;
+transactions initiated from an account or device previously reported
+for fraud by various sources of fraud intelligence (e.g. upon
+investigation by any financial institution, report from customer or law
+enforcement agencies, industry threat intel sharing, etc.);
+transactions from an account previously inactive for a period of
+time; and
+transactions to suspected financial mules detected by the financial
+institution or any other fraud repositories developed by the Bank,
+the industry, or law enforcement agencies.
+
+(c) Changes in a device fingerprint, such as the location, IP address, device
+MAC, operating system and other device profile. This must include the ability
+to detect and block attempts to defeat or bypass device fingerprinting
+methodologies.
+(d) Account takeover and identity fraud using advanced artificial intelligence
+tools, techniques, and procedures to defeat or bypass the authentication
+controls of digital services or contact centre.
+(e) Higher risk scoring must be applied for vulnerable customers (e.g. senior
+citizens, younger customers, previous victims of fraud, customers with lower
+literacy on the safety of electronic banking or awareness level, etc).
+(f) Changes in biometric credentials registered in a device, where biometric
+technologies are solely used for financial transaction authentication
+purposes. This includes the scenario where a mobile banking application
+relies on the biometric verification function of the device, mobile operating
+system, or a third party application.
+3.
+
+A financial institution must implement measures to promptly detect and terminate
+hijacked sessions to prevent unauthorised access to customer accounts. The
+financial institution shall notify customer on elevated cyber risk caused by the
+presence of risky application (e.g. application downloaded outside official
+distribution platforms or detected to contain security vulnerabilities).
+
+4.
+
+When customer' online banking access is restricted, a financial institution must
+promptly notify customer with appropriate guidance to enable customer to restore
+access to their account subject to robust verification. To mitigate privacy
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+80 of 80
+
+concerns, the financial institution must seek consent from the customer prior to
+effecting the customer device profiling.
+5.
+
+A financial institution must investigate suspicious transactions based on predetermined priority levels and conduct the necessary verification (such as callbacks or other effective methods) with the customer prior to releasing any flagged
+transactions. To ensure acceptable customer experience, the financial institution
+must notify the affected customer immediately upon the blocking of each
+suspicious transaction (e.g. via SMS or secure app notification) and deploy
+sufficient resources to contact the affected customer within 30 minutes of the
+transaction, including during peak periods. The verification procedures must
+consider and include ways to help detect circumstances where customer may be
+responding under the influence or threat of fraudsters. The financial institution
+must also establish a robust process to minimise risk in the event the customer
+cannot be contacted due to their unavailability.
+
+6.
+
+A financial institution must ensure that its various touch points such as contact
+centres and branches are easily accessible and sufficiently resourced to provide
+customer with prompt advice or to connect customer with the fraud investigation
+team, if necessary.
+
+7.
+
+A financial institution must continuously update its system to ensure fraud
+detection rules remain effective to combat new fraud modus operandi via the
+following:
+(a) enhance its fraud detection rules promptly upon detection of new fraud
+techniques that have evaded its fraud detection system. The enhancements
+shall be timely upon being notified by its internal fraud team or upon receiving
+such intelligence from external sources such as other financial institution,
+industry group, public-private partnership and other intelligence sharing
+platform; and
+(b) review the effectiveness of its fraud detection parameters and thresholds in
+a timely manner, taking into consideration recent typologies in relation to
+fraudulent transactions and financial mule accounts, including new digital
+fraud techniques and modus operandi in other jurisdictions.
+
+8.
+
+In order to effectively address the wide range of fraud alerts that can arise from
+various fraud modus operandi and techniques, it is important to have clear and
+detailed procedures for managing suspected fraud cases. Therefore, the financial
+institution must develop a comprehensive fraud management playbook, as a
+point of reference for the relevant staff to promptly identify, confirm, and respond
+effectively to various scenarios. The playbook must be updated and validated at
+least once a year, or more frequently if needed, to ensure it remains relevant in
+the evolving fraud landscape. This includes reflecting insights from assessments
+of confirmed fraud cases and lessons learnt from incidences in which the financial
+institution was unable to detect the fraudulent activities or transactions.
+
+Issued on: 28 November 2025

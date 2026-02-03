@@ -1,0 +1,63 @@
+Risk Management in Technology
+10
+
+13 of 80
+
+Technology Operations Management
+
+Technology Project Management
+S
+
+10.1
+
+A financial institution must establish appropriate governance requirements
+commensurate with the risk and complexity15 of technology projects
+undertaken. This shall include project oversight roles and responsibilities,
+authority and reporting structures, and risk assessments throughout the
+project life cycle.
+
+S
+
+10.2
+
+The risk assessments shall identify and address the key risks arising from
+the implementation of technology projects. These include the risks that could
+threaten successful project implementation and the risks that a project failure
+will lead to a broader impact on the financial institution's operational
+capabilities. At a minimum, due regard shall be given to the following areas:
+(a) the adequacy and competency of resources including those of the
+vendor to effectively implement the project. This shall also take into
+consideration the number, size and duration of significant technology
+projects already undertaken concurrently by the financial institution;
+(b) the complexity of systems to be implemented such as the use of
+unproven or unfamiliar technology and the corresponding risks of
+integrating the new technology into existing systems, managing multiple
+vendor-proprietary technologies, large-scale data migration or cleansing
+efforts and extensive system customisation;
+(c) the adequacy and configuration of security controls throughout the
+project life cycle to mitigate cybersecurity breaches or exposure of
+confidential data;
+(d) the comprehensiveness of the user requirement specifications to
+mitigate risks from extensive changes in project scope or deficiencies in
+meeting business needs;
+(e) the robustness of system and user testing strategies to reduce risks of
+undiscovered system faults and functionality errors;
+(f) the appropriateness of system deployment and fallback strategies to
+mitigate risks from prolonged system stability issues; and
+(g) the adequacy of disaster recovery operational readiness following the
+implementation of new or enhanced systems.
+
+S
+
+10.3
+
+The board and senior management must receive and review timely reports
+on the management of these risks on an ongoing basis throughout the
+implementation of significant projects.
+
+15 For example, large-scale integration projects or those involving critical systems must be subject to
+
+more stringent project governance requirements such as more frequent reporting to the board and senior
+management, more experienced project managers and sponsors, more frequent milestone reviews and
+independent quality assurance at major project approval stages.
+Issued on: 28 November 2025

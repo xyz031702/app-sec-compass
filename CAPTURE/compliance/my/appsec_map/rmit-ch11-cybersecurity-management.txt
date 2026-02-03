@@ -1,0 +1,153 @@
+Risk Management in Technology
+11
+
+27 of 80
+
+Cybersecurity Management
+
+Cyber Risk Management
+S
+
+11.1
+
+A financial institution must ensure that there is an enterprise-wide focus on
+effective cyber risk management to reflect the collective responsibility of
+business and technology lines for managing cyber risks.
+
+S
+
+11.2
+
+A financial institution must develop a CRF which clearly articulates its
+governance for managing cyber risks, its cyber resilience objectives and its
+risk tolerance, with due regard to the evolving cyber threat environment.
+Objectives of the CRF shall include ensuring operational resilience against
+extreme but plausible cyber-attacks. The framework must be able to support
+the effective identification, protection, detection, response, and recovery
+(IPDRR) of systems and data hosted on-premises or by third party service
+providers from internal and external cyber-attacks.
+
+S
+
+11.3
+
+The CRF must consist of, at a minimum, the following elements:
+(a) development of an institutional understanding of the overall cyber risk
+context in relation to the financial institution's business and operations,
+its exposure to cyber risks and current cybersecurity posture;
+(b) identification, classification and prioritisation of critical systems,
+information, assets and interconnectivity (with internal and external
+parties) to obtain a complete and accurate view of the financial
+institution's information assets, critical systems, interdependencies and
+cyber risk profile;
+(c) identification
+of
+cybersecurity
+threats,
+vulnerabilities
+and
+countermeasures to secure digital services delivery against cyberattacks and contain reputational damage that can undermine confidence
+in the financial institution;
+(d) enhancing layers of cyber defence with reference to the latest
+international standards and sound practices such as zero-trust
+principles33, defense-in-depth through micro-segmentation and security
+by design, to protect its data, infrastructure and assets against evolving
+cyber threats;
+(e) timely detection of cybersecurity incidents through continuous
+surveillance and monitoring;
+(f) detailed incident handling policies and procedures and a crisis response
+management playbook to support the swift recovery from cyber
+incidents and contain any damage resulting from a cybersecurity
+breach;
+(g) policies and procedures for timely and secure information sharing and
+collaboration with other financial institutions and participants in financial
+market infrastructure to strengthen cyber resilience and fraud
+prevention;
+(h) implement a centralised automated tracking system to manage its
+technology asset inventory; and
+(i) establish a cyber risk management function to analyse actual and
+potential cyber threats, providing risk assessments and timely
+
+33 Zero-trust
+
+principles is a security paradigm designed to prevent data breaches and limit lateral
+movement of threat actors by requiring all users, whether in or outside the organization's network, to be
+authenticated, authorised, and validated before being granted the access.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+28 of 80
+
+escalation of high-risk cyber threats to senior management and the
+board. This function shall be performed by an in-house dedicated team
+or by leveraging on the parent or group.
+S
+
+11.4
+
+A financial institution that is designated as a National Critical Information
+Infrastructure (NCII) entity pursuant to the Cyber Security Act 2024 must
+ensure compliance to the requirements and guidelines applicable to NCII,
+including any additional directives and standards issued by the National
+Cyber Security Agency (NACSA).
+
+S
+
+11.5
+
+A financial institution must adopt robust control measures as outlined in
+Appendix 5 to enhance its resilience to cyber-attacks.
+
+S
+
+11.6
+
+A financial institution must conduct a realistic "Red Team34" simulation attack
+on its infrastructure at least once every three years to proactively identify and
+manage potential vulnerabilities.
+
+G
+
+11.7
+
+A financial institution may implement crowdsourced security testing programs
+as a complement to existing security assessments, in order to thoroughly test
+the security of their IT environment. The financial institution must engage
+reputable and credible service providers to facilitate the program.
+
+Cybersecurity Operations
+S
+
+11.8
+
+A financial institution must establish clear responsibilities for cybersecurity
+operations which shall include implementing appropriate mitigating
+measures in the financial institution's conduct of business that correspond to
+the following phases of the cyber-attack lifecycle:
+(a) reconnaissance;
+(b) weaponisation;
+(c) delivery;
+(d) exploitation;
+(e) installation;
+(f) command and control; and
+(g) exfiltration.
+
+S
+
+11.9
+
+A financial institution must ensure continuous and proactive monitoring and
+timely detection of anomalous activities in its technology infrastructure to
+prevent potential compromise of its security controls or weakening of its
+security posture. This shall include(a) establishing a Security Operations Center (SOC) supported by
+competent resources and equipped with the necessary tools and
+technologies for proactive monitoring of its technology security posture;
+
+34 A red team exercise involves a controlled attempt to rigorously evaluate an institution's security
+
+defences, resilience, and response capabilities. In this exercise, a team of information security experts
+known as the "red team" simulates the tactics, techniques, and procedures of potential adversaries to
+critically assess the effectiveness of the institution's security measures, with minimal knowledge and
+impact on operations.
+Issued on: 28 November 2025

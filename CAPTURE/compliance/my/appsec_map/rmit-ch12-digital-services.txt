@@ -1,0 +1,178 @@
+Risk Management in Technology
+12
+
+32 of 80
+
+Digital Services
+
+Security of Digital Services
+S
+
+12.1
+
+Securing digital services is an integral part of financial institution's risk
+management. A financial institution must expand its CRF to implement robust
+technology security controls in providing digital services which assure the
+following:
+(a) adopt and regularly assess the minimum-security controls for respective
+delivery channels to ensure confidentiality and integrity of customer and
+counterparty information and transactions. Refer to Appendices 2, 3, 4
+and 11;
+(b) proper authentication of users or devices and authorization of
+transactions to mitigate impersonation and fraud risk. Refer the
+minimum-security controls in Appendix 3; and
+(c) strong physical control and logical control measures.
+
+S
+
+12.2
+
+In the event that a financial institution has not yet implemented the digital
+services security controls specified under paragraph 12.1 to 12.9, the
+financial institution must(a)
+(b)
+
+be ready to provide documented explanation of how alternatives
+measures or mitigations achieve equivalent or superior effectiveness;
+and
+assume the liability of any fraud that occurs due to the gaps arise from
+the absence of the specified control.
+
+Digital Fraud Management and Customer Awareness
+S
+
+12.3
+
+The complex and fast evolving digital fraud requires financial institutions to be
+vigilant against new fraud techniques and proactive in strengthening their
+cyber defence for customer protection. In line with paragraphs 11.2 and 11.3,
+a financial institution must enhance its CRF as follows:
+(a) expand the scope of identification of cybersecurity threats and
+countermeasures to include customers' mobile devices and access
+points;
+(b) adopt layered (defense-in-depth) security controls to protect the digital
+service application deployed to customers' mobile devices and the
+relevant banking data contained in it;
+(c) perform continuous surveillance and monitoring to detect any
+exploitation of the digital service application deployed to customers'
+mobile devices and ensure the swift upgrade of security controls to
+mitigate new vulnerabilities;
+(d) establish clearly defined and effective incident handling procedures to
+assist customers to contain the potential damage resulting from a
+cybersecurity breach involving digital services;
+(e) formalise operational arrangement to enable swift coordinated response
+and rapid upgrade of countermeasures to defend against advanced
+fraud tactics if a financial institution relies on multiple business functions;
+(f) conduct regular review by senior management to ensure the
+effectiveness of digital fraud management and define threshold for
+escalation of countermeasures considering the actual impact to victims
+of digital fraud and emerging fraud environment; and
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+33 of 80
+
+(g) apprise the board on the outcome of management reviews to preserve
+public confidence in the security of digital services and mitigate
+reputation risk to the industry.
+S
+
+12.4
+
+A financial institution must ensure that its fraud detection capabilities and
+rules are updated in a timely manner upon detection of new fraud modus
+operandi in order to prevent fraudulent transactions or account takeover using
+stolen customer credentials. This must be supported by appropriate risk
+analytics to improve the accuracy of fraud detection, that includes continuous
+upgrade of fraud detection capabilities as specified in Appendix 11 on Fraud
+Detection Standards.
+
+S
+
+12.5
+
+A financial institution must mitigate any attendant risk arising from its delivery
+of digital services. This shall include(a) adopt secure communication channel to mitigate risk of phishing.
+Compensating controls shall be adopted when using communication
+channel prone to phishing exploits37;
+(b) all customers must be properly informed in advance of new controls to
+ease adoption and minimise inconvenience; and
+(c) practical ways for customers to verify the authenticity of calls made by
+the financial institution or its appointed outsourced service providers.
+
+S
+
+12.6
+
+A financial institution shall empower customers to mitigate digital fraud risks
+where it is reasonably practical. This shall include offering customer
+mechanisms to manage activation and de-activation of payment card38 for
+card-not-present and overseas transactions. This shall not absolve the
+financial institution from its liabilities, responsibilities and duty of care to
+ensure the security of its digital services.
+
+S
+
+12.7
+
+Consumer competency is essential to strengthening the security of digital
+services. A financial institution must maintain continuous efforts to review and
+enhance the effectiveness of its awareness programmes, ensuring customers
+understand the risks of digital services fraud. This shall include(a) continuous and timely updates of practical information on how to identify
+potential fraud, including specific information about new or common
+modus operandi;
+(b) clear explanation about new and existing security measures, such as
+how to verify genuine e-banking websites and mobile applications;
+(c) real-time alerts of possible risks when security measures are absent or
+have not yet been implemented; and
+(d) measures to further improve customer understanding and familiarisation
+with fraud risks and controls, such as through interactive simulations of
+security features etc.
+
+S
+
+12.8
+
+A financial institution must provide convenient means for customers to report,
+suspend and re-activate their account swiftly in the event of a suspected
+fraud, where applicable. This shall require the financial institution to:
+
+A financial institution must remove any clickable hyperlinks in short messaging service (SMS)
+messages to customers and create awareness on this change to mitigate risk of phishing.
+38 A financial institution must adhere to the relevant requirements of the policy documents, as issued by
+the Bank, on Debit Card and Debit Card-I, and Credit Card and Credit Card-I in managing opt-in
+requirement for card-not-present and overseas transactions.
+37
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+34 of 80
+
+(a) offer a secure self-service "kill switch" solution;
+(b) ensure that its contact centre is adequately resourced and operating
+effectively to provide prompt and adequate assistance to customers in
+distress; and
+(c) restore customer access to digital services within a reasonable
+timeframe upon validation.
+S
+
+12.9
+
+In addition to effective incident handling procedures, a financial institution
+must adopt additional measures to mitigate risk to customers arising from any
+incident involving potential fraud or compromise of customer data. This shall
+include(a) heighten monitoring of affected customer accounts;
+(b) notify affected customers and provide them with the necessary
+information to apply mitigating measures and reduce the risk of fraud;
+and
+(c) revoke and re-issue affected user credentials or designated payment
+instruments, where there is a potential risk of exploitation due to
+compromised data or other fraudulent activity.
+
+The rest of the page is intentionally left as blank
+
+Issued on: 28 November 2025

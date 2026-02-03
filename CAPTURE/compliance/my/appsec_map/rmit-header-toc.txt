@@ -1,0 +1,146 @@
+Risk Management in Technology (RMiT)
+
+Applicable to:
+1. Licensed banks
+2. Licensed investment banks
+3. Licensed Islamic banks
+4. Licensed insurers including professional reinsurers
+5. Licensed takaful operators including professional retakaful operators
+6. Prescribed development financial institutions
+7. Approved issuers of electronic money
+8. Operator of a designated payment system
+9. Registered merchant acquirers
+10. Intermediary remittance institutions
+
+Issued on: 28 November 2025
+
+BNM/RH/PD 028-98
+
+Risk Management in Technology
+
+2 of 80
+
+TABLE OF CONTENTS
+PART A
+
+OVERVIEW .........................................................................................................2
+
+1
+
+Introduction .........................................................................................................3
+
+2
+
+Applicability .........................................................................................................3
+
+3
+
+Legal provisions ..................................................................................................4
+
+4
+
+Effective date ......................................................................................................4
+
+5
+
+Interpretation.......................................................................................................4
+
+6
+
+Related legal instruments and policy documents.................................................6
+
+7
+
+Policy documents and circulars superseded .......................................................7
+
+PART B
+
+POLICY REQUIREMENTS .................................................................................8
+
+8
+
+Governance .........................................................................................................8
+
+9
+
+Technology Risk Management ........................................................................... 11
+
+10
+
+Technology Operations Management ................................................................ 13
+
+11
+
+Cybersecurity Management ............................................................................... 27
+
+12
+
+Digital Services .................................................................................................. 32
+
+13
+
+Technology Audits ............................................................................................. 35
+
+14
+
+External Party Assurance................................................................................... 36
+
+15
+
+Security Awareness and Education .................................................................... 36
+
+16
+
+Notification for Technology-Related Applications ............................................... 37
+
+17
+
+Consultation and Notification related to Cloud Services and Emerging
+Technology........................................................................................................ 38
+
+18
+
+Assessment and Gap Analysis........................................................................... 40
+
+APPENDICES ..................................................................................................................... 41
+Appendix 1
+
+Storage and Transportation of Sensitive Data in Removable Media ....... 41
+
+Appendix 2
+
+Control Measures on Self-service Terminals (SSTs) .............................. 42
+
+Appendix 3
+
+Control Measures for Digital Services .................................................... 45
+
+Appendix 4
+
+Control Measures for Mobile Applications and Devices .......................... 49
+
+Appendix 5
+
+Control Measures on Cybersecurity ....................................................... 50
+
+Appendix 6
+
+Criteria for Simplified Notification for IT Services Enhancements ........... 55
+
+Appendix 7
+
+Risk Assessment Report and Supervisory Expectations on
+External Party ........................................................................................ 56
+
+Appendix 8
+
+IT and Cyber Risks Associated with Third Party Service Providers ........ 61
+
+Appendix 9
+
+Guidance on Emerging Technologies..................................................... 62
+
+Appendix 10 Key Risks and Control Measures for Cloud Services ............................. 63
+Appendix 11 Fraud Detection Standards .................................................................... 78
+
+Issued on: 28 November 2025

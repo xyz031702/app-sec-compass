@@ -1,0 +1,145 @@
+Risk Management in Technology
+
+63 of 80
+
+Appendix 10 Key Risks and Control Measures for Cloud Services
+This appendix provides additional guidance to financial institutions for the assessment
+of common key risks and considerations of control measures when financial institutions
+adopt public cloud for critical systems. The guidance is broadly applicable across
+various cloud service models and financial institutions is expected to apply a risk-based
+approach in implementing the guidance.
+The guidance consists of two (2) parts:
+•
+
+•
+
+Part A: Cloud governance – describes the considerations governing the cloud
+usage policy, and technology skills capacity to implement cloud services
+securely and effectively.
+Part B: Cloud design and control – describes the considerations related to
+designing robust cloud infrastructure and in operationalising the cloud
+environment. This places emphasis on cloud architecture, cloud application
+delivery model, high velocity software development, user access management,
+data protection, key management, cloud backup and recovery, business
+continuity management and cybersecurity management.
+
+Part A: Cloud Governance
+A financial institution should ensure robust cloud governance processes are
+established prior to cloud adoption and are subject to on-going review and continuous
+improvement. This should cover the following areas:
+1. Cloud risk management
+(a) The board of a financial institution is expected to promote and implement sound
+governance principles throughout the cloud service lifecycle in line with the
+financial institution's risk appetite to ensure safety and soundness of the
+financial institution.
+(b) The senior management of a financial institution is expected to develop and
+implement a cloud risk management framework that integrates with existing
+outsourcing risk management framework, technology risk management
+framework (TRMF) and cyber resilience framework (CRF), for the board's
+approval, proportionate to the materiality of cloud adoption in its business
+strategy, to assist in the identification, monitoring and mitigating of risks arising
+from cloud adoption.
+(c) Common cloud service models45 are Software-as-a-Service (SaaS), Platformas-a-Service (PaaS), and Infrastructure-as-a-Service (IaaS), wherein each
+presents a different set of capabilities offered to the financial institution as the
+cloud consumer, and hence a different set of shared responsibilities. In view of
+this, the cloud risk management framework of the financial institution should:
+
+45 Cloud service models consist of SaaS, PaaS and IaaS. Refer the Special Publication 800-145 on
+
+Definition of Cloud Computing issued by the National Institute of Standards and Technology, U.S.
+Department of Commerce.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+64 of 80
+
+i) be an integral part of the financial institution's enterprise risk management
+framework (ERM);
+ii) be tailored to the cloud service models, both currently in use or being
+considered for use; and
+iii) specify the scope of the financial institution's responsibility under each
+shared responsibility model, as the associated risks may vary.
+(d) A financial institution is responsible for the protection of data stored in cloud
+irrespective of cloud service models and the cloud service providers. Therefore,
+the financial institution's understanding of the specific details of the cloud
+arrangement, particularly what is or is not specified in the terms of the contract
+with the cloud service providers is essential.
+(e) Regardless of the cloud arrangement with cloud service providers, the onus
+remains on the financial institution to satisfy the Bank that it is protecting
+customer information and ensuring service reliability.
+(f) The use of cloud services may represent a paradigm shift in technology
+operation management as compared to on-premises IT infrastructure. Business
+processes may change and internal controls on compliance, business
+continuity, information and data security may be overlooked due to the ease of
+subscribing to cloud services. Therefore, the cloud risk management framework
+should also clearly articulate the accountability of the financial institution's
+board and senior management, and the process involved in approving and
+managing cloud service usage, including the responsibility of key functions
+across the enterprise in business, IT, finance, legal, compliance and audit, over
+the lifecycle of cloud service adoption.
+(g) As the cloud landscape rapidly evolves, a financial institution`s cloud risk
+management framework should undergo periodic review (at least once every
+three years to ensure its adequacy and effectiveness to manage new service
+models over time), or immediately upon any major cybersecurity incidents
+involving the cloud services.
+2. Cloud usage policy
+(a) The financial institution's senior management is expected to develop and
+implement internal policies and procedures that articulate the criteria for
+permitting or prohibiting the hosting of information assets on cloud services,
+commensurate with the level of criticality of the information asset and the
+capabilities of the financial institution to effectively manage the risks associated
+with the cloud arrangement.
+(b) A financial institution is expected to expand the scope of its current technology
+assets inventory to include critical systems hosted on the cloud services, with
+a clear assignment of ownership, and to be updated upon deployment and
+changes of IT assets to facilitate timely recalibration of cybersecurity posture in
+tandem with an evolving threat landscape. Having visibility on the latest view of
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+65 of 80
+
+the technology asset would enable effective triaging, escalation and response
+to information security incidents.
+(c) A financial institution should regularly review and update the cloud usage policy
+at least once every three years. However, where any material changes arise,
+including but not limited to adoption of new cloud service deployment model, or
+adoption of cloud service for IT systems with higher degree of criticality, the
+financial institution should review and update its cloud usage policy
+immediately.
+3. Due diligence
+Due diligence on the prospective cloud service providers should be risk-based and
+conducted to a level of scrutiny that is commensurate with the criticality of the
+information and technology assets to be hosted on the cloud in compliance with
+relevant requirements and guidance as stipulated in the Third Party Service Provider
+Management section of this policy document and paragraphs 9, 10 and 11 in the
+Bank's Outsourcing policy document (Outsourcing process and management of risks,
+Outsourcing outside Malaysia, Outsourcing involving cloud services).46
+4. Access to cloud service providers' certifications
+A financial institution should review their cloud service providers' certifications prior to
+entering into any cloud arrangement or contract with such cloud service providers. At
+a minimum, a financial institution should:
+(a) Seek assurance that the cloud service provider continues to be compliant with
+relevant legal, or regulatory requirements as well as contractual obligations and
+assess the cloud service provider's action plans for mitigating any noncompliance; and
+(b) Obtain and refer to credible independent external party reports of the cloud
+platforms when conducting risk assessments. The financial institution's risk
+assessment should address all the requirements and guidance as stipulated in
+the Cloud Services section of this policy document and paragraph 11 of the
+Bank's policy document on Outsourcing which sets out provisions on
+outsourcing involving cloud services.
+5. Contract management
+A financial institution should set out clearly and where relevant, measurable,
+contractually agreed terms and parameters on the information security and operational
+standards expected of the cloud service providers. Such contract terms and
+parameters should be aligned with the financial institution's business strategy,
+information security policies and regulatory requirements.
+
+46 Or the relevant paragraphs in the policy documents applicable for eligible e-money issuer, non-bank
+
+registered merchant acquirer, intermediary remittance institution and operator of designated payment
+system.
+Issued on: 28 November 2025

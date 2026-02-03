@@ -1,0 +1,318 @@
+Risk Management in Technology
+PART A
+
+3 of 80
+
+OVERVIEW
+
+1
+
+Introduction
+
+1.1
+
+With the prevalent use of technology in the provision of financial services,
+financial institutions must(a) invest in the required expertise and risk controls to prevent operational
+disruptions given the complexity of Information Technology (IT) systems;
+(b) achieve the highest level of security to combat fast-changing digital
+crimes for public confidence;
+(c) maintain robust oversight to prevent transmission of risks with increased
+third party interlinkages;
+(d) build operational resilience against sophisticated and malicious cyber
+threats amidst heightened cyber risks globally; and
+(e) practice ethical and responsible use of technology for inclusive growth.
+
+1.2
+
+This policy document sets out the Bank's policy objectives and minimum
+requirements to improve financial institutions' management of technology risk,
+including cyber risk. In applying this policy document, a financial institution
+shall have regard to the size and complexity of its operations, the level of
+technology use and its external stress exposure. Accordingly, larger and more
+complex financial institutions, or those with a high degree of digitalisation and
+linkages with third parties, are required to adopt more robust risk controls that
+commensurate with the increased technology risk exposure of the institution.
+
+1.3
+
+Enforcement or supervisory actions can be taken against the financial
+institutions including its directors, officers and employees for any noncompliance with any provision marked as "S" in Part B of this policy document.
+
+1.4
+
+Where the Bank considers that a financial institution's technology risk
+management has material weaknesses which, if not promptly and effectively
+addressed, might contribute to, or result in, non-compliance with this policy
+document, the Bank may, among others(a) require an independent external review of the overall or specific areas of
+the financial institution's technology risk management;
+(b) require the financial institution to develop and implement specific
+remediation plan;
+(c) require the financial institution to hold additional capital; or
+(d) require the financial institution to take any other corrective action
+necessary to rectify the weaknesses in a sustainable manner.
+
+2
+
+Applicability
+
+2.1
+
+Subject to paragraph 2.2, this policy document is applicable to all financial
+institutions as defined in paragraph 5.2.
+
+2.2
+
+The following paragraphs and appendices are not applicable to certain financial
+institutions identified below:
+(a)
+
+Part C (paragraphs 16 to 17) and Appendices 6 and 7 are not applicable
+to(i)
+operators of designated payment system;
+(ii)
+eligible e-money issuers;
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+(b)
+(c)
+
+4 of 80
+
+(iii)
+non-bank registered merchant acquirers; and
+(iv)
+intermediary remittance institutions; and
+paragraphs 12.3 to 12.9 are not applicable to(i)
+operators of designated payment system; and
+(ii)
+intermediary remittance institutions; and
+paragraph 13.3 is not applicable to the following financial institutions,
+provided they have not been designated as National Critical Information
+Infrastructure (NCII) entities1:
+(i)
+eligible e-money issuers;
+(ii)
+non-bank registered merchant acquirers; and
+(iii)
+intermediary remittance institutions.
+
+3
+
+Legal provisions
+
+3.1
+
+The requirements in this policy document are specified pursuant to(a) sections 47(1), 47(2)(d) and 143(2) of the Financial Services Act 2013
+(FSA);
+(b) sections 57(1), 57(2)(d) and 155(2) of the Islamic Financial Services Act
+2013 (IFSA);
+(c) sections 41(1), 41(2)(b) and 116(1) of the Development Financial
+Institutions Act 2002 (DFIA); and
+(d) sections 34(2) and 74 of the Money Services Business Act 2011 (MSBA).
+
+3.2
+
+The guidance in this policy document is issued pursuant to section 266 of the
+FSA, section 277 of the IFSA, section 126 of the DFIA and section 74 of the
+MSBA.
+
+4
+
+Effective date
+
+4.1
+
+This policy document comes into effect on 28 November 2025 except where
+otherwise stated explicitly in this policy document.
+
+5
+
+Interpretation
+
+5.1
+
+The terms and expressions used in this policy document shall have the same
+meanings assigned to them in the FSA, IFSA, DFIA or MSBA, as the case may
+be, unless otherwise defined in this policy document.
+
+5.2
+
+For purposes of this policy document"S" denotes a standard, an obligation, a requirement, specification, direction,
+condition and any interpretative, supplemental and transitional provisions that
+must be complied with. Non-compliance may result in enforcement action;
+"G" denotes guidance which may consist of statements or information
+intended to promote common understanding and advice or recommendations
+that are encouraged to be adopted;
+
+1 For clarity, this refers to financial institutions that have not been designated as NCII entities by BNM
+
+under subsection 17(1) of the Cyber Security Act 2024, which came into effect on 26 August 2024.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+5 of 80
+
+"affiliate" in relation to an entity, refers to any corporation that controls, is
+controlled by, or is under common control with, the entity;
+"board" refers to the board of directors of a financial institution, including any
+committee carrying out any of the responsibilities of the board under this policy
+document;
+"critical system" refers to any application system that supports the provision
+of critical banking, insurance, takaful, payment, investment or trading services,
+where failure of the system has the potential to significantly impair the financial
+institution's provision of financial services to customers or counterparties,
+business operations, financial position, reputation, or compliance with
+applicable laws and regulatory requirements;
+"customer and counterparty information" refers to any information relating
+to the affairs or the account, of any customer or counterparty of a financial
+institution in whatever form;
+"cyber incident" refers to a cyber event that adversely affects the cyber
+security of an information system or the information the system processes,
+stores or transmits whether resulting from malicious activity or not;
+"cyber resilience" refers to the ability of people, processes, IT systems,
+applications, platforms or infrastructures to withstand adverse cyber events;
+"digital services" refers to the provision of payment, remittance, banking,
+Islamic banking, insurance or takaful services delivered to customers via
+electronic channels and devices including Internet and mobile devices, selfservice and point-of-sale terminals;
+"disruption" refers to an incident that causes degradation to the normal
+performance of a business function that would affect a financial institution's
+ability to continue its operations and services to its customers;
+"financial institution" refers to(a) a licensed person under the FSA and the IFSA (excluding branches of a
+foreign professional reinsurer and a professional retakaful operator);
+(b) a prescribed institution under the DFIA;
+(c) an eligible e-money issuer as defined2 in the policy document on
+Electronic Money issued on 31 January 20253;
+(d) an operator of a designated payment system under the FSA and IFSA;
+(e) a non-bank registered merchant acquirer as defined4 in the policy
+document on Merchant Acquiring Services issued on 15 September
+2 For ease of reference, an "eligible e-money issuer" is defined as an approved issuer of electronic
+
+money with substantial market presence based on the criteria set out in Appendix 1 of the policy
+document on Electronic Money or such other criteria as may be specified by the Bank from time to time.
+3 Including any amendments or modifications made after the issuance date.
+4 For ease of reference, a "non-bank registered merchant acquirer" refers to any person who is
+registered pursuant to sections 17(1) and 18 of the FSA to provide merchant acquiring services and
+fulfils the criteria under paragraph 2.1 of the policy document on Merchant Acquiring Services or such
+other criteria as may be specified by the Bank from time to time but does not include a licensed bank,
+licensed Islamic bank or prescribed institution.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+(f)
+
+6 of 80
+
+20215, with a market share of at least 5% of the total non-bank merchant
+acquiring services transaction value or volume in Malaysia for a given
+year; and
+an intermediary remittance institution (IRI) as defined6 in the policy
+document on Governance, Risk Management, and Operations for Money
+Services Business (MSB) issued on 9 April 20257, with a market share of
+at least 5% of total IRI transaction value or volume in Malaysia for a given
+year;
+
+"OTP or one-time password" refers to an alphanumeric or numeric code
+represented by a minimum of 6 characters or digits which is valid only for single
+use;
+"senior management" refers to the Chief Executive Officer and senior
+officers, who are employed by a financial institution or an affiliate of the
+financial institution. This includes, at minimum, senior management roles listed
+in Appendix 2 of policy document of Responsibility Mapping issued on 29
+December 2023 as well as the relevant paragraphs on roles and
+responsibilities in the policy documents8 on Electronic Money issued on 31
+January 2025, Merchant Acquiring Services issued on 15 September 2021,
+Payment System Operator issued on 22 December 2022, and Governance,
+Risk Management, and Operations for Money Services Business (MSB)
+issued on 9 April 2025;
+"third party service provider" refers to any internal group affiliate or external
+entity providing technology-related functions or services directly to enable or
+support a function or service provided by the financial institution, or which
+involves the transmission, processing, storage or handling of confidential
+information pertaining to the financial institution or its customers. This includes
+cloud computing software, platform and infrastructure service providers.
+6
+
+Related legal instruments and policy documents
+
+6.1
+
+This policy document must be read together with any relevant legal
+instruments, policy documents, guidelines, circulars, and supplementary
+documents issued by the Bank, including any amendments and reissuances
+thereafter, in particular(a) Guidelines on Data Management and MIS Framework issued on 23
+October 2008;
+(b) Guidelines on Data Management and MIS Framework for Development
+Financial Institutions issued on 5 November 2012;
+(c) Policy Document on Risk Governance issued on 1 March 2013;
+(d) Policy Document on Introduction of New Products issued on 7 March
+2014;
+(e) Policy Document on Compliance issued on 10 May 2016;
+
+5 Including any amendments or modifications made after the issuance date.
+6 For ease of reference, an "intermediary remittance institution or IRI" refers to an intermediary institution
+
+that receives wire transfers on behalf of a sending remittance company, for onward transmission, to a
+receiving party that will then disburse to the beneficiary of the wire transfer as may be specified by the
+Bank from time to time.
+7 Including any amendments or modifications made after the issuance date.
+8 Including any amendments or modifications made after the issuance date for the referenced policy
+documents.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+7 of 80
+
+(f)
+(g)
+
+Policy Document on Operational Risk issued on 10 May 2016;
+Policy Document on Debit Card and Debit Card-i issued on 2 December
+2016;
+(h) Policy Document on Credit Card and Credit Card-i issued on 2 July 2019;
+(i) Policy Document on Outsourcing issued on 23 October 2019;
+(j) Policy Document on Interoperable Credit Transfer Framework issued on
+23 December 2019;
+(k) Policy Document on Merchant Acquiring Services issued on 15
+September 2021;
+(l) Circular of Notification on Consolidated List of Requirements Relating to
+Technology and Cyber Risk issued on 29 September 2022;
+(m) Policy Document on Business Continuity Management issued on 19
+December 2022;
+(n) Policy Document on Responsibility Mapping issued on 29 December
+2023;
+(o) Industry letter on Updated 2023 Financial Stability Board Cyber Lexicon
+issued on 28 February 2024;
+(p) Policy Document on Fair Treatment of Financial Consumers issued on
+27 March 2024;
+(q) Specifications on Countermeasures to Combat E-Money Fraud issued
+on 8 April 2024;
+(r) Policy Document on Operational Risk Reporting issued on 10 April 2025;
+and
+(s) Management of Customer Information and Permitted Disclosures
+(MCIPD) issued on 31 October 2025.
+7
+7.1
+
+Policy documents and circulars superseded
+This policy document supersedes the following policy documents, guidelines,
+circulars and notifications:
+(a) Guidelines on the Provision of Electronic Banking (e-banking) Services
+by Financial Institutions, including for the provisions under paragraphs
+21, 22 and 26 issued on 18 November 2019;
+(b) Specifications on Measures to Combat Electronic Banking Fraud dated
+23 August 2022;
+(c) Measures to Combat Fraud Monetised via Internet Banking and Mobile
+Banking dated 31 May 2022;
+(d) Policy Document on Risk Management in Technology (RMiT) issued on
+1 June 2023;
+(e) Additional Guidance on Technology and Cyber Safeguards to Ensure the
+Protection of Customer Information issued on 10 July 2023; and
+(f) Specifications on Fraud Detection Standard dated 27 March 2024.
+
+Issued on: 28 November 2025

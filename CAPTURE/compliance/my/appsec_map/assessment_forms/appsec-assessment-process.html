@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppSec Process Maturity Assessment</title>
+    <style>
+        :root {
+            --bd-black: #000000;
+            --bd-purple: #9F81BD;
+            --bd-purple-light: #E8E0F0;
+            --bd-purple-dark: #7B5FA0;
+            --bd-white: #FFFFFF;
+            --bd-gray-100: #F7F7F8;
+            --bd-gray-200: #E5E5E7;
+            --bd-gray-300: #D1D1D4;
+            --bd-gray-500: #71717A;
+            --bd-gray-700: #3F3F46;
+            --bd-gray-900: #18181B;
+        }
+
+        @page { size: A4; margin: 10mm; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            font-size: 9pt;
+            line-height: 1.4;
+            color: var(--bd-gray-900);
+            background: var(--bd-gray-100);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 8mm;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media print {
+            body { background: white; }
+            .page { width: 100%; min-height: auto; padding: 0; margin: 0; box-shadow: none; }
+            .no-print { display: none; }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
+            border-bottom: 3px solid var(--bd-purple);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo { height: 45px; width: auto; }
+
+        .header-title {
+            border-left: 2px solid var(--bd-gray-300);
+            padding-left: 14px;
+        }
+
+        .header-title h1 {
+            font-size: 15pt;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+
+        .header-title h2 {
+            font-size: 10pt;
+            font-weight: 400;
+            color: var(--bd-purple-dark);
+            margin-top: 2px;
+        }
+
+        .header-right {
+            text-align: right;
+            font-size: 8pt;
+            color: var(--bd-gray-500);
+        }
+
+        .header-right .field { margin-bottom: 5px; }
+        .header-right .field-label { color: var(--bd-gray-700); font-weight: 500; }
+        .header-right .field-input {
+            border: none;
+            border-bottom: 1px solid var(--bd-gray-300);
+            width: 130px;
+            font-size: 8pt;
+            padding: 2px 4px;
+            background: transparent;
+        }
+
+        .section {
+            border: 1px solid var(--bd-gray-200);
+            margin-bottom: 10px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: var(--bd-black);
+            color: var(--bd-white);
+            padding: 10px 14px;
+            font-size: 11pt;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-badge {
+            background: var(--bd-purple);
+            color: white;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 8pt;
+            font-weight: 500;
+        }
+
+        .legend-bar {
+            display: flex;
+            background: var(--bd-purple-light);
+            padding: 8px 14px;
+            gap: 10px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 8pt;
+            background: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .legend-num {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9pt;
+            font-weight: 700;
+            color: white;
+        }
+
+        .l0 { background: var(--bd-gray-500); }
+        .l1 { background: #DC2626; }
+        .l2 { background: #F59E0B; }
+        .l3 { background: #10B981; }
+        .l4 { background: var(--bd-purple); }
+
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+
+        .rating-table th {
+            background: var(--bd-gray-100);
+            padding: 8px 6px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid var(--bd-gray-200);
+            font-size: 8pt;
+            color: var(--bd-gray-700);
+        }
+
+        .rating-table th.item-header { text-align: left; width: 48%; }
+        .rating-table th.rmit-header { width: 10%; }
+
+        .rating-table td {
+            padding: 10px 6px;
+            border: 1px solid var(--bd-gray-200);
+            vertical-align: middle;
+        }
+
+        .rating-table tr:nth-child(even) { background: var(--bd-gray-100); }
+
+        .item-cell { text-align: left; }
+        .rmit-cell { text-align: center; font-size: 8pt; color: var(--bd-purple-dark); font-weight: 500; }
+        .rating-cell { text-align: center; width: 8%; }
+
+        .item-title { font-weight: 600; color: var(--bd-black); font-size: 9.5pt; }
+        .item-desc { font-size: 8pt; color: var(--bd-gray-500); margin-top: 2px; }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--bd-gray-300);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: var(--bd-black);
+            color: white;
+        }
+
+        .score-label { font-weight: 600; font-size: 10pt; }
+        .score-box {
+            background: var(--bd-purple);
+            padding: 6px 18px;
+            border-radius: 4px;
+            font-size: 13pt;
+            font-weight: 700;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .priorities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            padding: 12px;
+        }
+
+        .priority-box {
+            background: var(--bd-gray-100);
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--bd-gray-200);
+        }
+
+        .priority-box h4 {
+            font-size: 9pt;
+            color: var(--bd-black);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--bd-purple);
+        }
+
+        .priority-inputs { display: flex; gap: 15px; }
+        .priority-item { display: flex; align-items: center; gap: 5px; }
+        .priority-label { font-size: 8pt; color: var(--bd-gray-500); font-weight: 500; }
+        .priority-input {
+            width: 30px;
+            height: 26px;
+            border: 2px solid var(--bd-purple);
+            border-radius: 4px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 10pt;
+        }
+
+        .barrier-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px 10px;
+        }
+
+        .barrier-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 8pt;
+        }
+
+        .checkbox-box {
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--bd-gray-500);
+            border-radius: 3px;
+            flex-shrink: 0;
+        }
+
+        .success-content { padding: 12px; }
+        .success-content label {
+            font-size: 9pt;
+            font-weight: 600;
+            color: var(--bd-black);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .text-area {
+            border: 2px solid var(--bd-gray-300);
+            min-height: 45px;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7pt;
+            color: var(--bd-gray-500);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--bd-gray-200);
+        }
+
+        .footer-left { display: flex; align-items: center; gap: 8px; }
+        .footer-logo { height: 18px; opacity: 0.7; }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: var(--bd-black);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 11pt;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .print-btn:hover { background: var(--bd-purple-dark); }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+    <div class="page">
+        <div class="header">
+            <div class="header-left">
+                <img src="logo.png" alt="Logo" class="logo">
+                <div class="header-title">
+                    <h1>PROCESS MATURITY ASSESSMENT</h1>
+                    <h2>Application Security | Compliance-Linked</h2>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="field">
+                    <span class="field-label">Company:</span>
+                    <input type="text" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label">Assessor:</span>
+                    <input type="text" class="field-input">
+                </div>
+                <div class="field">
+                    <span class="field-label">Date:</span>
+                    <input type="text" class="field-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">
+                <span>PROCESS MATURITY RATING</span>
+                <span class="section-badge">RMIT Compliance</span>
+            </div>
+            <div class="legend-bar">
+                <div class="legend-item"><span class="legend-num l0">0</span> Not Present</div>
+                <div class="legend-item"><span class="legend-num l1">1</span> Ad-hoc (inconsistent)</div>
+                <div class="legend-item"><span class="legend-num l2">2</span> Defined (documented)</div>
+                <div class="legend-item"><span class="legend-num l3">3</span> Measured (KPIs tracked)</div>
+                <div class="legend-item"><span class="legend-num l4">4</span> Optimized (continuous improvement)</div>
+            </div>
+            <table class="rating-table">
+                <thead>
+                    <tr>
+                        <th class="item-header">Process Area</th>
+                        <th class="rmit-header">RMIT</th>
+                        <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">1. Secure SDLC Process</div>
+                            <div class="item-desc">Security activities integrated at each SDLC phase</div>
+                        </td>
+                        <td class="rmit-cell">Ch 10.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">2. Security Requirements Process</div>
+                            <div class="item-desc">Security requirements defined, validated, and tracked</div>
+                        </td>
+                        <td class="rmit-cell">Ch 9.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">3. Security Testing Process</div>
+                            <div class="item-desc">Test planning, execution, and remediation workflow</div>
+                        </td>
+                        <td class="rmit-cell">Ch 10.2</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">4. Vulnerability Management Process</div>
+                            <div class="item-desc">Discovery → Triage → Remediation → Verification cycle</div>
+                        </td>
+                        <td class="rmit-cell">Ch 11.3</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">5. Third-Party / Supply Chain Risk Process</div>
+                            <div class="item-desc">Vendor assessment, OSS governance, dependency tracking</div>
+                        </td>
+                        <td class="rmit-cell">App 8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">6. Security Training & Awareness Process</div>
+                            <div class="item-desc">Developer training program, tracking, effectiveness</div>
+                        </td>
+                        <td class="rmit-cell">Ch 15</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">7. Security Metrics & Reporting Process</div>
+                            <div class="item-desc">KPIs defined, dashboards, board-level reporting</div>
+                        </td>
+                        <td class="rmit-cell">Ch 8</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                    <tr>
+                        <td class="item-cell">
+                            <div class="item-title">8. AppSec Incident Response Process</div>
+                            <div class="item-desc">Detection, containment, remediation for app vulnerabilities</div>
+                        </td>
+                        <td class="rmit-cell">Ch 11.4</td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                        <td class="rating-cell"><span class="circle"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="score-row">
+                <span class="score-label">PROCESS MATURITY TOTAL</span>
+                <div class="score-box">___/32</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">PRIORITIES & BARRIERS</div>
+            <div class="priorities-grid">
+                <div class="priority-box">
+                    <h4>Top 3 Process Priorities (write item #)</h4>
+                    <div class="priority-inputs">
+                        <div class="priority-item">
+                            <span class="priority-label">1st:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">2nd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                        <div class="priority-item">
+                            <span class="priority-label">3rd:</span>
+                            <input type="text" class="priority-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="priority-box">
+                    <h4>Biggest Barrier (check ONE)</h4>
+                    <div class="barrier-grid">
+                        <div class="barrier-item"><span class="checkbox-box"></span> No ownership assigned</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Lack of documentation</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> No management support</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Siloed teams</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Unclear requirements</div>
+                        <div class="barrier-item"><span class="checkbox-box"></span> Other: __________</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">SUCCESS DEFINITION</div>
+            <div class="success-content">
+                <label>In 12 months, what PROCESS improvement would you report to the Board?</label>
+                <div class="text-area"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-left">
+                <img src="logo.png" alt="" class="footer-logo">
+                <span>Framework: BSIMM15 | BNM RMIT Compliance</span>
+            </div>
+            <span style="color: var(--bd-purple);">CONFIDENTIAL</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+:root {
+  /* Primary Brand Colors */
+  --black-duck-black: #000000;
+  --black-duck-purple: #9F81BD; /* Approx. match to the logo image */
+  
+  /* Background */
+  --black-duck-white: #FFFFFF;
+}
+
+/* Application Helpers */
+.logo-text-primary {
+  color: var(--black-duck-black);
+  font-weight: 700; /* Bold for "BLACK" */
+}
+
+.logo-text-secondary {
+  color: var(--black-duck-purple);
+  font-weight: 300; /* Thinner weight for "DUCK" */
+}
+
+.logo-icon-bg {
+  background-color: var(--black-duck-purple);
+}

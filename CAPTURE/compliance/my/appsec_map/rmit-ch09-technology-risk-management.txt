@@ -1,0 +1,111 @@
+Risk Management in Technology
+9
+
+11 of 80
+
+Technology Risk Management
+
+Risk Management Framework
+S
+
+9.1
+
+A financial institution must ensure that the TRMF is an integral part of the
+financial institution's enterprise risk management framework (ERM).
+
+S
+
+9.2
+
+The TRMF must include the following:
+(a) clear definition of technology risk;
+(b) clear responsibilities assigned for the management of technology risk at
+different levels and across functions, with appropriate governance and
+reporting arrangements;
+(c) the identification of technology risks to which the financial institution is
+exposed, including risks from the adoption of new or emerging
+technology (refer Appendix 9 on Guidance on Emerging Technologies);
+(d) risk classification of all information assets / systems based on its
+criticality;
+(e) risk measurement and assessment approaches and methodologies;
+(f) risk controls and mitigations;
+(g) continuous monitoring to timely detect and address any material risks;
+(h) effective information system to ensure the technology risk profile
+remains accurate and up to date;
+(i) identification of key resources and interdependencies (including critical
+third party service providers and their connected parties11) which
+support delivery of critical technology functions;
+(j) undertake scenario analysis to strengthen capacity and readiness to
+resume critical systems under severe conditions; and
+(k) effective incident management policies and procedures to minimise the
+impact of any service disruption on the financial institution and its
+customers, by restoring the affected service or system to a secure and
+stable state as quickly as possible.
+
+S
+
+9.3
+
+A financial institution must establish an independent enterprise-wide
+technology risk management function which is responsible for(a) implementing the TRMF and CRF;
+(b) advising on critical technology projects and ensuring critical issues that
+may have an impact on the financial institution's risk tolerance are
+adequately deliberated or escalated in a timely manner; and
+(c) providing independent views to the board and senior management on
+third party assessments12, where necessary.
+
+11 Connected parties refers to Nth party as defined by Basel Committee on Banking Supervision on
+
+principles for the sound management of third party risk.
+12 Relevant third party assessments may include the Data Centre Resilience and Risk Assessment,
+Network Resilience and Risk Assessment and independent assurance for introduction of new or
+enhanced digital services.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+12 of 80
+
+Designated Chief Information Security Officer
+S
+
+9.4
+
+A financial institution must designate a Chief Information Security Officer13
+(CISO) by whatever name called, to be responsible for the technology risk
+management function of the financial institution. The financial institution must
+ensure that the CISO has sufficient authority, independence and resources14.
+The CISO shall(a) be independent from day-to-day technology operations;
+(b) apprise board and senior management of current and emerging
+technology risks which could potentially affect the financial institution's
+risk profile;
+(c) have the requisite technical skills in emerging and core technologies
+used by the institution, expertise and experience in audit, governance
+and risk management, strategic planning and execution of IT and
+cybersecurity programs, and third party risk management; and
+(d) be appropriately certified.
+
+S
+
+9.5
+
+The CISO shall be responsible for ensuring that the financial institution's
+information assets and technologies are adequately protected, which
+includes(a) formulating appropriate policies for the effective implementation of
+TRMF and CRF;
+(b) enforcing compliance with these policies, frameworks and other
+technology-related regulatory requirements; and
+(c) advising senior management on technology risk and security matters,
+including developments in the financial institution's technology security
+risk profile in relation to its business and operations.
+
+13 In line with the role defined in Responsibility Mapping policy document dated 29 December 2023,
+
+including any amendments or modifications made after the issuance date.
+14 A financial institution's CISO may take guidance from the expertise of a group-level CISO, in or outside
+of Malaysia, and may also hold other roles and responsibilities provided these do not impair the CISO's
+independence or competence. Such designated CISO shall be accountable for and serve as the point
+of contact with the Bank on the financial institution's technology-related matters, including managing
+entity-specific risks, supporting prompt incident response and reporting to the financial institution's
+board.
+Issued on: 28 November 2025

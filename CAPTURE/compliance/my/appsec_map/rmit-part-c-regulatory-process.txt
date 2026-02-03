@@ -1,0 +1,217 @@
+Risk Management in Technology
+PART C
+16
+
+37 of 80
+
+REGULATORY PROCESS
+
+Notification for Technology-Related Applications
+
+Introduction or enhancement to digital services
+S
+
+16.1
+
+A financial institution must notify the Bank in accordance with the
+requirements in paragraphs 16.2 to 16.7 prior to introducing new digital
+services or enhancement to existing digital services.
+
+S
+
+16.2
+
+A financial institution offering digital services for the first time must undertake
+measures specified under paragraph 16.4 and submit the following
+information in the notification to the Bank:
+(a) assessment on the risks identified and strategies to manage such risks.
+This includes specific accountabilities, policies and controls to address
+risks;
+(b) security arrangements and controls;
+(c) significant terms and conditions;
+(d) client charter;
+(e) privacy policy statement; and
+(f) any outsourcing or website link arrangements, or strategic alliances or
+partnerships with third parties that have been finalised.
+
+S
+
+16.3
+
+For any enhancements to existing digital services which meet the criteria in
+Appendix 6, a financial institution shall be subject to a simplified notification
+requirement and submit the following information in the notification to the
+Bank:
+(a) description of the enhancements to the existing technologies; and
+(b) risk assessment of the proposed enhancements, including the impact
+and measures to mitigate identified risks.
+
+S
+
+16.4
+
+For any enhancements to existing digital services which are not subject to
+the simplified notification requirement under paragraph 16.3, a financial
+institution is required to undertake the following measures prior to notifying
+the Bank:
+(a) engage an independent external party to provide assurance that the
+financial institution has addressed the technology risks and security
+controls associated with the digital services or any material
+enhancement to the digital services. The format of the assurance shall
+be as set out in Part A of Appendix 7; and
+(b) provide a confirmation by the CISO, senior management officer or the
+chairman of the board or designated board-level committee specified in
+paragraph 8.3 of the financial institution's readiness to provide digital
+services or implement any material enhancement to the digital services.
+The format of the confirmation shall be as set out in Part B of Appendix
+7.
+
+S 16.5
+
+A financial institution must ensure that the independent external party
+providing the assurance is competent and has a good track record. The
+assurance shall address the matters covered in, and comply with, Part C
+and D of Appendix 7.
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+38 of 80
+
+S 16.6
+
+A financial institution shall provide relevant documents for the Bank's review
+when required by the Bank.
+
+G 16.7
+
+A financial institution may offer digital services or implement any
+enhancement to the digital services immediately upon submission of the
+notification under paragraph 16.1 and compliance with the requirements in
+paragraphs 16.2 to 16.6.
+
+17
+
+Consultation and Notification related to Cloud Services and Emerging
+Technology
+
+S 17.1
+
+A financial institution is required to consult the Bank prior to the first-time
+adoption of a public cloud or emerging technology for critical systems. During
+the consultation, the financial institution must demonstrate that specific risks
+associated with the use of these technologies have been adequately
+considered and addressed to the satisfaction of the Bank, in order to proceed
+with the adoption of the public cloud for critical systems for the first time. The
+financial institution shall undertake the following prior to consulting the Bank
+on its adoption of public cloud for critical systems:
+(a) conduct a comprehensive risk assessment of the proposed cloud
+adoption or emerging technology, including the possible impact and
+measures to address and mitigate the identified risks. For public cloud,
+the assessment must follow the risk outlined in paragraph 10.50 and
+Appendix 10. For emerging technology, it must follow the guideline in
+Appendix 9. The financial institution shall also adopt the format of the
+Risk Assessment Report as per Part A of Appendix 7;
+(b) provide a confirmation by the CISO, senior management officer or the
+chairman of the board or designated board-level committee specified in
+paragraph 8.3 of the financial institution's readiness to adopt public
+cloud or emerging technology for critical system. The format of the
+confirmation shall be as set out in Part B of Appendix 7; and
+(c) perform a third party pre-implementation review on public cloud or
+emerging technology. This review shall encompass the areas set out in
+Appendix 10 (for public cloud) or Appendix 9 (for emerging technology)
+and Part C of Appendix 7 for higher-risk services, such as those
+involving the processing or storage of customer information, or crossborder data transmission.
+
+S 17.2
+
+A financial institution shall notify the Bank on any subsequent adoption of a
+public cloud or emerging technology for critical system, by submitting the
+notification together with the necessary updates to all the information required
+under paragraph 17.1, subject to the financial institution having complied with
+the following requirements and included documentation and information to
+demonstrate such compliance in the notification submitted to the Bank that
+the financial institution:
+(a) has consulted the Bank prior to adopting a public cloud or emerging
+technology for critical systems for the first time in accordance with
+paragraph 17.1, with no concerns raised by the Bank during the firsttime consultation;
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+39 of 80
+
+(b) has enhanced the technology risk management framework to manage
+cloud or emerging technology risks;
+(c) has established independent assurance on the cloud risk management
+framework or emerging technology risk management framework; and
+(d) has provided assurance to the Bank that the incident response plans
+are sufficient to cater for adverse or unexpected events.
+G 17.3
+
+For the avoidance of doubt, notification to the Bank under paragraph 17.2 is
+not required for any enhancement to existing cloud adoption and emerging
+technology adoption that does not materially alter the prior assessments and
+representations made by a financial institution to the Bank.
+
+S 17.4
+
+The Bank may at its discretion direct a financial institution to consult the Bank
+under paragraph 17.1, notify the Bank under paragraph 17.2 or observe any
+of the guidance in Appendix 10 or Appendix 9 and to explain any deviations
+from the guidance in Appendix 10 or Appendix 9, including for a non-critical
+system or when the pre-requisites in the paragraphs 17.1 or 17.2 have not
+been met. A financial institution must comply with such a directive promptly
+and to the satisfaction of the Bank.
+
+S 17.5
+
+A financial institution must ensure the roadmap for adoption of cloud services
+or emerging technology (for critical systems and non-critical systems) is
+included in the annual outsourcing plan submitted to the Bank in adherence
+with the requirements in the policy document on Outsourcing or IT Profile
+reporting. The risk assessment as outlined in paragraph 10.50 for cloud
+services or Appendix 9 for emerging technology must also be documented
+and made available for the Bank's review as and when requested by the
+Bank.
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+40 of 80
+
+18
+
+Assessment and Gap Analysis
+
+S
+
+18.1
+
+A financial institution must perform a gap analysis of existing practices in
+managing technology risk against the requirements in this policy document
+and highlight key implementation gaps. The financial institution must develop
+an action plan with a clear timeline and key milestones to address the gaps
+identified. The gap analysis and action plan must be submitted to the Bank
+no later than 90 days after the issuance date of this policy document.
+Financial institutions that have previously made a submission in accordance
+with the equivalent provision in the previous version of this policy document
+are required to maintain continuous compliance by identifying any new gaps
+against the enhanced or revised requirements in the latest version of this
+policy document and taking the necessary steps to address such gaps. The
+updated annual assessment of its level of compliance must be made
+available to the Bank upon request.
+
+S
+
+18.2
+
+The self-assessment, gap analysis and action plan in paragraph 18.1 must
+be submitted to Jabatan Penyeliaan Konglomerat Kewangan, Jabatan
+Penyeliaan Perbankan, Jabatan Penyeliaan Insurans dan Takaful or Jabatan
+Pemantauan Perkhidmatan Pembayaran, as the case may be.
+
+Issued on: 28 November 2025

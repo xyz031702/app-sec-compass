@@ -1,0 +1,181 @@
+Risk Management in Technology
+
+42 of 80
+
+Appendix 2 Control Measures on Self-service Terminals (SSTs)
+Cash SST
+Cash SSTs are computer terminals provided by banking institutions such as
+Automated Teller Machine, Cash Deposit Machine and Cash Recycler Machine that
+provide cash transactions such as cash withdrawals and deposits including in foreign
+currencies.
+Financial institutions must ensure the adequacy of physical and logical security and
+controls implemented on the Cash SST, which includes1.
+
+enforcing full hard disk encryption;
+
+2.
+
+retaining cards or block access to Cash SST service when the following are
+detected:
+(a)
+(b)
+(c)
+(d)
+(e)
+(f)
+
+exceed maximum PIN attempts;
+invalid card authentication value;
+cash SST card unable to eject;
+"deactivated" card status;
+inactive account status such as "Dormant" or "Deceased"; and
+cards tagged as "Lost" or "Stolen";
+
+3.
+
+deploying antivirus solution for Cash SST, ensure full virus scanning on all Cash
+SSTs is performed periodically and ensuring timely update of signatures;
+
+4.
+
+implementing a centralised management system to monitor and alert any
+unauthorised activities on Cash SST such as unauthorised shutting-down of
+operating system or deactivation of the white-listing programme;
+
+5.
+
+ensuring effective control over the Cash SST lock and key by using a unique and
+non-duplicable key to open the Cash SST PC Core compartment as well as
+ensure proper safekeeping and custody of the key;
+
+6.
+
+installing alarm system with triggering mechanism connected to a centralised
+alert system to detect and alert bank's staff of any unauthorised opening or
+tampering of the physical component of the Cash SST, particularly the access to
+the Cash SST PC Core;
+
+7.
+
+securing physically the Cash SST PC Core by enclosing the central processing
+unit (CPU) in a locked case;
+
+8.
+
+enforcing pairing authentication for key Cash SST components, particularly
+between cash dispenser and Cash SST controller;
+
+9.
+
+enforcing Basic Input Output System (BIOS) lock-down which includes:
+(a)
+(b)
+(c)
+
+enabling unique password protection for accessing BIOS. The password
+shall be held by financial institutions under strict control;
+disabling external input device and port such as CD-ROM, floppy disk and
+USB port. The Cash SST operating system can only be booted from the
+internal hard disk; and
+disabling automatic BIOS update;
+
+10. ensuring proper configuration and hardening of the operating system and
+application system, which includes:
+Issued on: 28 November 2025
+
+Risk Management in Technology
+(a)
+(b)
+(c)
+(d)
+(e)
+(f)
+
+43 of 80
+
+blocking any wireless network connection such as Bluetooth, Wi-Fi;
+disabling Microsoft default program system (such as Notepad, Internet
+browser, Windows shortcut, file download, file sharing and command
+prompt);
+disabling unnecessary services in the operating system such as the autoplay features;
+concealing Start Bar or Tray Menu;
+enabling cache auto-deletion; and
+disabling key combinations and right-click mouse functions;
+
+11. enforcing secure system parameter setting, which includes(a)
+(b)
+(c)
+
+changing default passwords and other system security parameters setting
+of the Cash SST;
+using a unique system administrator password for all Cash SSTs; and
+using lowest-level privileges for programmes and users' system access;
+
+12. enforcing and monitoring of Cash SST end-point protection such as installing
+white-listing programmes. The end-point protection programme, at a minimum,
+shall ensure only authorised Cash SST system processes and libraries are
+installed and executed;
+13. enforcing strict control procedures over installation and maintenance of Cash
+SST operating systems and application systems, which includes(a)
+(b)
+(c)
+
+ensuring only authorised personnel have access to gold disk copy (master
+copy of Cash SST installation software);
+ensuring the gold disk copy is scanned for virus / malware prior to
+installation into Cash SST; and
+enforcing dual control for installation and maintenance of Cash SST
+software; and
+
+14. installing closed-circuit cameras and transaction triggered cameras at strategic
+locations with adequate lighting in order to ensure high quality and clear closedcircuit television images of cardholder performing a transaction as well as any
+suspicious activities.
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+44 of 80
+
+Non- Cash SST
+Non-cash SSTs are computer terminals such as desktops, laptops, tablets, kiosks or
+machines that provide non-cash transactions such as cheque deposits, balance
+enquiries, fund transfers, card replacements, utilities bill payments or insurance
+quotations.
+Financial institutions must ensure the adequacy of physical and logical security and
+controls implemented on the self-service terminals, which includes1.
+
+enforcing the use of lock and key on the computer terminal's CPU at all times;
+
+2.
+
+deploying closed-circuit television to monitor the usage of self-service terminals;
+
+3.
+
+disabling the use of all input devices (such as USB, CD and DVD), application
+system (such as Notepad, Microsoft Word, and Microsoft PowerPoint) and file
+download as well as command prompt on the kiosk;
+
+4.
+
+disabling browser scripting, pop-ups, ActiveX, Windows shortcut;
+
+5.
+
+concealing Start Bar or Tray Menu;
+
+6.
+
+enabling cache auto-deletion;
+
+7.
+
+disabling key combinations and right-click mouse functions; and
+
+8.
+
+restricting use of Internet browser i.e. only to be used to access the financial
+institution's internet website.
+
+Issued on: 28 November 2025

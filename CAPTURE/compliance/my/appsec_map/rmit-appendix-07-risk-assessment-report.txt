@@ -1,0 +1,258 @@
+Risk Management in Technology
+
+56 of 80
+
+Appendix 7 Risk Assessment Report and Supervisory Expectations on External
+Party
+Part A: Risk Assessment Report
+Section 1: Financial Institution
+Name of Financial Institution
+Mailing address
+Type of digital services / cloud
+service / emerging technology
+
+New / Enhancement
+
+Description of the digital services
+/ cloud service / emerging
+technology
+
+Key contact personnel
+Email address
+Phone number
+Section 2: External Service Provider
+Name of company
+SSM registration number
+Mailing address
+Engagement period
+Key contact personnel
+Email address
+Phone number
+Section 3: Detail of application
+Overview of the application i.e.
+business case, target segment of
+demographic and end-user, etc.
+
+(Please keep the response below 200 words.
+Additional information may be provided as
+supporting documents)
+
+Describe the technology used to
+support the product, service or
+solution
+
+(Please keep the response below 200 words.
+Additional information may be provided as
+supporting documents)
+
+Section 4: Technology risk assessment
+Issued on: 28 November 2025
+
+Risk Management in Technology
+Technology risk assessment
+shall provide assurance on the
+effectiveness of technology risk
+control and mitigation performed
+by the financial institution in
+meeting expectations outlined in
+Part D of this Appendix and
+paragraph 17.1 (for cloud
+services and emerging
+technology).
+Section 5: Quality assurance
+Overall recommendation
+
+Section 6: Authorised signatory
+Signature
+
+Name
+Designation
+Date
+
+Issued on: 28 November 2025
+
+57 of 80
+
+Risk Management in Technology
+
+58 of 80
+
+Part B: Format of Confirmation
+Name of Financial Institution……………………………………………………………
+As Chairman of the board of directors / designated board-level committee / CISO /
+designated senior management officer * of [name of Financial Institution], I confirm that
+–
+1.
+2.
+
+3.
+
+4.
+5.
+6.
+7.
+8.
+9.
+
+digital services / cloud service / emerging technology * is consistent with the
+bank's / insurer's / takaful operator's * strategic and business plans;
+the board of directors / senior management * understand and are ready to
+assume the roles and responsibilities stated in Bank Negara Malaysia's policy
+document on Risk Management in Technology and are also apprised of all
+relevant provisions in the FSA, IFSA and DFIA and other relevant legislation,
+guidelines and codes of conduct;
+risk management process related to digital services / cloud service / emerging
+technology * is subject to appropriate oversight by the board of directors and
+senior management;
+appropriate security measures to address digital services / cloud service /
+emerging technology * security concerns are in place;
+customer support services and education related to digital services / cloud
+service / emerging technology * are in place;
+performance monitoring of digital services / cloud service / emerging technology
+* products, services, delivery channels and processes has been established;
+digital services / cloud service / emerging technology * is included in the
+contingency and business resumption plans;
+there are adequate resources to support the offering of digital services / cloud
+service / emerging technology * business; and
+the systems, procedures, security measures, etc. relevant to sound operations
+of digital services / cloud service / emerging technology * will constantly be
+reviewed to keep up with the latest changes.
+
+Signature : ………………………………
+Name : …………………………………..
+Date : ………………………..…………..
+* (delete whichever is not applicable)
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+59 of 80
+
+Requirements on External Party Assurance
+Part C: Financial Institutions are required to provide an external assurance
+1.
+
+The assurance shall be conducted by an independent external service provider
+(ESP) engaged by the financial institution.
+
+2.
+
+The independent ESP must understand the proposed services, the data flows,
+system architecture, connectivity as well as its dependencies.
+
+3.
+
+The independent ESP shall review the comprehensiveness of the risk
+assessment performed by the financial institution and validate the adequacy of
+the control measures implemented or to be implemented.
+
+4.
+
+The Risk Assessment Report (as per Part D in Appendix 7) shall state among
+others, the scope of review, risk assessment methodology, summary of findings
+and remedial actions (if any).
+
+5.
+
+The Risk Assessment Report shall confirm there is no exception noted based on
+the prescribed risk areas (Negative attestation).
+
+6.
+
+The financial institution shall provide the Risk Assessment Report accompanied
+by the relevant documents.
+
+Part D: Minimum controls to be assessed by the independent External Service
+Provider, where applicable
+1.
+
+The independent ESP assessment of security requirements shall include the
+following key areas:
+(a)
+(b)
+(c)
+(d)
+(e)
+(f)
+
+2.
+
+access control;
+physical and environmental security;
+operations security;
+communication security;
+information security incident management; and
+information security aspects of business continuity management.
+
+For online transactions and services, a financial institution has implemented the
+following:
+(a) adequate measures to authenticate customer identity and ensure legitimate
+transaction authorisation by the customer, including(i) measures to prevent session takeover or man-in-the-middle attacks;
+(ii) internal controls must be in place to prevent compromise of relevant
+internal systems / application / database;
+(iii) where appropriate, apply multi-level authentication, out of band
+protocol and real-time verification;
+(iv) secure session handling functions and authentication databases; and
+(v) ensure strong password and cryptographic implementation
+(recognised algorithm with reasonable key strength);
+(b)
+
+adequate measures for transaction authentication that promotes nonrepudiation and establishes accountability(i) mechanism exists to ensure proof of origin, content as well as the
+integrity of the message;
+(ii) chosen channel to deliver transaction is secure;
+
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+60 of 80
+
+(iii)
+
+mechanism exists to alert the user on certain type of transactions for
+further authentication; and
+(iv) establish mutual authentication or appropriate use of digital
+certification;
+(c)
+
+segregation of duties and access control privilege for systems, databases
+and applications(i) implement dual control where applicable;
+(ii) controls exist to detect and prevent unauthorised access to relevant
+resources / devices;
+(iii) authorisation database must be tamper-resistant; and
+(iv) periodic review of privileged users;
+
+(d)
+
+adequate measures to protect data integrity of transactions and information:
+(i) implementation of end-to-end encryption for external communication;
+(ii) implementation of multi-layer network security and devices;
+(iii) absence of single point of failures in network architecture;
+(iv) conduct network security assessment / penetration test to identify
+vulnerabilities;
+(v) establish audit trail capabilities;
+(vi) preserve the confidentiality of information;
+(vii) use of stronger authentication for higher risk transactions; and
+(viii) timely notification to customers that is sufficiently descriptive of the
+nature of the transaction; and
+
+(e)
+
+adequate measures to mitigate associated risks of using electronic mobile
+devices to perform online transactions, which shall include the following:
+(i) application is running on secure mobile operating system versions;
+(ii) application is not running on compromised devices;
+(iii) conduct penetration test to identify and rectify potential vulnerability;
+(iv) secure end-to-end communication between the device and host;
+(v) sensitive information is not stored on mobile devices;
+(vi) user is notified of successful transactions;
+(vii) user is notified of suspicious transactions;
+(viii) continuous monitoring and takedown of fake applications in
+application distribution platforms;
+(ix) controls over the uploading of application-to-application distribution
+platforms;
+(x) a unique code is generated per transaction; and
+(xi) timely expiry of the transaction code.
+
+Issued on: 28 November 2025

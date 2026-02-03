@@ -1,0 +1,48 @@
+Risk Management in Technology
+
+41 of 80
+
+APPENDICES
+
+Appendix 1 Storage and Transportation of Sensitive Data in Removable Media
+Financial institutions must ensure adequate controls and measures are implemented
+for the storage and transportation of sensitive data in removable media, including:
+1.
+
+deploying the latest industry-tested and accepted encryption techniques;
+
+2.
+
+implementing authorised access control to sensitive data (e.g. password
+protection, user access matrix);
+
+3.
+
+prohibiting unauthorised copying and reading from the media;
+
+4.
+
+where there is a need to transport the removable media to a different physical
+location, financial institutions must(a)
+
+(b)
+(c)
+(d)
+5.
+
+strengthen the chain of custody processes for media management which
+includes:
+(i) the media must not be under single custody at any point of time;
+(ii) the media must always be within sight of the designated custodians;
+and
+(iii) the media must be delivered to its target destination without
+unscheduled stops or detours;
+use secure and official vehicle for transportation;
+use strong and tamper-proof containers for storing the media with highsecurity lock (e.g. dual key and combination lock); and
+implement location tracking functionality for each media container; and
+
+ensuring third party service providers comply with the requirements in paragraphs
+1 to 4 of this Appendix, in the event third party services are required in
+undertaking the storage management or transportation process of sensitive data.
+
+Issued on: 28 November 2025

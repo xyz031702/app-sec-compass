@@ -1,0 +1,49 @@
+Risk Management in Technology
+13
+
+35 of 80
+
+Technology Audits
+
+Audit function
+S
+
+13.1
+
+A financial institution must ensure that the scope, frequency, and intensity of
+technology audits are commensurate with the complexity, sophistication and
+criticality of technology systems and applications.
+
+S
+
+13.2
+
+A financial institution must establish annual review on its technology audit plan
+that provides appropriate frequency and coverage of critical technology
+services, third party service providers, material external system interfaces,
+delayed or prematurely terminated critical technology projects and postimplementation review of new or material enhancements of technology
+services.
+
+S
+
+13.3
+
+A financial institution must ensure the internal audit function must have
+dedicated technology audit resources with specialised competencies and
+professionally certified. The technology audit resources shall be adequately
+conversant with the developing sophisticate of the financial institution's
+technology systems, delivery channels and have sound knowledge in the
+areas audited.
+
+G 13.4
+
+The technology audit resources may be enlisted to provide advice on
+compliance and adequacy of control processes during the planning and
+development phases of new major products, systems, adoption of third party
+service providers or technology operations. In such cases, the technology
+auditors participating in this capacity are expected to carefully consider
+whether such an advisory or consulting role can materially impair their
+independence or objectivity in performing post-implementation reviews of the
+products, systems and operations concerned.
+
+Issued on: 28 November 2025

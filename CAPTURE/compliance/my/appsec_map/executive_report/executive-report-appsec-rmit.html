@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Security Investment Case for RMIT Compliance</title>
+    <style>
+        :root {
+            --bd-black: #000000;
+            --bd-purple: #9F81BD;
+            --bd-purple-light: #E8E0F0;
+            --bd-purple-dark: #7B5FA0;
+            --bd-white: #FFFFFF;
+            --bd-gray-50: #FAFAFA;
+            --bd-gray-100: #F4F4F5;
+            --bd-gray-200: #E4E4E7;
+            --bd-gray-300: #D4D4D8;
+            --bd-gray-500: #71717A;
+            --bd-gray-600: #52525B;
+            --bd-gray-700: #3F3F46;
+            --bd-gray-800: #27272A;
+            --bd-gray-900: #18181B;
+            --bd-red: #DC2626;
+            --bd-amber: #F59E0B;
+            --bd-green: #10B981;
+        }
+
+        @page {
+            size: A4;
+            margin: 15mm 12mm;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            font-size: 10pt;
+            line-height: 1.5;
+            color: var(--bd-gray-800);
+            background: var(--bd-gray-100);
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 12mm;
+            margin: 0 auto 10mm;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            page-break-after: always;
+        }
+
+        .page:last-child {
+            page-break-after: avoid;
+        }
+
+        @media print {
+            body { background: white; }
+            .page {
+                width: 100%;
+                min-height: auto;
+                padding: 0;
+                margin: 0;
+                box-shadow: none;
+            }
+            .no-print { display: none !important; }
+        }
+
+        /* Cover Page */
+        .cover-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 273mm;
+        }
+
+        .cover-header {
+            text-align: center;
+            padding-top: 30mm;
+        }
+
+        .cover-logo {
+            height: 60px;
+            margin-bottom: 15mm;
+        }
+
+        .cover-title {
+            font-size: 28pt;
+            font-weight: 700;
+            color: var(--bd-black);
+            letter-spacing: -1px;
+            margin-bottom: 8mm;
+            line-height: 1.2;
+        }
+
+        .cover-subtitle {
+            font-size: 14pt;
+            color: var(--bd-purple-dark);
+            font-weight: 400;
+        }
+
+        .cover-meta {
+            text-align: center;
+            padding-bottom: 20mm;
+        }
+
+        .cover-meta-grid {
+            display: inline-grid;
+            grid-template-columns: auto auto;
+            gap: 4mm 8mm;
+            text-align: left;
+            font-size: 10pt;
+            color: var(--bd-gray-600);
+        }
+
+        .cover-meta-label {
+            font-weight: 600;
+            color: var(--bd-gray-700);
+        }
+
+        .cover-classification {
+            margin-top: 10mm;
+            padding: 4mm 8mm;
+            background: var(--bd-purple-light);
+            border: 2px solid var(--bd-purple);
+            display: inline-block;
+            font-weight: 600;
+            color: var(--bd-purple-dark);
+            font-size: 9pt;
+        }
+
+        .cover-footer {
+            border-top: 3px solid var(--bd-purple);
+            padding-top: 5mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cover-footer-logo {
+            height: 30px;
+            opacity: 0.8;
+        }
+
+        .cover-footer-text {
+            font-size: 8pt;
+            color: var(--bd-gray-500);
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 4mm;
+            margin-bottom: 6mm;
+            border-bottom: 2px solid var(--bd-purple);
+        }
+
+        .page-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .page-header-logo {
+            height: 28px;
+        }
+
+        .page-header-title {
+            font-size: 9pt;
+            color: var(--bd-gray-600);
+            border-left: 1px solid var(--bd-gray-300);
+            padding-left: 10px;
+        }
+
+        .page-header-right {
+            font-size: 8pt;
+            color: var(--bd-gray-500);
+        }
+
+        /* Section Headers */
+        h1 {
+            font-size: 18pt;
+            font-weight: 700;
+            color: var(--bd-black);
+            margin-bottom: 6mm;
+            padding-bottom: 3mm;
+            border-bottom: 3px solid var(--bd-purple);
+        }
+
+        h2 {
+            font-size: 13pt;
+            font-weight: 600;
+            color: var(--bd-black);
+            margin: 6mm 0 4mm;
+            padding-left: 3mm;
+            border-left: 4px solid var(--bd-purple);
+        }
+
+        h3 {
+            font-size: 11pt;
+            font-weight: 600;
+            color: var(--bd-gray-700);
+            margin: 4mm 0 3mm;
+        }
+
+        p {
+            margin-bottom: 3mm;
+            text-align: justify;
+        }
+
+        /* Executive Summary Box */
+        .exec-summary {
+            background: var(--bd-gray-50);
+            border: 1px solid var(--bd-gray-200);
+            border-left: 4px solid var(--bd-purple);
+            padding: 5mm;
+            margin-bottom: 6mm;
+        }
+
+        .exec-summary p {
+            font-size: 10pt;
+            line-height: 1.6;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 4mm 0 6mm;
+            font-size: 9pt;
+        }
+
+        thead th {
+            background: var(--bd-black);
+            color: white;
+            padding: 3mm 2mm;
+            text-align: left;
+            font-weight: 600;
+            font-size: 8pt;
+        }
+
+        tbody td {
+            padding: 2.5mm 2mm;
+            border-bottom: 1px solid var(--bd-gray-200);
+            vertical-align: top;
+        }
+
+        tbody tr:nth-child(even) {
+            background: var(--bd-gray-50);
+        }
+
+        tbody tr:hover {
+            background: var(--bd-purple-light);
+        }
+
+        .table-highlight {
+            background: var(--bd-purple-light) !important;
+            font-weight: 500;
+        }
+
+        .number-cell {
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .cost-cell {
+            font-family: 'Consolas', monospace;
+            text-align: right;
+        }
+
+        /* Key Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4mm;
+            margin: 5mm 0;
+        }
+
+        .stat-box {
+            background: var(--bd-gray-50);
+            border: 1px solid var(--bd-gray-200);
+            padding: 4mm;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .stat-box.highlight {
+            background: var(--bd-purple-light);
+            border-color: var(--bd-purple);
+        }
+
+        .stat-value {
+            font-size: 18pt;
+            font-weight: 700;
+            color: var(--bd-black);
+            line-height: 1.2;
+        }
+
+        .stat-value.purple {
+            color: var(--bd-purple-dark);
+        }
+
+        .stat-label {
+            font-size: 8pt;
+            color: var(--bd-gray-600);
+            margin-top: 1mm;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            padding: 4mm;
+            margin: 4mm 0;
+            border-radius: 4px;
+        }
+
+        .callout.warning {
+            background: #FEF3C7;
+            border: 1px solid #F59E0B;
+            border-left: 4px solid #F59E0B;
+        }
+
+        .callout.danger {
+            background: #FEE2E2;
+            border: 1px solid #DC2626;
+            border-left: 4px solid #DC2626;
+        }
+
+        .callout.info {
+            background: var(--bd-purple-light);
+            border: 1px solid var(--bd-purple);
+            border-left: 4px solid var(--bd-purple);
+        }
+
+        .callout-title {
+            font-weight: 600;
+            font-size: 9pt;
+            margin-bottom: 2mm;
+        }
+
+        .callout-text {
+            font-size: 9pt;
+        }
+
+        /* Priority Badges */
+        .badge {
+            display: inline-block;
+            padding: 1mm 3mm;
+            border-radius: 3px;
+            font-size: 7pt;
+            font-weight: 600;
+        }
+
+        .badge.p1 { background: #DC2626; color: white; }
+        .badge.p2 { background: #F59E0B; color: white; }
+        .badge.p3 { background: #10B981; color: white; }
+        .badge.gap { background: #FEE2E2; color: #DC2626; }
+        .badge.ok { background: #D1FAE5; color: #059669; }
+
+        /* Lists */
+        ol, ul {
+            margin: 3mm 0 4mm 6mm;
+        }
+
+        li {
+            margin-bottom: 2mm;
+        }
+
+        /* Page Footer */
+        .page-footer {
+            position: relative;
+            margin-top: auto;
+            padding-top: 4mm;
+            border-top: 1px solid var(--bd-gray-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 7pt;
+            color: var(--bd-gray-500);
+        }
+
+        .page-footer-logo {
+            height: 14px;
+            opacity: 0.6;
+        }
+
+        /* Print Button */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 14px 28px;
+            background: var(--bd-black);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12pt;
+            font-weight: 500;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: all 0.2s;
+        }
+
+        .print-btn:hover {
+            background: var(--bd-purple-dark);
+            transform: translateY(-2px);
+        }
+
+        /* TOC */
+        .toc {
+            margin: 6mm 0;
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 2mm 0;
+            border-bottom: 1px dotted var(--bd-gray-300);
+        }
+
+        .toc-item:hover {
+            background: var(--bd-gray-50);
+        }
+
+        .toc-title {
+            font-weight: 500;
+        }
+
+        .toc-page {
+            color: var(--bd-purple-dark);
+            font-weight: 600;
+        }
+
+        /* Scenario Chart */
+        .scenario-chart {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4mm;
+            margin: 4mm 0;
+        }
+
+        .scenario-box {
+            padding: 4mm;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .scenario-box.best {
+            background: #D1FAE5;
+            border: 2px solid #10B981;
+        }
+
+        .scenario-box.expected {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+        }
+
+        .scenario-box.worst {
+            background: #FEE2E2;
+            border: 2px solid #DC2626;
+        }
+
+        .scenario-title {
+            font-weight: 700;
+            font-size: 10pt;
+            margin-bottom: 2mm;
+        }
+
+        .scenario-prob {
+            font-size: 8pt;
+            color: var(--bd-gray-600);
+            margin-bottom: 2mm;
+        }
+
+        .scenario-impact {
+            font-size: 14pt;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">Print / Save PDF</button>
+
+    <!-- COVER PAGE -->
+    <div class="page cover-page">
+        <div class="cover-header">
+            <img src="logo.png" alt="Logo" class="cover-logo">
+            <h1 class="cover-title">Application Security<br>Investment Case</h1>
+            <p class="cover-subtitle">For BNM Risk Management in Technology (RMIT) Compliance</p>
+        </div>
+
+        <div class="cover-meta">
+            <div class="cover-meta-grid">
+                <span class="cover-meta-label">Prepared for:</span>
+                <span>Board of Directors</span>
+                <span class="cover-meta-label">Prepared by:</span>
+                <span>Chief Information Security Officer</span>
+                <span class="cover-meta-label">Date:</span>
+                <span>February 2025</span>
+                <span class="cover-meta-label">Document Version:</span>
+                <span>1.0</span>
+            </div>
+            <div class="cover-classification">CONFIDENTIAL - INTERNAL USE ONLY</div>
+        </div>
+
+        <div class="cover-footer">
+            <img src="logo.png" alt="" class="cover-footer-logo">
+            <span class="cover-footer-text">Framework: BSIMM15 | BNM RMIT November 2025</span>
+        </div>
+    </div>
+
+    <!-- PAGE 2: Executive Summary + TOC -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">CONFIDENTIAL</div>
+        </div>
+
+        <h1>Executive Summary</h1>
+
+        <div class="exec-summary">
+            <p>This report presents the investment case for Application Security capabilities to address Bank Negara Malaysia's Risk Management in Technology requirements issued November 2025. Application Security represents one layer within the institution's defense-in-depth model, specifically addressing vulnerabilities in software code, third-party components, and application programming interfaces that the institution develops or controls.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box highlight">
+                <div class="stat-value purple">35%</div>
+                <div class="stat-label">RMIT Controls with<br>AppSec Relevance</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">8 of 10</div>
+                <div class="stat-label">Largest Breaches from<br>App-Layer Failures</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">$5B+</div>
+                <div class="stat-label">Combined Settlement<br>Costs (2017-2024)</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">$4.88M</div>
+                <div class="stat-label">Average Breach<br>Cost (2024)</div>
+            </div>
+        </div>
+
+        <div class="callout danger">
+            <div class="callout-title">Key Risk</div>
+            <div class="callout-text">Failure to invest in Application Security exposes the institution to regulatory penalties up to RM25 million, reputational damage, and financial losses from application-layer breaches.</div>
+        </div>
+
+        <h2>Contents</h2>
+        <div class="toc">
+            <div class="toc-item"><span class="toc-title">Section 1: AppSec Coverage of RMIT Controls</span><span class="toc-page">3</span></div>
+            <div class="toc-item"><span class="toc-title">Section 2: Consequences of Inadequate Investment</span><span class="toc-page">4</span></div>
+            <div class="toc-item"><span class="toc-title">Section 3: Maturity Measurement Framework</span><span class="toc-page">5</span></div>
+            <div class="toc-item"><span class="toc-title">Section 4: Gap Assessment</span><span class="toc-page">6</span></div>
+            <div class="toc-item"><span class="toc-title">Section 5: Recommendations</span><span class="toc-page">7</span></div>
+            <div class="toc-item"><span class="toc-title">Appendix: Reference Materials</span><span class="toc-page">8</span></div>
+        </div>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 2</span>
+        </div>
+    </div>
+
+    <!-- PAGE 3: Section 1 - Coverage -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Section 1</div>
+        </div>
+
+        <h1>Section 1: AppSec Coverage of RMIT Controls</h1>
+
+        <h2>Scope Definition</h2>
+        <p>Application Security applies exclusively to controls where the institution writes, modifies, or controls application source code. It does not apply to commercial off-the-shelf products, network infrastructure, physical security, or endpoint devices managed by platform teams.</p>
+
+        <h2>Coverage by RMIT Section</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:50%">RMIT Section</th>
+                    <th class="number-cell">Total</th>
+                    <th class="number-cell">AppSec</th>
+                    <th class="number-cell">%</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Part A Overview</td><td class="number-cell">7</td><td class="number-cell">5</td><td class="number-cell">71%</td></tr>
+                <tr><td>Chapter 8 Governance</td><td class="number-cell">7</td><td class="number-cell">4</td><td class="number-cell">57%</td></tr>
+                <tr class="table-highlight"><td>Chapter 9 Technology Risk Management</td><td class="number-cell">5</td><td class="number-cell">5</td><td class="number-cell">100%</td></tr>
+                <tr class="table-highlight"><td>Chapter 10 Technology Operations</td><td class="number-cell">3</td><td class="number-cell">3</td><td class="number-cell">100%</td></tr>
+                <tr><td>Chapter 11 Cybersecurity Management</td><td class="number-cell">9</td><td class="number-cell">6</td><td class="number-cell">67%</td></tr>
+                <tr><td>Chapter 12 Digital Services</td><td class="number-cell">9</td><td class="number-cell">5</td><td class="number-cell">56%</td></tr>
+                <tr class="table-highlight"><td>Appendix 3 Digital Services Controls</td><td class="number-cell">9</td><td class="number-cell">9</td><td class="number-cell">100%</td></tr>
+                <tr class="table-highlight"><td>Appendix 4 Mobile Applications</td><td class="number-cell">9</td><td class="number-cell">9</td><td class="number-cell">100%</td></tr>
+                <tr><td>Appendix 5 Cybersecurity Controls</td><td class="number-cell">25</td><td class="number-cell">8</td><td class="number-cell">32%</td></tr>
+                <tr><td>Appendix 8 Third Party Risks</td><td class="number-cell">7</td><td class="number-cell">3</td><td class="number-cell">43%</td></tr>
+                <tr><td>Appendix 10 Cloud Services</td><td class="number-cell">12</td><td class="number-cell">5</td><td class="number-cell">42%</td></tr>
+                <tr style="background:#E8E0F0"><td><strong>Appendix 1-2 (Physical/Device)</strong></td><td class="number-cell">27</td><td class="number-cell">0</td><td class="number-cell">0%</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Summary by Security Layer</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Security Layer</th>
+                    <th class="number-cell">Coverage</th>
+                    <th>Primary Solutions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-highlight"><td><strong>Application Security</strong></td><td class="number-cell">35%</td><td>SAST, DAST, SCA, SBOM, API Testing</td></tr>
+                <tr><td>Network Security</td><td class="number-cell">20%</td><td>Firewall, IDS/IPS, DDoS Protection</td></tr>
+                <tr><td>Endpoint & Device</td><td class="number-cell">15%</td><td>EDR, MDM, Device Hardening</td></tr>
+                <tr><td>Physical Security</td><td class="number-cell">10%</td><td>Access Control, CCTV, Facility Security</td></tr>
+                <tr><td>Operational Security</td><td class="number-cell">20%</td><td>SOC, Incident Response, Fraud Operations</td></tr>
+            </tbody>
+        </table>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 3</span>
+        </div>
+    </div>
+
+    <!-- PAGE 4: Section 2 - Consequences -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Section 2</div>
+        </div>
+
+        <h1>Section 2: Consequences of Inadequate Investment</h1>
+
+        <h2>Regulatory Consequences</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Enforcement Action</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Monetary Penalty</strong></td><td>Up to RM25 million for institutions, RM3 million for individuals</td></tr>
+                <tr><td><strong>License Conditions</strong></td><td>Additional operating restrictions or capital requirements</td></tr>
+                <tr><td><strong>Independent Review</strong></td><td>Mandatory external assessment at institution expense</td></tr>
+                <tr><td><strong>Remediation Orders</strong></td><td>Required corrective action plans with defined timelines</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Financial Impact of Application-Layer Breaches</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Incident</th>
+                    <th class="number-cell">Year</th>
+                    <th>Root Cause</th>
+                    <th class="cost-cell">Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Change Healthcare</strong></td><td class="number-cell">2024</td><td>Ransomware via unpatched systems</td><td class="cost-cell">$2.5B</td></tr>
+                <tr><td><strong>Meta Texas</strong></td><td class="number-cell">2024</td><td>Unauthorized data processing</td><td class="cost-cell">$1.4B</td></tr>
+                <tr><td><strong>Equifax</strong></td><td class="number-cell">2017</td><td>Unpatched Apache Struts</td><td class="cost-cell">$700M</td></tr>
+                <tr><td><strong>T-Mobile</strong></td><td class="number-cell">2021</td><td>API vulnerability</td><td class="cost-cell">$500M</td></tr>
+                <tr><td><strong>Capital One</strong></td><td class="number-cell">2019</td><td>Server-side request forgery</td><td class="cost-cell">$270M</td></tr>
+            </tbody>
+        </table>
+
+        <h2>2025 Supply Chain Attack Escalation</h2>
+        <div class="callout warning">
+            <div class="callout-title">Supply Chain Threat</div>
+            <div class="callout-text">Software supply chain attacks escalated dramatically in 2025, with self-replicating malware and SaaS compromise chains affecting millions of downloads.</div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Incident</th>
+                    <th>Date</th>
+                    <th>Impact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>Shai-Hulud npm Worm</strong></td><td>Sep 2025</td><td>18 packages, $50M cryptocurrency theft</td></tr>
+                <tr><td><strong>Shai-Hulud 2.0</strong></td><td>Nov 2025</td><td>796 packages, 132M downloads compromised</td></tr>
+                <tr><td><strong>Salesloft/Drift</strong></td><td>Aug 2025</td><td>700 organizations including Google</td></tr>
+                <tr><td><strong>SharePoint Zero-Day</strong></td><td>Jul 2025</td><td>400 organizations, state actor</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Scenario Analysis</h2>
+        <div class="scenario-chart">
+            <div class="scenario-box best">
+                <div class="scenario-title">Optimistic</div>
+                <div class="scenario-prob">20% Probability</div>
+                <div class="scenario-impact">Remediation Only</div>
+            </div>
+            <div class="scenario-box expected">
+                <div class="scenario-title">Expected</div>
+                <div class="scenario-prob">60% Probability</div>
+                <div class="scenario-impact">$5-15M</div>
+            </div>
+            <div class="scenario-box worst">
+                <div class="scenario-title">Adverse</div>
+                <div class="scenario-prob">20% Probability</div>
+                <div class="scenario-impact">$50-200M</div>
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 4</span>
+        </div>
+    </div>
+
+    <!-- PAGE 5: Section 3 - Maturity Framework -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Section 3</div>
+        </div>
+
+        <h1>Section 3: Maturity Measurement Framework</h1>
+
+        <h2>Recommended Assessment Frameworks</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Framework</th>
+                    <th>Publisher</th>
+                    <th>Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-highlight"><td><strong>BSIMM15</strong></td><td>Black Duck</td><td>AppSec program maturity benchmarking</td></tr>
+                <tr class="table-highlight"><td><strong>Supply Chain MAP</strong></td><td>Black Duck</td><td>Software supply chain maturity</td></tr>
+                <tr><td>SLSA</td><td>OpenSSF</td><td>Build integrity verification</td></tr>
+                <tr><td>OWASP SAMM</td><td>OWASP</td><td>Self-assessment and roadmap</td></tr>
+            </tbody>
+        </table>
+
+        <h2>BSIMM15 Maturity Levels</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="number-cell">Level</th>
+                    <th>Description</th>
+                    <th>Characteristics</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="number-cell"><span class="badge p1">1</span></td><td>Emerging</td><td>Ad-hoc activities, reactive security testing</td></tr>
+                <tr class="table-highlight"><td class="number-cell"><span class="badge p2">2</span></td><td>Maturing</td><td>Defined processes, consistent execution (Target)</td></tr>
+                <tr><td class="number-cell"><span class="badge p3">3</span></td><td>Optimizing</td><td>Metrics-driven, continuous improvement</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Key Performance Indicators</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Metric</th>
+                    <th>Target</th>
+                    <th>Frequency</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td rowspan="3"><strong>Risk Reduction</strong></td><td>MTTR Critical Vulnerabilities</td><td>&lt;7 days</td><td>Weekly</td></tr>
+                <tr><td>Vulnerability Escape Rate</td><td>&lt;5%</td><td>Monthly</td></tr>
+                <tr><td>Security Debt Backlog</td><td>Declining</td><td>Monthly</td></tr>
+                <tr><td rowspan="2"><strong>Maturity</strong></td><td>BSIMM Level</td><td>Level 2 min</td><td>Annual</td></tr>
+                <tr><td>SLSA Level (Critical Builds)</td><td>Level 2 min</td><td>Quarterly</td></tr>
+                <tr><td rowspan="2"><strong>Velocity</strong></td><td>Security Gate Pass Rate</td><td>&gt;85%</td><td>Weekly</td></tr>
+                <tr><td>Exception Approval Time</td><td>&lt;2 days</td><td>Weekly</td></tr>
+                <tr><td rowspan="2"><strong>Coverage</strong></td><td>Components with SBOM</td><td>100%</td><td>Quarterly</td></tr>
+                <tr><td>Apps with Security Testing</td><td>100%</td><td>Quarterly</td></tr>
+            </tbody>
+        </table>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 5</span>
+        </div>
+    </div>
+
+    <!-- PAGE 6: Section 4 - Gap Assessment -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Section 4</div>
+        </div>
+
+        <h1>Section 4: Gap Assessment</h1>
+
+        <h2>Current State Assessment</h2>
+        <p style="font-size:9pt; color:var(--bd-gray-600); margin-bottom:4mm;">The following assessment assumes baseline capabilities. Actual ratings should be validated through formal assessment.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>RMIT Control Area</th>
+                    <th class="number-cell">SAST</th>
+                    <th class="number-cell">DAST</th>
+                    <th class="number-cell">SCA</th>
+                    <th class="number-cell">SBOM</th>
+                    <th class="number-cell">API</th>
+                    <th class="number-cell">Mobile</th>
+                    <th class="number-cell">Pentest</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Ch 10 SDLC</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+                <tr><td>Ch 12 Digital</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+                <tr><td>App 3 Auth/Session</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+                <tr><td>App 4 Mobile</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+                <tr><td>App 5.E API</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+                <tr><td>App 8 Supply Chain</td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell">—</td></tr>
+                <tr><td>App 10 Cloud</td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell"><span class="badge gap">GAP</span></td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell">—</td><td class="number-cell"><span class="badge gap">GAP</span></td></tr>
+            </tbody>
+        </table>
+        <p style="font-size:8pt; color:var(--bd-gray-500);">Legend: <span class="badge gap">GAP</span> = Not deployed or not meeting RMIT requirements. — = Not applicable.</p>
+
+        <h2>Investment Priority Matrix</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="number-cell">Priority</th>
+                    <th>Capability</th>
+                    <th>RMIT Coverage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-highlight"><td class="number-cell"><span class="badge p1">1</span></td><td><strong>Static Application Security Testing (SAST)</strong></td><td>Ch 10, 12, App 3-5, 7, 10</td></tr>
+                <tr class="table-highlight"><td class="number-cell"><span class="badge p1">2</span></td><td><strong>Dynamic Application Security Testing (DAST)</strong></td><td>Ch 10, 12, App 3-5, 7, 10</td></tr>
+                <tr class="table-highlight"><td class="number-cell"><span class="badge p1">3</span></td><td><strong>Software Composition Analysis (SCA)</strong></td><td>Ch 9-10, App 4-5, 8, 10</td></tr>
+                <tr><td class="number-cell"><span class="badge p2">4</span></td><td>DevSecOps Integration</td><td>All chapters</td></tr>
+                <tr><td class="number-cell"><span class="badge p2">5</span></td><td>Application Penetration Testing</td><td>Ch 11, 13, App 3-5, 7</td></tr>
+                <tr><td class="number-cell"><span class="badge p2">6</span></td><td>Software Bill of Materials (SBOM)</td><td>Ch 9, 11, App 5, 8</td></tr>
+                <tr><td class="number-cell"><span class="badge p3">7</span></td><td>API Security Testing</td><td>App 3, 5, 7</td></tr>
+                <tr><td class="number-cell"><span class="badge p3">8</span></td><td>Mobile Application Testing</td><td>Ch 12, App 4, 7</td></tr>
+            </tbody>
+        </table>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 6</span>
+        </div>
+    </div>
+
+    <!-- PAGE 7: Section 5 - Recommendations -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Section 5</div>
+        </div>
+
+        <h1>Section 5: Recommendations</h1>
+
+        <h2>Immediate Actions (0-90 days)</h2>
+        <ol>
+            <li>Conduct formal gap analysis against RMIT requirements (Section 18.1)</li>
+            <li>Engage BSIMM15 assessment to establish baseline maturity</li>
+            <li>Initiate procurement for SAST, DAST, and SCA capabilities</li>
+            <li>Establish software bill of materials generation for critical applications</li>
+        </ol>
+
+        <h2>Short-Term Actions (90-180 days)</h2>
+        <ol>
+            <li>Deploy security testing tools into development pipelines</li>
+            <li>Implement security gates for production releases</li>
+            <li>Establish vulnerability management process with defined SLAs</li>
+            <li>Conduct initial penetration testing of digital services</li>
+        </ol>
+
+        <h2>Medium-Term Actions (180-365 days)</h2>
+        <ol>
+            <li>Achieve BSIMM Level 2 maturity across core practices</li>
+            <li>Implement SLSA Level 2 for critical application builds</li>
+            <li>Establish security champions program across development teams</li>
+            <li>Complete supply chain risk assessment using Supply Chain MAP</li>
+        </ol>
+
+        <h2>Investment Estimate</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Capability</th>
+                    <th class="cost-cell">Implementation</th>
+                    <th class="cost-cell">Annual Operating</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table-highlight"><td><strong>SAST Platform</strong></td><td class="cost-cell">$200-400K</td><td class="cost-cell">$100-200K</td></tr>
+                <tr class="table-highlight"><td><strong>DAST Platform</strong></td><td class="cost-cell">$100-200K</td><td class="cost-cell">$50-100K</td></tr>
+                <tr class="table-highlight"><td><strong>SCA Platform</strong></td><td class="cost-cell">$150-300K</td><td class="cost-cell">$75-150K</td></tr>
+                <tr><td>DevSecOps Integration</td><td class="cost-cell">$100-200K</td><td class="cost-cell">$50-100K</td></tr>
+                <tr><td>Penetration Testing</td><td class="cost-cell">—</td><td class="cost-cell">$200-400K</td></tr>
+                <tr><td>BSIMM Assessment</td><td class="cost-cell">—</td><td class="cost-cell">$50-100K</td></tr>
+                <tr><td>Training Program</td><td class="cost-cell">$50-100K</td><td class="cost-cell">$25-50K</td></tr>
+                <tr style="background:var(--bd-purple-light); font-weight:600;"><td><strong>Total Year 1</strong></td><td class="cost-cell">$600K-1.2M</td><td class="cost-cell">$550K-1.1M</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout info">
+            <div class="callout-title">Return on Investment</div>
+            <div class="callout-text">With average breach costs of $5.97M for financial services and regulatory penalties up to RM25M, the proposed investment of $1.2-2.3M represents significant risk reduction relative to potential exposure.</div>
+        </div>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 7</span>
+        </div>
+    </div>
+
+    <!-- PAGE 8: Appendix -->
+    <div class="page">
+        <div class="page-header">
+            <div class="page-header-left">
+                <img src="logo.png" alt="" class="page-header-logo">
+                <span class="page-header-title">Application Security Investment Case</span>
+            </div>
+            <div class="page-header-right">Appendix</div>
+        </div>
+
+        <h1>Appendix: Reference Materials</h1>
+
+        <h2>Regulatory Sources</h2>
+        <ul>
+            <li>Bank Negara Malaysia, Risk Management in Technology, Issued 28 November 2025</li>
+            <li>Financial Services Act 2013, Sections 47, 143</li>
+            <li>Islamic Financial Services Act 2013, Sections 57, 155</li>
+        </ul>
+
+        <h2>Industry Standards</h2>
+        <ul>
+            <li>OWASP Top 10 Web Application Security Risks</li>
+            <li>OWASP API Security Top 10</li>
+            <li>OWASP Mobile Application Security Verification Standard</li>
+            <li>NIST Cybersecurity Framework</li>
+            <li>ISO 27001 Information Security Management</li>
+        </ul>
+
+        <h2>Maturity Frameworks</h2>
+        <ul>
+            <li><strong>Black Duck BSIMM15</strong> - Building Security In Maturity Model Version 15</li>
+            <li><strong>Black Duck Supply Chain MAP</strong> - Software Supply Chain Maturity Assessment Program</li>
+            <li>OpenSSF SLSA - Supply-chain Levels for Software Artifacts</li>
+            <li>OWASP SAMM - Software Assurance Maturity Model</li>
+        </ul>
+
+        <h2>Breach Cost Data Sources</h2>
+        <ul>
+            <li>IBM Security, Cost of a Data Breach Report 2024</li>
+            <li>Identity Theft Resource Center, 2024 Data Breach Report</li>
+            <li>Ponemon Institute, Application Security Research</li>
+        </ul>
+
+        <h2>Document Control</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Version</th>
+                    <th>Date</th>
+                    <th>Author</th>
+                    <th>Changes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1.0</td><td>February 2025</td><td>CISO</td><td>Initial release</td></tr>
+            </tbody>
+        </table>
+
+        <div class="callout info" style="margin-top:8mm;">
+            <div class="callout-text" style="text-align:center; font-style:italic;">
+                This document contains confidential information intended for Board review.<br>
+                Distribution outside the institution requires prior authorization.
+            </div>
+        </div>
+
+        <div class="page-footer">
+            <img src="logo.png" alt="" class="page-footer-logo">
+            <span>Page 8</span>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+Risk Management in Technology
+
+49 of 80
+
+Appendix 4 Control Measures for Mobile Applications and Devices
+1.
+
+A financial institution that offers digital services must be aware of the risks
+associated with mobile applications. To mitigate these risks, a financial institution
+shall continuously assess and perform risk assessment to ensure that the threats
+associated with mobile applications is addressed.
+
+2.
+
+A financial institution must ensure digital services involving sensitive customer
+and counterparty information offered via mobile devices are adequately secured.
+This includes the following:
+(a) design the mobile application to operate in a secure and tamper-proof
+environment42 within the mobile devices to protect users against cyber
+threats such as malware and unauthorised access;
+(b) prohibit mobile applications from storing customer and counterparty
+information used for authentication with the application server such as PIN
+and passwords. Authentication and verification of unique key and PIN must
+be centralised at the host;
+(c) activation of the mobile application must be subject to robust authentication
+by the financial institution;
+(d) ensure secure provisioning and deprovisioning process of mobile
+application in the customer's device;
+(e) undertake proper due diligence processes to ensure the application
+distribution platforms used to distribute the mobile application are reputable;
+(f) ensure proper controls are in place to access, maintain and upload the
+mobile application on application distribution platforms; and
+(g) monitor the application distribution platforms to identify and address the
+distribution of fake applications in a timely manner.
+
+3.
+
+A financial institution must also ensure the following measures are applied
+specifically for applications running on mobile devices used by the financial
+institution, appointed agents or intermediaries for the purpose of processing
+customer and counterparty information:
+(a) mobile device to be adequately hardened and secured;
+(b) ensure the capability to automatically wipe data stored in the mobile devices
+in the event the device is reported stolen or missing;
+(c) comply with industry standards processed in card payments to mitigate risks
+of unauthorised data access, identity theft and fraud43;
+(d) enforce masking of sensitive customer and counterparty information when
+displayed on mobile devices; and
+(e) limit the storage of customer and counterparty information for soliciting
+insurance and takaful businesses in mobile devices to 30 days.
+
+42 Such as have not been compromised, jailbroken or rooted.
+43 This includes risks associated with malwares that enable keystroke logging, PIN harvesting and other
+
+malicious forms of customer and counterparty information downloading.
+Issued on: 28 November 2025

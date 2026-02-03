@@ -1,0 +1,154 @@
+Risk Management in Technology
+PART B
+8
+
+8 of 80
+
+POLICY REQUIREMENTS
+
+Governance
+
+Responsibilities of the Board of Directors
+S
+
+8.1
+
+The board must establish and approve the technology risk appetite which is
+aligned with the financial institution's risk appetite statement. In doing so, the
+board must(a) approve the corresponding risk tolerances for technology-related events
+considering potential impact on business operations as well as its
+customers;
+(b) identify risk owner to ensure clear accountability and establish criteria
+and approving authority for the acceptance of residual risks by the
+institution;
+(c) ensure key risk indicators are identified to monitor existing and emerging
+risks against financial institution's risk tolerance;
+(d) ensure sufficiency and appropriate deployment of resources; and
+(e) conduct review of the technology risk appetite at regular intervals with
+sufficient deliberation to ensure such risk appetite remains relevant with
+changing risk environment.
+
+S
+
+8.2
+
+In discharging its oversight responsibility, the board must(a) approve and review the adequacy of the financial institution's IT and
+cybersecurity strategic plans to meet business objectives covering a
+period of no less than three years;
+(b) endorse and oversee the effective implementation of a sound and robust
+technology risk management framework (TRMF) and cyber resilience
+framework (CRF), as required to be developed under paragraphs 9.1
+and 11.2, for the continuity of operations and delivery of financial
+services;
+(c) require senior management to continuously demonstrate that risk
+assessments undertaken in relation to critical IT systems and use of
+emerging technology are robust and comprehensive, supported with
+adequate control measures and resources to mitigate IT and cyber risks
+arising from the execution of IT strategic plans;
+(d) ensure IT-related framework, policies and guidelines are reviewed at
+least once every three years (unless otherwise stated in this policy
+document) and apply a depth of review that is commensurate with the
+complexity of the financial institution's operations and changes in the
+risk environment; and
+(e) ensure risk management framework provide support to robust risk
+assessments in relation to technology related applications submitted to
+the Bank.
+
+S
+
+8.3
+
+The board must designate a board-level committee9 which shall be
+responsible for supporting the board in providing oversight over technologyrelated matters. The composition of the designated committee must include
+
+9 The board of a financial institution may either designate an existing board committee or establish a
+
+separate committee for this purpose. Where such a committee is separate from the Board Risk
+Committee (BRC), there must be appropriate interface between this committee and the BRC on
+technology risk-related matters to ensure effective oversight of all risks at the enterprise level.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+9 of 80
+
+at least one member with technology experience and competencies.
+S
+
+8.4
+
+To promote effective discussion at the board level amidst a rapidly evolving
+technology and cyber risk landscape, the board must(a) obtain regular updates on technology risk and cyber threats;
+(b) allocate sufficient time to discuss cyber risks, including the strategic,
+reputational and liquidity risks and impact of operational disruption to
+stakeholders which could arise from an extreme cyber incident. This
+shall be supported by input from external experts where appropriate;
+and
+(c) participate in relevant cybersecurity awareness and training
+programmes.
+
+S
+
+8.5
+
+The board audit committee (BAC) shall be responsible for ensuring the
+effectiveness of the internal technology audit function. This shall include
+ensuring the adequate competence of the audit staff to perform technology
+audits. The BAC shall review and ensure appropriate audit scope,
+procedures and frequency of technology audits. The BAC shall also ensure
+effective oversight over the prompt closure of corrective actions to address
+technology control gaps.
+
+Responsibilities of the senior management
+S
+
+8.6
+
+The senior management shall bear primary responsibility for the day-to-day
+management of technology risks including cyber risks. In fulfilling its
+responsibilities, senior management must–
+(a) implement board approved TRMF and CRF into specific policies and
+procedures that are consistent with the approved risk appetite and risk
+tolerance;
+(b) ensure that the crisis management plan for service disruptions provides
+for timely escalation of recovery action, taking into consideration the
+impact on customers, such as:
+(i) duration of disruption;
+(ii) number of customers affected by a disruption; and
+(iii) number and value of financial transaction impacted; and
+(c) provide regular updates to the board on the status of key performance
+indicators with pertinent information on the risk controls to facilitate
+informed performance review.
+
+S
+
+8.7
+
+The senior management must establish a cross-functional committee to
+provide guidance on the financial institution's technology plans and
+operations. The members of the committee must include senior management
+from both cyber and technology functions, as well as major business units.
+The committee's responsibilities shall include the following:
+(a) oversee the formulation and effective implementation of the strategic
+technology plan and associated technology policies and procedures;
+(b) provide timely updates to the board on key technology matters10; and
+
+10 Key technology matters include updates on critical systems' performance, significant IT and cyber
+
+incidents, management of technology obsolescence risk, status of patch deployment activities for critical
+technology infrastructure, proposals for and progress of strategic technology projects, performance of
+critical technology outsourcing activities, utilisation of the technology budget and competencies for
+managing technology risks.
+Issued on: 28 November 2025
+
+Risk Management in Technology
+
+10 of 80
+
+(c) approve any deviation from technology-related policies after having
+carefully considered a robust assessment of related risks. Material
+deviations shall be reported to the board.
+
+The rest of the page is intentionally left as blank
+
+Issued on: 28 November 2025

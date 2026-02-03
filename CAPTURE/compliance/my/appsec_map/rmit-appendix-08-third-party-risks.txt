@@ -1,0 +1,90 @@
+Risk Management in Technology
+
+61 of 80
+
+Appendix 8 IT and Cyber Risks Associated with Third Party Service Providers
+1.
+
+Operational performance and capacity (including staff competency and bench
+strength to mitigate key-man risks, system infrastructure reliability and IT
+operation management for service quality, strong recovery and resumption
+capability for business continuity).
+
+2.
+
+Security requirements to mitigate information security risks relating to secure
+handling of confidential information pertaining to the financial institution, its
+customers or counterparty during transmission, process or storage of such
+information(a) security governance;
+(b) IT asset management and protection against evolving cyber threats. This
+includes ensuring the storage of its data is at least logically segregated
+from the other clients of the third party service provider;
+(c) secure system development lifecycle;
+(d) physical security;
+(e) personnel security;
+(f) access management; and
+(g) incident management.
+
+3.
+
+Cyber supply chain risks:
+(a) vetting of personnel;
+(b) vetting of third party or open source software
+interdependence;
+(c) third party risk management for key sub-contractors; and
+(d) concentration and geopolitical risk.
+
+Issued on: 28 November 2025
+
+and
+
+system
+
+Risk Management in Technology
+
+62 of 80
+
+Appendix 9 Guidance on Emerging Technologies
+1.
+
+As the landscape of emerging technology is dynamic and evolving, a
+financial institution shall ensure technology risk management framework
+(TRMF) is effective in monitoring the build-up of risks at the enterprise level
+arising from the use of new technologies. A financial institution shall provide
+clarity in its governance arrangement relating to new technologies as follows:
+(a) appropriate level of caution, factoring the unintended consequences
+such as fairness, ethics, legal liability exposures and frictions to
+vulnerable customers in the risk assessment and tolerance level;
+(b) acceptance criteria for introduction of new technology and reporting
+structure and oversight mechanism to uphold accountability throughout
+the lifecycle of adoption;
+(c) enhancement of technology and cybersecurity operation controls to
+mitigate attendant risks; and
+(d) evaluation and improvement of operating control effectiveness on ongoing basis.
+
+2.
+
+A financial institution must only allow the use of emerging technology in a
+production environment when, at a minimum, the following requirements are
+met:
+(a) IT system using the new technology is adequately tested to meet the
+service quality, resiliency, and information security objectives of the
+institution with residual risk that remains within the financial institution's
+risk tolerance level;
+(b) availability of industry standards and best practices to effectively test the
+operation risk controls and cyber defence. Where this cannot be met,
+additional margin of conservatism shall be applied in the risk
+assessment and the scope of provision to customers;
+(c) the financial institution must be prepared to suspend the use of
+emerging technology applications when extreme events such as
+adversarial attacks arise;
+(d) the financial institution must implement regular monitoring to assess
+consistency in the quality of the solution, security and compliance,
+enabling timely identification and mitigation to any emerging risks or
+issues; and
+(e) the financial institution must disclose to users that emerging technology
+is utilized in the system, providing adequate information about
+associated risks to enable them to make an informed decision before
+using the service.
+
+Issued on: 28 November 2025

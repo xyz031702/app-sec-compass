@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMIT Mappings - AppSec Compliance Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .mappings-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 60px);
+        }
+        .sidebar {
+            background: var(--bd-gray-50);
+            border-right: 1px solid var(--bd-gray-200);
+            padding: var(--space-lg);
+            position: sticky;
+            top: 60px;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+        .sidebar-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--bd-gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: var(--space-md);
+        }
+        .sidebar-section {
+            margin-bottom: var(--space-lg);
+        }
+        .sidebar-section-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--bd-gray-400);
+            text-transform: uppercase;
+            margin-bottom: var(--space-sm);
+            padding: var(--space-xs) 0;
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-nav li {
+            margin-bottom: 2px;
+        }
+        .sidebar-nav a {
+            display: block;
+            padding: var(--space-sm) var(--space-md);
+            color: var(--bd-gray-700);
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            cursor: pointer;
+        }
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background: var(--bd-purple-light);
+            color: var(--bd-purple-dark);
+        }
+        .main-content {
+            padding: var(--space-xl);
+            max-width: 900px;
+        }
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--bd-gray-200);
+        }
+        .page-header img { height: 40px; }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-bottom: var(--space-sm);
+        }
+        .breadcrumb a { color: var(--bd-purple); }
+        .doc-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+        #md-content {
+            line-height: 1.7;
+        }
+        #md-content h1 {
+            font-size: 1.5rem;
+            color: var(--bd-black);
+            margin: var(--space-xl) 0 var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--bd-purple);
+        }
+        #md-content h2 {
+            font-size: 1.25rem;
+            color: var(--bd-gray-800);
+            margin: var(--space-lg) 0 var(--space-md);
+            padding-left: var(--space-md);
+            border-left: 4px solid var(--bd-purple);
+        }
+        #md-content h3 {
+            font-size: 1rem;
+            color: var(--bd-gray-700);
+            margin: var(--space-md) 0 var(--space-sm);
+        }
+        #md-content .md-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-lg) 0;
+            font-size: 0.875rem;
+        }
+        #md-content .md-table th {
+            background: var(--bd-black);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+        }
+        #md-content .md-table td {
+            padding: var(--space-sm) var(--space-md);
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+        #md-content code {
+            background: var(--bd-gray-100);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+        }
+        #md-content pre {
+            background: var(--bd-gray-900);
+            color: var(--bd-gray-100);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+        }
+        #md-content blockquote {
+            background: var(--bd-purple-light);
+            border-left: 4px solid var(--bd-purple);
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        #md-content hr {
+            border: none;
+            border-top: 1px solid var(--bd-gray-200);
+            margin: var(--space-xl) 0;
+        }
+        .loading {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--bd-gray-500);
+        }
+        @media (max-width: 768px) {
+            .mappings-layout { grid-template-columns: 1fr; }
+            .sidebar { position: relative; height: auto; top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-brand">
+                <img src="../assets/logo.png" alt="Black Duck" class="header-logo">
+                <span>RMIT AppSec Hub</span>
+            </a>
+            <nav class="header-nav">
+                <a href="./mappings.html" class="active">Mappings</a>
+                <a href="./coverage.html">Coverage</a>
+                <a href="./executive.html">Executive</a>
+                <a href="./assessment.html">Assessment</a>
+                <a href="./guidelines.html">Guidelines</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="mappings-layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">RMIT Chapters</div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Overview</div>
+                <ul class="sidebar-nav">
+                    <li><a onclick="loadDoc('rmit-header-toc-appsec-map.md')">Header & TOC</a></li>
+                    <li><a onclick="loadDoc('rmit-part-a-overview-appsec-map.md')">Part A: Overview</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Part B: Chapters</div>
+                <ul class="sidebar-nav">
+                    <li><a onclick="loadDoc('rmit-ch08-governance-appsec-map.md')">Ch 8: Governance</a></li>
+                    <li><a onclick="loadDoc('rmit-ch09-technology-risk-management-appsec-map.md')">Ch 9: Tech Risk Mgmt</a></li>
+                    <li><a onclick="loadDoc('rmit-ch10-technology-operations-management-appsec-map.md')" class="active">Ch 10: Tech Operations</a></li>
+                    <li><a onclick="loadDoc('rmit-ch11-cybersecurity-management-appsec-map.md')">Ch 11: Cybersecurity</a></li>
+                    <li><a onclick="loadDoc('rmit-ch12-digital-services-appsec-map.md')">Ch 12: Digital Services</a></li>
+                    <li><a onclick="loadDoc('rmit-ch13-technology-audits-appsec-map.md')">Ch 13: Tech Audits</a></li>
+                    <li><a onclick="loadDoc('rmit-ch14-external-party-assurance-appsec-map.md')">Ch 14: External Party</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Part C: Regulatory</div>
+                <ul class="sidebar-nav">
+                    <li><a onclick="loadDoc('rmit-part-c-regulatory-process-appsec-map.md')">Ch 16-18: Regulatory</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Appendices</div>
+                <ul class="sidebar-nav">
+                    <li><a onclick="loadDoc('rmit-appendix-01-storage-transportation-appsec-map.md')">App 1: Storage/Transport</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-02-sst-controls-appsec-map.md')">App 2: SST Controls</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-03-digital-services-controls-appsec-map.md')">App 3: Digital Controls</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-04-mobile-applications-appsec-map.md')">App 4: Mobile Apps</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-05-cybersecurity-controls-appsec-map.md')">App 5: Cybersecurity</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-06-simplified-notification-appsec-map.md')">App 6: Notification</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-07-risk-assessment-report-appsec-map.md')">App 7: Risk Assessment</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-08-third-party-risks-appsec-map.md')">App 8: Third Party</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-10-cloud-services-appsec-map.md')">App 10: Cloud Services</a></li>
+                    <li><a onclick="loadDoc('rmit-appendix-11-fraud-detection-appsec-map.md')">App 11: Fraud Detection</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Reference</div>
+                <ul class="sidebar-nav">
+                    <li><a onclick="loadDoc('appsec-coverage-matrix.md')">Coverage Matrix</a></li>
+                    <li><a onclick="loadDoc('review.md')">AppSec Guidelines</a></li>
+                    <li><a onclick="loadDoc('summary.md')">Summary Plan</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <img src="../assets/logo.png" alt="Black Duck">
+                <div>
+                    <div class="breadcrumb">
+                        <a href="../index.html">Home</a> / RMIT Mappings
+                    </div>
+                    <h1 class="doc-title">RMIT AppSec Mappings</h1>
+                </div>
+            </div>
+            <div id="md-content">
+                <div class="loading">Select a document from the sidebar to view...</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script>
+        function loadDoc(filename) {
+            const path = '../docs/mappings/' + filename;
+            loadMarkdown(path, 'md-content');
+
+            // Update active state
+            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        // Load default document
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDoc('rmit-ch10-technology-operations-management-appsec-map.md');
+        });
+    </script>
+</body>
+</html>

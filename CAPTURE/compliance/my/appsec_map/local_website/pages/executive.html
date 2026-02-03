@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Report - AppSec Compliance Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--bd-gray-200);
+        }
+
+        .page-header img {
+            height: 40px;
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-bottom: var(--space-sm);
+        }
+
+        .breadcrumb a {
+            color: var(--bd-purple);
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+
+        .report-overview {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: var(--space-xl);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .report-description {
+            line-height: 1.7;
+        }
+
+        .report-description p {
+            color: var(--bd-gray-700);
+            margin-bottom: var(--space-md);
+        }
+
+        .report-actions {
+            background: var(--bd-gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            height: fit-content;
+        }
+
+        .report-actions h3 {
+            font-size: 1rem;
+            margin-bottom: var(--space-md);
+        }
+
+        .report-actions .btn {
+            width: 100%;
+            margin-bottom: var(--space-sm);
+            text-align: center;
+        }
+
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .key-stat {
+            background: var(--bd-white);
+            border: 1px solid var(--bd-gray-200);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .key-stat .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--bd-purple);
+        }
+
+        .key-stat .label {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-top: var(--space-xs);
+        }
+
+        .report-structure {
+            margin-bottom: var(--space-2xl);
+        }
+
+        .report-structure h2 {
+            font-size: 1.25rem;
+            margin-bottom: var(--space-lg);
+        }
+
+        .structure-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .structure-table th {
+            background: var(--bd-black);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+        }
+
+        .structure-table td {
+            padding: var(--space-sm) var(--space-md);
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+
+        .structure-table tr:hover td {
+            background: var(--bd-gray-50);
+        }
+
+        .page-num {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: var(--bd-purple-light);
+            color: var(--bd-purple-dark);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .investment-summary {
+            background: var(--bd-purple-light);
+            padding: var(--space-xl);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .investment-summary h2 {
+            color: var(--bd-purple-dark);
+            margin-bottom: var(--space-lg);
+        }
+
+        .investment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+
+        .investment-card {
+            background: white;
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+        }
+
+        .investment-card h4 {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-bottom: var(--space-sm);
+        }
+
+        .investment-card .amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+
+        .priority-tools {
+            margin-top: var(--space-lg);
+        }
+
+        .priority-tools h4 {
+            font-size: 0.875rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .tool-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: var(--space-xs) var(--space-sm);
+            background: white;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .tool-badge.p1 {
+            background: var(--bd-purple);
+            color: white;
+        }
+
+        .tool-badge.p2 {
+            background: var(--bd-gray-200);
+            color: var(--bd-gray-700);
+        }
+
+        .branding-info {
+            background: var(--bd-gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-2xl);
+        }
+
+        .branding-info h3 {
+            margin-bottom: var(--space-md);
+        }
+
+        .color-swatches {
+            display: flex;
+            gap: var(--space-md);
+        }
+
+        .color-swatch {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--bd-gray-200);
+        }
+
+        .swatch.black { background: #000000; }
+        .swatch.purple { background: #9F81BD; }
+        .swatch.purple-light { background: #E8E0F0; }
+
+        .how-to-print {
+            background: white;
+            border: 1px solid var(--bd-gray-200);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+        }
+
+        .how-to-print h3 {
+            margin-bottom: var(--space-md);
+        }
+
+        .how-to-print ol {
+            padding-left: var(--space-lg);
+        }
+
+        .how-to-print li {
+            margin-bottom: var(--space-sm);
+            color: var(--bd-gray-700);
+        }
+
+        @media (max-width: 768px) {
+            .report-overview {
+                grid-template-columns: 1fr;
+            }
+            .key-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .investment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-brand">
+                <img src="../assets/logo.png" alt="Black Duck" class="header-logo">
+                <span>RMIT AppSec Hub</span>
+            </a>
+            <nav class="header-nav">
+                <a href="./mappings.html">Mappings</a>
+                <a href="./coverage.html">Coverage</a>
+                <a href="./executive.html" class="active">Executive</a>
+                <a href="./assessment.html">Assessment</a>
+                <a href="./guidelines.html">Guidelines</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <img src="../assets/logo.png" alt="Black Duck">
+            <div>
+                <div class="breadcrumb">
+                    <a href="../index.html">Home</a> / Executive Report
+                </div>
+                <h1 class="page-title">Executive Report: AppSec Investment Case</h1>
+            </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="report-overview">
+            <div class="report-description">
+                <p>This board-level executive report presents the investment case for Application Security (AppSec) as part of BNM RMIT compliance. The report covers AppSec coverage analysis, breach risk scenarios, maturity measurement frameworks, gap assessments, and investment recommendations.</p>
+                <p>The report is designed for CISO presentation to the Board, focusing on business impact and ROI rather than technical implementation details.</p>
+            </div>
+            <div class="report-actions">
+                <h3>Quick Actions</h3>
+                <a href="../../executive_report/executive-report-appsec-rmit.html" class="btn btn-primary" target="_blank">View Full Report</a>
+                <a href="../docs/rmit-source/pd-rmit-nov25.pdf" class="btn btn-outline" target="_blank">Download RMIT PDF</a>
+            </div>
+        </div>
+
+        <!-- Key Stats -->
+        <div class="key-stats">
+            <div class="key-stat">
+                <div class="value">35%</div>
+                <div class="label">RMIT controls with AppSec relevance</div>
+            </div>
+            <div class="key-stat">
+                <div class="value">8/10</div>
+                <div class="label">Largest breaches from app-layer failures</div>
+            </div>
+            <div class="key-stat">
+                <div class="value">$5B+</div>
+                <div class="label">Combined settlement costs (2017-2024)</div>
+            </div>
+            <div class="key-stat">
+                <div class="value">$4.88M</div>
+                <div class="label">Average breach cost (2024)</div>
+            </div>
+        </div>
+
+        <!-- Report Structure -->
+        <div class="report-structure">
+            <h2>Report Structure (8 Pages)</h2>
+            <table class="structure-table">
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>Section</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="page-num">1</span></td>
+                        <td>Cover</td>
+                        <td>Title, metadata, classification</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">2</span></td>
+                        <td>Executive Summary</td>
+                        <td>Key statistics, table of contents</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">3</span></td>
+                        <td>Section 1</td>
+                        <td>AppSec Coverage of RMIT Controls</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">4</span></td>
+                        <td>Section 2</td>
+                        <td>Consequences of Inadequate Investment</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">5</span></td>
+                        <td>Section 3</td>
+                        <td>Maturity Measurement Framework</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">6</span></td>
+                        <td>Section 4</td>
+                        <td>Gap Assessment</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">7</span></td>
+                        <td>Section 5</td>
+                        <td>Recommendations & Investment</td>
+                    </tr>
+                    <tr>
+                        <td><span class="page-num">8</span></td>
+                        <td>Appendix</td>
+                        <td>Reference Materials</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Investment Summary -->
+        <div class="investment-summary">
+            <h2>Investment Summary</h2>
+            <div class="investment-grid">
+                <div class="investment-card">
+                    <h4>Year 1 Implementation</h4>
+                    <div class="amount">$600K - $1.2M</div>
+                </div>
+                <div class="investment-card">
+                    <h4>Annual Operating</h4>
+                    <div class="amount">$550K - $1.1M</div>
+                </div>
+            </div>
+            <div class="priority-tools">
+                <h4>Priority Tools</h4>
+                <div class="tool-badges">
+                    <span class="tool-badge p1">P1: SAST</span>
+                    <span class="tool-badge p1">P1: DAST</span>
+                    <span class="tool-badge p1">P1: SCA</span>
+                    <span class="tool-badge p2">P2: DevSecOps</span>
+                    <span class="tool-badge p2">P2: Pentest</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Maturity Framework -->
+        <div class="branding-info">
+            <h3>Maturity Framework</h3>
+            <table class="structure-table" style="margin-top: var(--space-md);">
+                <thead>
+                    <tr>
+                        <th>Framework</th>
+                        <th>Type</th>
+                        <th>Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>BSIMM15</strong></td>
+                        <td>Commercial (Black Duck)</td>
+                        <td>Primary AppSec maturity assessment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supply Chain MAP</strong></td>
+                        <td>Commercial (Black Duck)</td>
+                        <td>Software supply chain maturity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SLSA</strong></td>
+                        <td>Open Standard</td>
+                        <td>Build integrity levels</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OWASP SAMM</strong></td>
+                        <td>Open Standard</td>
+                        <td>Alternative reference model</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Branding -->
+        <div class="branding-info">
+            <h3>Report Branding</h3>
+            <p style="margin-bottom: var(--space-md); color: var(--bd-gray-600);">Uses Black Duck color scheme:</p>
+            <div class="color-swatches">
+                <div class="color-swatch">
+                    <div class="swatch black"></div>
+                    <span>Primary: #000000</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch purple"></div>
+                    <span>Accent: #9F81BD</span>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch purple-light"></div>
+                    <span>Highlights: #E8E0F0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to Print -->
+        <div class="how-to-print">
+            <h3>How to Generate PDF</h3>
+            <ol>
+                <li>Open the <a href="../../executive_report/executive-report-appsec-rmit.html" target="_blank">Executive Report HTML</a> in Chrome</li>
+                <li>Click <strong>"Print / Save PDF"</strong> button (top-right)</li>
+                <li>In print dialog:
+                    <ul>
+                        <li>Destination: <strong>Save as PDF</strong></li>
+                        <li>Paper size: <strong>A4</strong></li>
+                        <li>Margins: <strong>Default</strong></li>
+                        <li><strong>Enable "Background graphics"</strong> (required for colors)</li>
+                    </ul>
+                </li>
+                <li>Save the file</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="flex gap-md" style="align-items: center;">
+                <img src="../assets/logo.png" alt="" class="footer-logo">
+                <span class="footer-text">Framework: BSIMM15 | BNM RMIT November 2025</span>
+            </div>
+            <div class="footer-text">
+                Generated February 2025 | Internal Use Only
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

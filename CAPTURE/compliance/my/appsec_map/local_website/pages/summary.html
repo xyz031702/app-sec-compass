@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Plan - AppSec Compliance Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--bd-gray-200);
+        }
+        .page-header img { height: 40px; }
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-bottom: var(--space-sm);
+        }
+        .breadcrumb a { color: var(--bd-purple); }
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+        #md-content {
+            line-height: 1.7;
+        }
+        #md-content h1 {
+            font-size: 1.5rem;
+            color: var(--bd-black);
+            margin: var(--space-xl) 0 var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 2px solid var(--bd-purple);
+        }
+        #md-content h2 {
+            font-size: 1.25rem;
+            color: var(--bd-gray-800);
+            margin: var(--space-lg) 0 var(--space-md);
+            padding-left: var(--space-md);
+            border-left: 4px solid var(--bd-purple);
+        }
+        #md-content h3 {
+            font-size: 1rem;
+            color: var(--bd-gray-700);
+            margin: var(--space-md) 0 var(--space-sm);
+        }
+        #md-content .md-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: var(--space-lg) 0;
+            font-size: 0.875rem;
+        }
+        #md-content .md-table th {
+            background: var(--bd-black);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+        }
+        #md-content .md-table td {
+            padding: var(--space-sm) var(--space-md);
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+        #md-content code {
+            background: var(--bd-gray-100);
+            padding: 2px 6px;
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+        }
+        #md-content pre {
+            background: var(--bd-gray-900);
+            color: var(--bd-gray-100);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+        }
+        #md-content pre code {
+            background: none;
+            padding: 0;
+        }
+        #md-content blockquote {
+            background: var(--bd-purple-light);
+            border-left: 4px solid var(--bd-purple);
+            padding: var(--space-md);
+            margin: var(--space-md) 0;
+        }
+        #md-content hr {
+            border: none;
+            border-top: 1px solid var(--bd-gray-200);
+            margin: var(--space-xl) 0;
+        }
+        #md-content ul {
+            margin: var(--space-md) 0;
+            padding-left: var(--space-xl);
+        }
+        #md-content li {
+            margin-bottom: var(--space-sm);
+        }
+        .loading {
+            text-align: center;
+            padding: var(--space-2xl);
+            color: var(--bd-gray-500);
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-brand">
+                <img src="../assets/logo.png" alt="Black Duck" class="header-logo">
+                <span>RMIT AppSec Hub</span>
+            </a>
+            <nav class="header-nav">
+                <a href="./mappings.html">Mappings</a>
+                <a href="./coverage.html">Coverage</a>
+                <a href="./executive.html">Executive</a>
+                <a href="./assessment.html">Assessment</a>
+                <a href="./guidelines.html">Guidelines</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <img src="../assets/logo.png" alt="Black Duck">
+            <div>
+                <div class="breadcrumb">
+                    <a href="../index.html">Home</a> / Summary Plan
+                </div>
+                <h1 class="page-title">Summary Report Generation Plan</h1>
+            </div>
+        </div>
+        <div id="md-content">
+            <div class="loading">Loading content...</div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="flex gap-md" style="align-items: center;">
+                <img src="../assets/logo.png" alt="" class="footer-logo">
+                <span class="footer-text">Framework: BSIMM15 | BNM RMIT November 2025</span>
+            </div>
+            <div class="footer-text">Generated February 2025 | Internal Use Only</div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMarkdown('../docs/mappings/summary.md', 'md-content');
+        });
+    </script>
+</body>
+</html>

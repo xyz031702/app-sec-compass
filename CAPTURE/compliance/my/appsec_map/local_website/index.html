@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMIT AppSec Compliance Hub</title>
+    <link rel="stylesheet" href="./css/styles.css">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, var(--bd-black) 0%, var(--bd-gray-800) 100%);
+            color: var(--bd-white);
+            padding: var(--space-2xl) var(--space-xl);
+            text-align: center;
+        }
+
+        .hero-logo {
+            height: 60px;
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--space-sm);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--bd-gray-400);
+            margin-bottom: var(--space-xl);
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-md);
+        }
+
+        .stats-section {
+            padding: var(--space-xl);
+            background: var(--bd-white);
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+
+        .nav-section {
+            padding: var(--space-2xl) var(--space-xl);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bd-black);
+            margin-bottom: var(--space-lg);
+            text-align: center;
+        }
+
+        .source-docs {
+            background: var(--bd-gray-50);
+            padding: var(--space-xl);
+            border-top: 1px solid var(--bd-gray-200);
+        }
+
+        .source-docs-grid {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            flex-wrap: wrap;
+        }
+
+        .source-doc-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            padding: var(--space-md) var(--space-lg);
+            background: var(--bd-white);
+            border: 1px solid var(--bd-gray-200);
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+        }
+
+        .source-doc-card:hover {
+            border-color: var(--bd-purple);
+            box-shadow: var(--shadow-md);
+        }
+
+        .source-doc-icon {
+            font-size: 2rem;
+        }
+
+        .source-doc-info {
+            text-align: left;
+        }
+
+        .source-doc-title {
+            font-weight: 600;
+            color: var(--bd-black);
+        }
+
+        .source-doc-desc {
+            font-size: 0.75rem;
+            color: var(--bd-gray-500);
+        }
+
+        .quick-links {
+            background: var(--bd-purple-light);
+            padding: var(--space-lg) var(--space-xl);
+            border-top: 3px solid var(--bd-purple);
+        }
+
+        .quick-links-inner {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+
+        .quick-link {
+            color: var(--bd-purple-dark);
+            font-weight: 500;
+        }
+
+        .quick-link:hover {
+            color: var(--bd-black);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="assets/logo.png" alt="Black Duck" class="hero-logo">
+        <h1 class="hero-title">RMIT AppSec Compliance Hub</h1>
+        <p class="hero-subtitle">BNM Risk Management in Technology - November 2025<br>Application Security Mapping & Analysis</p>
+        <div class="hero-actions">
+            <a href="docs/rmit-source/pd-rmit-nov25.pdf" class="btn btn-primary btn-download" target="_blank">
+                📄 Download RMIT PDF
+            </a>
+            <a href="pages/mappings.html" class="btn btn-outline">
+                📋 Browse Mappings
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="grid grid-4">
+                <div class="stat-card highlight">
+                    <div class="stat-value purple">35%</div>
+                    <div class="stat-label">AppSec Coverage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">20</div>
+                    <div class="stat-label">Chapters Mapped</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Tool Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">100+</div>
+                    <div class="stat-label">Controls Analyzed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Cards -->
+    <section class="nav-section">
+        <div class="container">
+            <h2 class="section-title">Explore the Analysis</h2>
+            <div class="grid grid-3">
+                <a href="pages/mappings.html" class="nav-card">
+                    <div class="nav-card-icon">📋</div>
+                    <div class="nav-card-title">RMIT Mappings</div>
+                    <div class="nav-card-desc">Browse all 20 chapter-by-chapter AppSec tool mappings</div>
+                </a>
+                <a href="pages/coverage.html" class="nav-card">
+                    <div class="nav-card-icon">📊</div>
+                    <div class="nav-card-title">Coverage Matrix</div>
+                    <div class="nav-card-desc">Interactive matrix showing tool coverage by RMIT section</div>
+                </a>
+                <a href="pages/executive.html" class="nav-card">
+                    <div class="nav-card-icon">📄</div>
+                    <div class="nav-card-title">Executive Report</div>
+                    <div class="nav-card-desc">Board-level investment case with cost analysis</div>
+                </a>
+                <a href="pages/assessment.html" class="nav-card">
+                    <div class="nav-card-icon">📝</div>
+                    <div class="nav-card-title">Assessment Forms</div>
+                    <div class="nav-card-desc">Workshop forms for process & tool maturity assessment</div>
+                </a>
+                <a href="pages/guidelines.html" class="nav-card">
+                    <div class="nav-card-icon">📖</div>
+                    <div class="nav-card-title">AppSec Guidelines</div>
+                    <div class="nav-card-desc">Scope definition, ROI criteria, and what's NOT AppSec</div>
+                </a>
+                <a href="pages/summary.html" class="nav-card">
+                    <div class="nav-card-icon">📑</div>
+                    <div class="nav-card-title">Summary Plan</div>
+                    <div class="nav-card-desc">Report generation plan with breach examples</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Source Documents -->
+    <section class="source-docs">
+        <div class="container">
+            <h2 class="section-title">Source Documents</h2>
+            <div class="source-docs-grid">
+                <a href="docs/rmit-source/pd-rmit-nov25.pdf" class="source-doc-card" target="_blank">
+                    <div class="source-doc-icon">📕</div>
+                    <div class="source-doc-info">
+                        <div class="source-doc-title">RMIT PDF</div>
+                        <div class="source-doc-desc">Original BNM document (November 2025)</div>
+                    </div>
+                </a>
+                <a href="docs/rmit-source/pd-rmit-nov25.txt" class="source-doc-card" target="_blank">
+                    <div class="source-doc-icon">📄</div>
+                    <div class="source-doc-info">
+                        <div class="source-doc-title">RMIT Text</div>
+                        <div class="source-doc-desc">Searchable text version</div>
+                    </div>
+                </a>
+                <a href="pages/executive.html" class="source-doc-card">
+                    <div class="source-doc-icon">📊</div>
+                    <div class="source-doc-info">
+                        <div class="source-doc-title">Executive Report</div>
+                        <div class="source-doc-desc">Board presentation (8 pages)</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="quick-links">
+        <div class="quick-links-inner">
+            <span class="text-small text-muted">Quick Links:</span>
+            <a href="pages/mappings.html#ch10" class="quick-link">Ch 10: SDLC</a>
+            <a href="pages/mappings.html#ch11" class="quick-link">Ch 11: Cybersecurity</a>
+            <a href="pages/mappings.html#ch12" class="quick-link">Ch 12: Digital Services</a>
+            <a href="pages/mappings.html#app3" class="quick-link">App 3: Digital Controls</a>
+            <a href="pages/mappings.html#app4" class="quick-link">App 4: Mobile</a>
+            <a href="pages/mappings.html#app5" class="quick-link">App 5: Cybersecurity</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="flex gap-md" style="align-items: center;">
+                <img src="assets/logo.png" alt="" class="footer-logo">
+                <span class="footer-text">Framework: BSIMM15 | BNM RMIT November 2025</span>
+            </div>
+            <div class="footer-text">
+                Generated February 2025 | Internal Use Only
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

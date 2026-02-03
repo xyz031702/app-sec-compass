@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coverage Matrix - AppSec Compliance Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .page-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--space-xl);
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-lg);
+            border-bottom: 2px solid var(--bd-gray-200);
+        }
+
+        .page-header img {
+            height: 40px;
+        }
+
+        .breadcrumb {
+            font-size: 0.875rem;
+            color: var(--bd-gray-500);
+            margin-bottom: var(--space-sm);
+        }
+
+        .breadcrumb a {
+            color: var(--bd-purple);
+        }
+
+        .page-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--bd-black);
+        }
+
+        .legend-section {
+            background: var(--bd-gray-50);
+            padding: var(--space-lg);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-xl);
+        }
+
+        .legend-title {
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .legend-grid {
+            display: flex;
+            gap: var(--space-xl);
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 0.875rem;
+        }
+
+        .legend-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .legend-dot.applies {
+            background: var(--bd-purple);
+            color: white;
+        }
+
+        .legend-dot.not-applies {
+            background: var(--bd-gray-200);
+            color: var(--bd-gray-500);
+        }
+
+        .matrix-container {
+            overflow-x: auto;
+            margin-bottom: var(--space-xl);
+        }
+
+        .coverage-matrix {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.75rem;
+            min-width: 1200px;
+        }
+
+        .coverage-matrix th {
+            background: var(--bd-black);
+            color: var(--bd-white);
+            padding: var(--space-sm);
+            text-align: center;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .coverage-matrix th:first-child {
+            text-align: left;
+            min-width: 180px;
+        }
+
+        .coverage-matrix td {
+            padding: var(--space-sm);
+            border: 1px solid var(--bd-gray-200);
+            text-align: center;
+        }
+
+        .coverage-matrix td:first-child {
+            text-align: left;
+            font-weight: 500;
+            background: var(--bd-gray-50);
+        }
+
+        .coverage-matrix tr:hover td {
+            background: var(--bd-purple-light);
+        }
+
+        .coverage-matrix tr:hover td:first-child {
+            background: var(--bd-purple-light);
+        }
+
+        .cell-applies {
+            background: var(--bd-purple);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+        }
+
+        .cell-not-applies {
+            color: var(--bd-gray-300);
+        }
+
+        .section-group {
+            background: var(--bd-gray-100);
+            font-weight: 600;
+        }
+
+        .priority-section {
+            margin-top: var(--space-2xl);
+        }
+
+        .priority-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: var(--space-lg);
+        }
+
+        .priority-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .priority-table th {
+            background: var(--bd-black);
+            color: white;
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+        }
+
+        .priority-table td {
+            padding: var(--space-sm) var(--space-md);
+            border-bottom: 1px solid var(--bd-gray-200);
+        }
+
+        .priority-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .priority-1 {
+            background: var(--bd-purple);
+            color: white;
+        }
+
+        .priority-2 {
+            background: var(--bd-purple-light);
+            color: var(--bd-purple-dark);
+        }
+
+        .priority-3 {
+            background: var(--bd-gray-200);
+            color: var(--bd-gray-700);
+        }
+
+        .out-of-scope {
+            margin-top: var(--space-2xl);
+            background: #FEF2F2;
+            border: 1px solid #FECACA;
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+        }
+
+        .out-of-scope-title {
+            color: #991B1B;
+            font-weight: 600;
+            margin-bottom: var(--space-md);
+        }
+
+        .out-of-scope-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+        }
+
+        .out-of-scope-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            padding: var(--space-xs) 0;
+            border-bottom: 1px solid #FECACA;
+        }
+
+        .out-of-scope-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="../index.html" class="header-brand">
+                <img src="../assets/logo.png" alt="Black Duck" class="header-logo">
+                <span>RMIT AppSec Hub</span>
+            </a>
+            <nav class="header-nav">
+                <a href="./mappings.html">Mappings</a>
+                <a href="./coverage.html" class="active">Coverage</a>
+                <a href="./executive.html">Executive</a>
+                <a href="./assessment.html">Assessment</a>
+                <a href="./guidelines.html">Guidelines</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <img src="../assets/logo.png" alt="Black Duck">
+            <div>
+                <div class="breadcrumb">
+                    <a href="../index.html">Home</a> / Coverage Matrix
+                </div>
+                <h1 class="page-title">AppSec Coverage Matrix</h1>
+            </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend-section">
+            <div class="legend-title">Legend</div>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="legend-dot applies">*</span>
+                    <span>AppSec applies (we write/control this code)</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-dot not-applies">-</span>
+                    <span>NOT AppSec (commercial product, infrastructure, or operational)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coverage Matrix -->
+        <div class="matrix-container">
+            <table class="coverage-matrix">
+                <thead>
+                    <tr>
+                        <th>RMIT Section</th>
+                        <th>SAST</th>
+                        <th>DAST</th>
+                        <th>SCA</th>
+                        <th>SBOM</th>
+                        <th>DevSecOps</th>
+                        <th>Container</th>
+                        <th>API</th>
+                        <th>Secret</th>
+                        <th>Mobile</th>
+                        <th>Pentest</th>
+                        <th>Threat</th>
+                        <th>Training</th>
+                        <th>Maturity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="section-group">
+                        <td colspan="14">Part A: Overview</td>
+                    </tr>
+                    <tr>
+                        <td>1.1-1.4</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr class="section-group">
+                        <td colspan="14">Part B: Chapters 8-14</td>
+                    </tr>
+                    <tr>
+                        <td>Ch 8: Governance (8.1-8.7)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 9: Tech Risk Mgmt (9.1-9.5)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 10: Tech Ops (10.1-10.3)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 11: Cybersecurity (11.1-11.3)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 11: Cybersecurity (11.4-11.9)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 12: Digital Services (12.1-12.3)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 12: Digital Services (12.4-12.9)</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 13: Tech Audits (13.1-13.4)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Ch 14-15</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr class="section-group">
+                        <td colspan="14">Part C: Regulatory (Ch 16-18)</td>
+                    </tr>
+                    <tr>
+                        <td>16.1-16.7</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>17.1-17.5</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>18.1-18.2</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr class="section-group">
+                        <td colspan="14">Appendices</td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 1 (Storage/Transport)</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 2 (SST Controls)</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 3 (Digital Controls)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 4 (Mobile Apps)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 5 Part A-C</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 5 Part D (Pentest)</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 5 Part E (API)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 6 (Notification)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 7 (Risk Assessment)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 8 (Third Party)</td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 10 (Cloud Services)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                    <tr>
+                        <td>Appendix 11 (Fraud Detection)</td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-applies">*</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                        <td><span class="cell-not-applies">-</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Priority Recommendations -->
+        <div class="priority-section">
+            <h2 class="priority-title">Tool Recommendations by Priority</h2>
+            <table class="priority-table">
+                <thead>
+                    <tr>
+                        <th>Priority</th>
+                        <th>Category</th>
+                        <th>RMIT Coverage</th>
+                        <th>ROI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="priority-badge priority-1">P1</span></td>
+                        <td><strong>SAST</strong></td>
+                        <td>Ch10, Ch12, App3-4, App5.E</td>
+                        <td>High - YOUR code</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-1">P1</span></td>
+                        <td><strong>DAST</strong></td>
+                        <td>Ch10, Ch12, App3-4, App5.D-E</td>
+                        <td>High - YOUR apps</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-1">P1</span></td>
+                        <td><strong>SCA</strong></td>
+                        <td>Ch9-10, App4, App5, App8</td>
+                        <td>High - YOUR dependencies</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-1">P1</span></td>
+                        <td><strong>DevSecOps</strong></td>
+                        <td>All chapters</td>
+                        <td>High - YOUR pipeline</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-2">P2</span></td>
+                        <td><strong>Application Pentest</strong></td>
+                        <td>Ch11, App3-5, App7</td>
+                        <td>Medium - validation</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-2">P2</span></td>
+                        <td><strong>Mobile (SAST/DAST)</strong></td>
+                        <td>Ch12, App4, App7</td>
+                        <td>Medium - if mobile apps</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-2">P2</span></td>
+                        <td><strong>API Security</strong></td>
+                        <td>App3, App5.E, App7</td>
+                        <td>Medium - if APIs</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-2">P2</span></td>
+                        <td><strong>Container</strong></td>
+                        <td>Ch9-10, Ch17, App10</td>
+                        <td>Medium - if containers</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-3">P3</span></td>
+                        <td><strong>SBOM</strong></td>
+                        <td>Ch9, App5.E, App8</td>
+                        <td>Medium - inventory</td>
+                    </tr>
+                    <tr>
+                        <td><span class="priority-badge priority-3">P3</span></td>
+                        <td><strong>Maturity (BSIMM15)</strong></td>
+                        <td>Ch8, Ch13, App4, App7</td>
+                        <td>Low - benchmarking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Out of Scope Section -->
+        <div class="out-of-scope">
+            <div class="out-of-scope-title">Sections Fully Out of AppSec Scope - Use These Instead</div>
+            <div class="out-of-scope-grid">
+                <div class="out-of-scope-item">
+                    <span>SST/ATM security</span>
+                    <span>Device hardening + endpoint management</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>Endpoint protection</span>
+                    <span>EDR (CrowdStrike, SentinelOne)</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>Antivirus</span>
+                    <span>Commercial AV</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>Full disk encryption</span>
+                    <span>BitLocker, LUKS</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>Network security</span>
+                    <span>Firewall, IDS/IPS, SDN</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>DDoS protection</span>
+                    <span>Cloudflare, AWS Shield</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>DLP</span>
+                    <span>Symantec, Microsoft Purview</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>SOC/SIEM</span>
+                    <span>Splunk, QRadar, Sentinel</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>Fraud detection</span>
+                    <span>FICO, SAS, Featurespace</span>
+                </div>
+                <div class="out-of-scope-item">
+                    <span>General awareness</span>
+                    <span>KnowBe4, Proofpoint</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="flex gap-md" style="align-items: center;">
+                <img src="../assets/logo.png" alt="" class="footer-logo">
+                <span class="footer-text">Framework: BSIMM15 | BNM RMIT November 2025</span>
+            </div>
+            <div class="footer-text">
+                Generated February 2025 | Internal Use Only
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

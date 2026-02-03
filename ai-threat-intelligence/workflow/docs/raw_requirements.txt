@@ -1,0 +1,59 @@
+Requirements: AI Security News Intelligence Agent
+1. Project Overview
+A LangGraph-based automated agent that monitors a Gmail inbox for Google Alerts related to AI Security, scrapes the full content of the linked articles, and generates a structured intelligence summary.
+
+2. Target Data Sources
+Inbox: Gmail (Search Query: label:"AI Security News" is:unread), actual alerts include:
+-."AI regulation" OR "AI safety law" OR "EU AI Act" OR "AI governance" OR "AI compliance framework" OR "AI liability"
+-."AI vulnerability disclosed" OR "LLM breach" OR "prompt injection attack" OR "model theft" OR "data poisoning incident" OR "AI CVE"
+-.(Singapore OR MAS OR IMDA OR CSA OR GovTech OR ASEAN OR "Southeast Asia") (AI OR LLM) (security OR governance OR regulation OR guideline OR framework OR policy)
+
+Alert Content: Google Alert emails containing multiple headlines and "redirect" links.
+
+External Content: Full-text articles from various news and research sites (CSET, METR, Solutions Review, etc.).
+
+3. Technical Requirements
+A. Connectivity & Ingestion
+Gmail API: OAuth2 authentication to list and get message details.
+
+URL Decoding: A utility to strip Google's tracking redirect and extract the raw target URL.
+
+Example: https://google.com/url?url=[TARGET_URL]&ct=...
+
+B. Scraping Engine
+Tool: Crawl4AI (preferred) or Playwright.
+
+Output: Must convert HTML to clean Markdown to minimize LLM token usage.
+
+Resilience: Handle timeouts, 403 Forbidden errors, and cookie consent popups.
+
+C. Logic Framework (LangGraph)
+The agent must follow a state-based workflow:
+
+Ingest Node: Fetch unread emails, extract URLs, and mark emails as read.
+
+Scrape Node: Visit each URL and extract text.
+
+Synthesize Node: Group articles by theme (e.g., Regulation, Vulnerabilities, Region).
+
+Reporting Node: Format the final summary.
+
+4. Output Specifications
+Language: Proper English.
+
+Format: Simple, professional Markdown (No emojis or stylized symbols).
+
+Key Focus Areas:
+
+Application Security (AppSec) & DevSecOps implications.
+
+Regulatory updates (Singapore MAS/CSA, EU AI Act).
+
+Actionable "Security Takeaways" for SMEs.
+
+5. Constraints & Error Handling
+Token Management: If an article is too long, truncate it or summarize in chunks before the final synthesis.
+
+Rate Limiting: Implement a 1-2 second delay between scraping different domains.
+
+Persistence: Use LangGraph Checkpointers to allow the process to resume if interrupted.

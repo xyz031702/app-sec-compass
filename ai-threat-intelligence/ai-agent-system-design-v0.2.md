@@ -491,3 +491,36 @@ output:
 **Key Innovation:** Google-exclusive data sourcing with embedded analyst persona  
 **Next Review:** January 10, 2026  
 **Implementation Priority:** High - Simplified architecture for rapid deployment
+
+
+
+**Search Strategies:**
+```
+Key News & Announcements:
+- "AI security/safety news site:news.ycombinator.com "
+- "artificial intelligence vulnerability disclosure "
+- "machine learning security breach "
+
+Significant Incidents:
+- "AI model vulnerability or relevant CVE "
+- "prompt injection attack disclosed "
+- "data poisoning incident "
+- "model theft extraction   "
+
+Offensive/Defensive Research:
+- "AI security research paper   "
+- "machine learning attack technique   "
+- "AI defense strategy research   "
+
+New Tooling:
+- "AI security tool released github "
+- "machine learning security scanner "
+- "AI pipeline security tool "
+```
+
+Regulation, Compliance, and Legal Issues:
+- "AI security/safety related regulation/standard/law/obligation "
+- "AI security/safety related legal discussion "
+
+
+
